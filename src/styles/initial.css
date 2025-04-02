@@ -1,0 +1,195 @@
+body:not(.device-type-mobile):not(.device-type-desktop) {
+  #superbanner-mobile,
+  #superbanner-desktop,
+  .common-header-mobile,
+  .common-header-desktop,
+  .hero__aside,
+  footer,
+  .floating {
+    display: none;
+  }
+
+  img:not(img[class*="icon"]) {
+    width: 100%;
+  }
+
+  .container {
+    display: grid;
+    grid-auto-flow: row;
+    max-width: var(--_container-width);
+    margin: auto;
+    gap: 1rem;
+  }
+
+  .hero__image {
+    width: 100%;
+    height: auto;
+    background-size: contain;
+    background-image: var(--_mainImageMobile);
+    aspect-ratio: 16 / 9;
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+  }
+
+  .hero__logo {
+    --_logo-width: 46%;
+    --_date-width: 44%;
+    --_gap: calc(100% - var(--_logo-width) - var(--_date-width));
+
+    display: grid;
+    grid-template-columns: var(--_logo-width) var(--_date-width);
+    gap: var(--_gap);
+    align-items: end;
+    padding: calc(16vw / var(--_mbw)) calc(8vw / var(--_mbw));
+
+    img {
+      width: 100%;
+      height: auto;
+    }
+  }
+
+  .typ__h2 {
+    display: grid;
+    grid-auto-flow: row;
+    place-content: center;
+    text-align: center;
+    font-size: 1.5rem;
+    color: rgba(51 51 51 / 1);
+
+    &::after {
+      font-size: .875rem;
+      content: attr(data-label);
+    }
+  }
+
+  .enhanced__vod__list {
+    display: grid;
+    justify-content: center;
+    align-items: center;
+
+    .container & {
+      grid-template-columns: 50% 50%;
+      padding: calc(16vw / var(--_mbw));
+      gap: calc(8vw / var(--_mbw));
+      background-color: var(--_bg-color);
+    }
+
+    .floating & {
+      --_space: calc(8vw / var(--_mbw));
+      grid-template-columns: repeat(2, calc((100% - var(--_space)*3) / 2));
+      padding:calc(16vw / var(--_mbw)) 0;
+      gap: var(--_space);
+      background-color: var(--_floating-bg-color);
+    }
+  }
+
+  .enhanced__vod__item {
+    display: grid;
+    grid-template-rows: subgrid;
+    grid-template-columns: 12vw 6vw auto;
+    grid-row: span 2;
+    gap: 0px;
+  }
+
+  .enhanced__vod__item__image {
+    grid-column: 1 / 4;
+  }
+
+  .enhanced__vod__item__icon {
+    padding: 0 2vw;
+
+    .item-tver & {
+      grid-column: 1 / 2;
+    }
+    .item-telasa & {
+      grid-column: 1 / 3;
+    }
+  }
+
+  .enhanced__vod__item__text {
+    display: grid;
+    place-content: center;
+    font-size: calc(11vw / var(--_mbw));
+    font-weight: 600;
+    padding: calc(4vw / var(--_mbw));
+    vertical-align: middle;
+
+
+    .item-tver & {
+      grid-column: 2 / 4;
+    }
+    .item-telasa & {
+      grid-column: 3 / 4;
+    }
+  }
+
+  .navigation.nav__main {
+    --column-count: 3;
+
+    .navigation__list__container {
+      overflow: hidden;
+      border-left: none;
+      border-bottom: var(--nav-border);
+    }
+
+    .navigation__item {
+      position:relative;
+      display: block grid;
+      grid-template-rows: subgrid;
+      grid-row: span 2;
+      justify-content: center;
+      text-align: center;
+      text-decoration: none;
+
+      text-align: center;
+      padding: calc(16vw / var(--_mbw)) 0;
+      text-decoration: none;
+      position: relative;
+
+      &:before,
+      &:after {
+        content: '';
+        position: absolute;
+        background-color: var(--nav-color);
+        z-index: 1;
+      }
+      &:after {
+        width: 100vw;
+        height: 1px;
+        left: 0;
+        top: -1px;
+      }
+      &:before {
+        width: 1px;
+        height: 100vh;
+        left: -1px;
+        top: 0;
+      }
+    }
+
+    .navigation__item__title {
+      font-weight: bold;
+      line-height: calc(26vw / var(--_mbw));
+      font-size: calc(13vw / var(--_mbw));
+      margin-bottom: calc(-5vw / var(--_mbw));
+
+      &:before {
+        transform: translate(-50%, calc(4vw / var(--_mbw)));
+        font-size: calc(9vw / var(--_mbw));
+        color: #ffffff;
+        background-color: #f0027f;
+        line-height: 1;
+        margin-block: calc((1em - 1lh) / 2);
+        padding: calc(2vw / var(--_mbw)) calc(16vw / var(--_mbw));
+        border-radius: calc(2vw / var(--_mbw));
+      }
+    }
+
+    .navigation__item__subtitle {
+      line-height: calc(14vw / var(--_mbw));
+      font-size: calc(9vw / var(--_mbw));
+      letter-spacing: 0;
+    }
+  }
+}

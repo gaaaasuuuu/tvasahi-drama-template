@@ -1,0 +1,1345 @@
+---
+---
+{() => {
+  if (import.meta.env.MODE === 'production') {
+    return (
+      <aside class="aside__container">
+        <div id="rectangle-desktop" class="pc"></div>
+        <div id="common-onair"></div>
+        <div id="common-tver-ranking-desktop"></div>
+        <div id="common-present"></div>
+        <div id="common-ranking"></div>
+      </aside>
+    )
+  } else {
+    return (
+      <aside class="aside__container">
+        <div id="rectangle-desktop" class="rectangle-desktop"></div>
+        <div id="common-onair">
+          <div class="common-onair__scheduleHeader--1niSW"><div class="common-onair__scheduleHeaderTitle--2ojz4"><span class="common-onair__scheduleHeaderDate--3u7B6">20XX.mm.dd</span><div class="common-onair__scheduleHeaderDayOfWeekContainer--NsAPo"><span class="common-onair__scheduleHeaderDayOfWeek--2BDJQ">月</span></div></div><a href="#" class="common-onair__scheduleHeaderButton--MewcQ hover__hoverLightCyan--1xny5"><svg class="common-onair__scheduleHeaderButtonIcon--8xdpv"><g><path d="M19.189 1.351h-3.821V0.809C15.368 0.362 15.006 0 14.558 0s-0.811 0.362-0.811 0.809v0.542H10.83V0.809C10.83 0.362 10.466 0 10.019 0 9.57 0 9.208 0.362 9.208 0.809v0.542H6.29V0.809C6.29 0.362 5.927 0 5.48 0S4.669 0.362 4.669 0.809v0.542H0.811C0.363 1.351 0 1.713 0 2.159V23.19C0 23.638 0.363 24 0.811 24h18.379C19.638 24 20 23.638 20 23.19V2.159C20 1.713 19.638 1.351 19.189 1.351M18.38 22.383H1.621V2.968h3.048v0.944c0 0.447 0.363 0.809 0.811 0.809s0.81-0.362 0.81-0.809V2.968h2.917v0.944c0 0.447 0.363 0.809 0.811 0.809s0.812-0.362 0.812-0.809V2.968h2.916v0.944c0 0.447 0.364 0.809 0.812 0.809 0.448 0 0.811-0.362 0.811-0.809V2.968h3.011v19.415H18.38z"></path><polygon points="15.222 8.397 15.222 8.397 4.815 8.397 4.815 10.016 15.222 10.016 "></polygon><polygon points="15.222 12.928 15.222 12.928 4.815 12.928 4.815 14.547 15.222 14.547 "></polygon><polygon points="15.222 17.458 15.222 17.458 4.815 17.458 4.815 19.076 15.222 19.076 "></polygon></g></svg><div class="common-onair__scheduleHeaderButtonText--3ymv8">番組表</div><svg x="0px" y="0px" width="18px" height="18px" viewBox="0 0 24 24" class="common-onair__scheduleHeaderButtonArrow--3pQFz"><path d="M10 6L8.59 7.41 13.17 12l-4.58 4.59L10 18l6-6z"></path></svg></a></div>
+          <div class="common-onair__scheduleTableBorder--JdwQW"></div>
+          <div class="common-onair__scheduleHeaderShadow--2Ao9o"><div style="width: 100%; height: 10px; margin: auto; overflow: hidden; position: absolute; left: 0px; right: 0px; top: 0px;"><div style="position: absolute; box-shadow: rgba(0, 0, 0, 0.2) 0px 0px 10px 0px; right: 0px; left: 0px; width: 100%; height: 10px; border-radius: 0px 0px 50% 50%; top: -10px;"></div></div></div>
+          <div class="dummy__onair__items">
+            {[...Array(5).keys()].map((_, i) => {
+              return (
+                <div class="common-onair__scheduleItem--3Xkjw"><div><div class="common-onair__scheduleItemOuterCircle--2ZrTs"><div class="common-onair__scheduleItemInnerCircle--3WFIV"></div></div><div class="common-onair__scheduleItemTime--3A_vt"><span class="common-onair__scheduleItemTimeSlot--2rt-O">午後</span><span>{ i + 1 }:00</span></div><div class="common-onair__scheduleItemTitle--2yUuK">番組名</div></div></div>
+              )
+            })}
+            {[...Array(6).keys()].map((_, i) => {
+              return (
+                <div class="common-onair__scheduleItem--3Xkjw"><div><div class="common-onair__scheduleItemOuterCircle--2ZrTs"><div class="common-onair__scheduleItemInnerCircle--3WFIV"></div></div><div class="common-onair__scheduleItemTime--3A_vt"><span class="common-onair__scheduleItemTimeSlot--2rt-O">よる</span><span>{ i + 6 }:00</span></div><div class="common-onair__scheduleItemTitle--2yUuK">番組名</div></div></div>
+              )
+            })}
+            {[...Array(4).keys()].map((_, i) => {
+              return (
+                <div class="common-onair__scheduleItem--3Xkjw"><div><div class="common-onair__scheduleItemOuterCircle--2ZrTs"><div class="common-onair__scheduleItemInnerCircle--3WFIV"></div></div><div class="common-onair__scheduleItemTime--3A_vt"><span class="common-onair__scheduleItemTimeSlot--2rt-O">深夜</span><span>{ i }:00</span></div><div class="common-onair__scheduleItemTitle--2yUuK">番組名</div></div></div>
+              )
+            })}
+          </div>
+        </div>
+        <div id="common-tver-ranking-desktop">
+          <h3 class="tver-ranking-header ranking__header--1bOz7">TVer視聴ランキング（テレビ朝日）</h3>
+          <div class="dummy__tver-ranking">
+            {[...Array(5).keys()].map((_, i) => {
+              return (
+                <a class="tver-ranking-listitem ranking__listItem--2eaU_ hover__hoverPale--3E8qZ" href="#" target="_blank"><div class="tver-ranking-listitem-media ranking__left--1Sphx"><div class="tver-ranking-listitem-image ranking__avatar--3cIpF">dummy</div><div class={`tver-ranking-listitem-badge tver-ranking-listitem-badge-${i+1} ranking__rankingColor${i+1} ranking__rankingIcon--3MRi6`}>{i+1}</div></div><div class="tver-ranking-listitem-content ranking__right--ax4ja"><h4 class="tver-ranking-listitem-title ranking__title--2vgWG">番組名</h4><p class="tver-ranking-listitem-subtitle ranking__subtitle--1Jaz6">説明文</p><div class="tver-ranking-listitem-date ranking__onairDate--3kGh-">3月18日(火)放送分</div><svg x="0px" y="0px" width="18px" height="18px" viewBox="0 0 24 24" class="tver-ranking-listitem-chevron-right ranking__linkIcon--3Gm2d ranking__arrow--1U8he"><path d="M10 6L8.59 7.41 13.17 12l-4.58 4.59L10 18l6-6z"></path></svg></div></a>
+              )
+            })}
+          </div>
+        </div>
+        <div id="common-present">
+          <h3 class="present__header--3Wuxp">プレゼント・観覧募集</h3>
+            <div class="dummy__present__items">
+            {[...Array(3).keys()].map((_, i) => {
+              return (
+              <a href="#" class="present__listItem--3W-sI hover__hoverPale--3E8qZ"><div class="present__left--1Xjvw"><div class="present__leftInner--1W4Fu"><div class="dummy__present__image">dummy</div></div></div><div class="present__right--E_OKE"><div class="present__rightInner--tKSPM"><h4 class="present__title--FdWqB">プレゼント内容</h4><svg x="0px" y="0px" width="18px" height="18px" viewBox="0 0 24 24" class="present__linkIcon--tXoMG"><path d="M10 6L8.59 7.41 13.17 12l-4.58 4.59L10 18l6-6z"></path></svg></div></div></a>
+              )
+            })}
+            </div>
+        </div>
+        <div id="common-ranking">
+          <h3 class="ranking__header--XZdMW">アクセスランキング</h3>
+          <div class="dummy__ranking__items">
+            {[...Array(5).keys()].map((_, i) => {
+              return (
+                <a href="#" class="ranking__listItem--BbiSs hover__hoverPale--3E8qZ"><div class="ranking__left--2DaFV"><div class="dummy__ranking__avatar ranking__avatar--3VZqt"></div><div class={`ranking__rankingColor${ i+1 } ranking__rankingIcon--2DqI5`}>{ i+1 }</div></div><div class="ranking__right--1pfII"><h4 class="ranking__title--1fEID">番組名</h4><svg x="0px" y="0px" width="18px" height="18px" viewBox="0 0 24 24" class="ranking__linkIcon--38SoS ranking__arrow--30DDg"><path d="M10 6L8.59 7.41 13.17 12l-4.58 4.59L10 18l6-6z"></path></svg></div></a>
+              )
+            })}
+          </div>
+        </div>
+      </aside>
+      <style>
+        #rectangle-desktop {
+          background-color: rgba(0 0 0 / .3);
+          width: 300px;
+          height: 250px;
+        }
+        #common-onair {
+          width: 300px;
+          height: 600px;
+          position: relative;
+          background-color: #fff;
+          box-shadow: rgba(0, 0, 0, .117647) 0px 1px 6px, rgba(0, 0, 0, .117647) 0px 1px 4px;
+          margin: 1rem 0;
+        }
+        .dummy__onair__items {
+          overflow-y: scroll;
+          height: 550px;
+          position: relative;
+        }
+        .dummy__tver-ranking {
+          background-color: #fff;
+          box-shadow: rgba(0, 0, 0, .117647) 0px 1px 6px, rgba(0, 0, 0, .117647) 0px 1px 4px;
+          margin: 1rem 0;
+        }
+        .tver-ranking-listitem-image {
+          display: grid;
+          place-content: center;
+          aspect-ratio: 16 / 9;
+          background-color: rgba(0 0 0 / .3);
+          color: #fff;
+        }
+        .dummy__present__items {
+          background-color: #fff;
+          box-shadow: rgba(0, 0, 0, .117647) 0px 1px 6px, rgba(0, 0, 0, .117647) 0px 1px 4px;
+          margin: 1rem 0;
+        }
+        .dummy__present__image {
+          display: grid;
+          place-content: center;
+          aspect-ratio: 16 / 9;
+          background-color: rgba(0 0 0 / .3);
+          color: #fff;
+          width: 88px;
+          height: 50px;
+        }
+        .dummy__ranking__items {
+          background-color: #fff;
+          box-shadow: rgba(0, 0, 0, .117647) 0px 1px 6px, rgba(0, 0, 0, .117647) 0px 1px 4px;
+          margin: 1rem 0;
+        }
+        .dummy__ranking__avatar {
+          background-color: rgba(0 0 0 / .3);
+        }
+      </style>
+      <style>
+        .common-onair__scheduleContainer--3riwx * {
+          -webkit-box-sizing: border-box;
+                  box-sizing: border-box;
+          font-weight: 400;
+          font-family: 'Noto Sans Japanese', sans-serif;
+        }
+
+        .common-onair__scheduleHeader--1niSW {
+          position: relative;
+          display: -webkit-box;
+          display: -ms-flexbox;
+          display: flex;
+          -webkit-box-align: center;
+              -ms-flex-align: center;
+                  align-items: center;
+          width: 300px;
+          height: 50px;
+          z-index: 2px;
+        }
+
+        .common-onair__scheduleHeaderShadow--2Ao9o {
+          position: absolute;
+          top: 50px;
+          width: 100%;
+          height: 5px;
+        }
+
+        .common-onair__scheduleHeaderTitle--2ojz4 {
+          text-align: center;
+          white-space: nowrap;
+          background: #ffffff;
+          -webkit-box-flex: 1;
+              -ms-flex: 1;
+                  flex: 1;
+          display: -webkit-box;
+          display: -ms-flexbox;
+          display: flex;
+          -webkit-box-pack: center;
+              -ms-flex-pack: center;
+                  justify-content: center;
+          -webkit-box-align: center;
+              -ms-flex-align: center;
+                  align-items: center;
+          line-height: 1;
+        }
+
+        .common-onair__scheduleHeaderDate--3u7B6 {
+          font-size: 18px;
+          font-family: "Aleo Regular", sans-serif;
+          letter-spacing: 2px;
+        }
+
+        .common-onair__scheduleHeaderDayOfWeekContainer--NsAPo {
+          height: 22px;
+          width: 22px;
+          margin-left: 5px;
+          position: relative;
+          background-color: #888888;
+          text-align: center;
+        }
+
+        .common-onair__scheduleHeaderDayOfWeek--2BDJQ {
+          font-size: 14px;
+          color: #ffffff !important;
+          line-height: 18px;
+          font-weight: bold;
+        }
+
+        .common-onair__scheduleHeaderButton--MewcQ {
+
+          cursor: pointer;
+          display: -webkit-box;
+          display: -ms-flexbox;
+          display: flex;
+          -webkit-box-align: center;
+              -ms-flex-align: center;
+                  align-items: center;
+          text-align: center;
+          white-space: nowrap;
+          color: #ffffff !important;
+          padding: 13px 13px 13px 17px;
+          -webkit-transition: all 450ms cubic-bezier(0.32, 1, 0.23, 1) 0ms;
+          transition: all 450ms cubic-bezier(0.32, 1, 0.23, 1) 0ms;
+          text-decoration: none;
+        }
+
+        .common-onair__scheduleHeaderButtonIcon--8xdpv {
+          width: 20px;
+          height: 24px;
+          fill: #ffffff;
+          margin-right: 10px;
+        }
+
+        .common-onair__scheduleHeaderButtonText--3ymv8 {
+          font-size: 13px;
+          font-weight: bold;
+        }
+
+        .common-onair__scheduleHeaderButtonArrow--3pQFz {
+          font-size: 18px;
+          height: 18px;
+          line-height: 18px;
+          fill: #fff;
+        }
+
+        .common-onair__scheduleContainer--3riwx {
+          background: #ffffff;
+          width: 300px;
+          height: 600px;
+          // box-shadow: 0px 0px 5px -2px rgba(0, 0, 0, .2);
+          -webkit-box-shadow: rgba(0, 0, 0, .117647) 0px 1px 6px, rgba(0, 0, 0, .117647) 0px 1px 4px;
+                  box-shadow: rgba(0, 0, 0, .117647) 0px 1px 6px, rgba(0, 0, 0, .117647) 0px 1px 4px;
+          z-index: 1px;
+          position: relative;
+          margin: 0 0 16px 0;
+        }
+
+        .common-onair__scheduleTable--1lar0 {
+          width: 300px;
+          // overflow-y: auto;
+          overflow-y: scroll;
+          height: 550px;
+          // height: calc(100% - 50px);
+          position: relative;
+          // top: 50px;
+          // right: 0px;
+        }
+
+        .common-onair__scheduleTableBorder--JdwQW {
+          width: 3px;
+          height: calc(100% - 50px);
+          position: absolute;
+          top: 50px;
+          left: 30px;
+          background: rgba(0, 0, 0, .1);
+          z-index: 0;
+        }
+
+        .common-onair__scheduleItem--3Xkjw {
+          position: relative;
+          display: block;
+          padding: 20px 30px 20px 60px;
+          border-bottom: solid 1px rgba(0, 0, 0, .06);
+        }
+
+        .common-onair__scheduleItemActive--Kxwwd {
+          color: #ffffff !important;
+          background: rgba(0, 160, 198, 1);
+          position: relative;
+          display: block;
+          padding: 20px 30px 20px 90px;
+          min-height: 100px;
+          z-index: 1px;
+        }
+
+        .common-onair__scheduleLinkItem--1hF6e {
+
+          position: relative;
+          display: block;
+          padding: 20px 30px 20px 60px;
+          -webkit-transition: all 450ms cubic-bezier(0.23, 1, 0.32, 1) 0ms;
+          transition: all 450ms cubic-bezier(0.23, 1, 0.32, 1) 0ms;
+          cursor: pointer;
+          border-bottom: solid 1px rgba(0, 0, 0, .06);
+          text-decoration: none;
+          color: #000;
+          font-size: 14px;
+        }
+
+        .common-onair__scheduleLinkItemActive--11tJB {
+
+          font-size: 14px;
+          color: #ffffff !important;
+          position: relative;
+          display: block;
+          padding: 20px 30px 20px 90px;
+          min-height: 100px;
+          -webkit-transition: all 450ms cubic-bezier(0.23, 1, 0.32, 1) 0ms;
+          transition: all 450ms cubic-bezier(0.23, 1, 0.32, 1) 0ms;
+          z-index: 1px;
+          cursor: pointer;
+          text-decoration: none;
+        }
+
+        .common-onair__scheduleItemTimeSlot--2rt-O {
+          font-size: 13px;
+          margin-right: 5px;
+          letter-spacing: 0px;
+        }
+
+        .common-onair__scheduleItemTime--3A_vt {
+          font-size: 16px;
+          color: #00a0c6;
+          font-weight: bold;
+          font-family: "Aleo Regular", "Noto Sans Japanese", sans-serif;
+          vertical-align: baseline;
+          letter-spacing: 2px;
+        }
+
+        .common-onair__scheduleItemTimeActive--1g1E8 {
+          font-size: 16px;
+          position: relative;
+          display: -webkit-box;
+          display: -ms-flexbox;
+          display: flex;
+          -webkit-box-align: center;
+              -ms-flex-align: center;
+                  align-items: center;
+          text-align: center;
+          font-family: "Aleo Regular", "Noto Sans Japanese", sans-serif;
+          vertical-align: baseline;
+          letter-spacing: 2px;
+        }
+
+        .common-onair__scheduleItemTimeTriangle--3a6ab {
+          border-top: 15px solid transparent;
+          border-right: 7px solid #f0027f;
+          border-bottom: 15px solid transparent;
+          border-left: 15px solid transparent;
+          margin-left: -20px;
+        }
+
+        .common-onair__scheduleItemTimeActiveNow--3D2QA {
+          background: #f0027f;
+          line-height: 30px;
+          padding: 0 10px 0 7px;
+          font-family: "Noto Sans Japanese", sans-serif;
+          font-size: 13px;
+          font-weight: bold;
+          letter-spacing: 0px;
+        }
+
+        .common-onair__scheduleItemTimeActiveText--31qUf {
+          background-color: #ffffff;
+          color: #00a0c6;
+          line-height: 30px;
+          padding: 0 10px;
+          white-space: nowrap;
+          font-weight: bold;
+        }
+
+        .common-onair__scheduleItemTitle--2yUuK {
+          margin-top: 10px;
+          font-size: 15px;
+          }
+
+        .common-onair__scheduleItemTitleActive--2GwF5 {
+            margin-top: 10px;
+            font-size: 15px;
+        }
+
+        .common-onair__scheduleItemOuterCircle--2ZrTs {
+          position: absolute;
+          top: 18px;
+          left: 20px;
+          width: 24px;
+          height: 24px;
+          border-radius: 50%;
+          background: rgba(0, 0, 0, .1);
+        }
+
+        .common-onair__scheduleItemInnerCircle--3WFIV {
+          position: absolute;
+          top: 7px;
+          left: 7px;
+          width: 10px;
+          height: 10px;
+          border-radius: 50%;
+          background: rgba(255, 255, 255, 1);
+          -webkit-box-shadow: 1px 1px 3px rgba(0, 0, 0, .2);
+                  box-shadow: 1px 1px 3px rgba(0, 0, 0, .2);
+          z-index: 1px;
+        }
+
+        .common-onair__scheduleItemAvatar--8AUlE {
+          position: absolute;
+          top: 20px;
+          left: 10px;
+          overflow: hidden;
+          height: 64px;
+          width: 64px;
+          border-radius: 50%;
+          background-repeat: no-repeat;
+          background-position: center;
+          background-size: cover;
+          z-index: 2px;
+        }
+
+        .common-onair__scheduleItemAvatarImage--2G9RK {
+          width: auto;
+          height: 64px;
+          -webkit-transform: translate-x(-50%);
+                  transform: translate-x(-50%);
+        }
+
+        .common-onair__arrow--2Ex0l {
+          position: absolute;
+          top: 0px;
+          right: 12px;
+          bottom: 0px;
+          margin: auto;
+          font-size: 18px;
+          height: 18px;
+          line-height: 18px;
+        }
+
+        .common-onair__linkIcon--2XHwf {
+          fill: #00a0c6;
+        }
+
+        .common-onair__linkIconActive--7IfDU {
+          fill: #fff;
+        }
+        </style>
+        <style>
+          .hover__hoverCyanText--raNVw {
+            color: #00a0c6 !important
+          }
+
+
+          .hover__hoverCyanText--raNVw:hover {
+            color: #05c3ed !important;
+          }
+
+
+          .hover__hoverCyan--iOlAD:hover {
+            background-color: rgba(0, 160, 198, .6);
+            color: #fff !important;
+          }
+
+
+          .hover__hoverLightCyan--1xny5 {
+            background-color: rgba(0, 160, 198, 1)
+          }
+
+
+          .hover__hoverLightCyan--1xny5:hover {
+            background-color: rgba(5, 195, 237, 1);
+          }
+
+
+          .hover__hoverPale--3E8qZ:hover {
+            background-color: rgba(5, 195, 237, .08);
+          }
+
+
+          .hover__hoverTea--2AAPX:hover {
+            color: #fff;
+            background-color: rgba(188, 179, 162, .6);
+          }
+
+
+          .hover__hoverLightTea--2l7_z:hover {
+            background-color: rgba(188, 179, 162, .25);
+          }
+
+
+          .hover__hoverMagenta--1mjdl:hover {
+            background-color: rgba(240, 2, 127, .2);
+          }
+
+
+          .hover__hoverTranslucent--2viTG:hover {
+            opacity: .5;
+          }
+
+
+          .hover__navNestedMenu--1ENLa {
+            color: #333 !important;
+          }
+
+
+          .hover__navCyanMenu--1YLF1 {
+            color: #00a0c6 !important;
+          }
+
+
+          .hover__dot--20twh:hover {
+            -webkit-transform: scale(2);
+                    transform: scale(2);
+          }
+
+
+          .hover__cardList--33FjM:hover .hover__button--2fYih:not(.hover__disable--2eLRy) {
+            -webkit-transform: scale(1.5);
+                    transform: scale(1.5)
+          }
+
+
+          .hover__cardList--33FjM:hover .hover__button--2fYih:not(.hover__disable--2eLRy):hover {
+            -webkit-animation: hover__popUp--3OIZG 200ms;
+                    animation: hover__popUp--3OIZG 200ms;
+          }
+
+
+          .hover__card--3sVxq {
+            -webkit-box-shadow: 0px 2px 5px rgba(0, 0, 0, .2);
+                    box-shadow: 0px 2px 5px rgba(0, 0, 0, .2)
+          }
+
+
+          .hover__card--3sVxq .hover__videoLinks--3ccHw {
+            // display: none;
+            opacity: 0;
+          }
+
+
+          .hover__card--3sVxq:hover {
+            -webkit-box-shadow: 0px 5px 8px 1px rgba(0, 0, 0, .2);
+                    box-shadow: 0px 5px 8px 1px rgba(0, 0, 0, .2)
+          }
+
+
+          .hover__card--3sVxq:hover .hover__cardImage--1Mqcs {
+            opacity: .7;
+          }
+
+
+          .hover__card--3sVxq:hover .hover__videoLinks--3ccHw {
+            // display: block;
+            opacity: 1;
+          }
+
+
+          @-webkit-keyframes hover__popUp--3OIZG {
+            0% {
+              -webkit-transform: scale(1.5);
+                      transform: scale(1.5);
+            }
+            50% {
+              -webkit-transform: scale(1.8);
+                      transform: scale(1.8);
+            }
+            100% {
+              -webkit-transform: scale(1.5);
+                      transform: scale(1.5);
+            }
+          }
+
+
+          @keyframes hover__popUp--3OIZG {
+            0% {
+              -webkit-transform: scale(1.5);
+                      transform: scale(1.5);
+            }
+            50% {
+              -webkit-transform: scale(1.8);
+                      transform: scale(1.8);
+            }
+            100% {
+              -webkit-transform: scale(1.5);
+                      transform: scale(1.5);
+            }
+          }
+          </style>
+          <style>
+            .ranking__wrapper--2j-Zu * {
+              -webkit-box-sizing: border-box;
+                      box-sizing: border-box;
+              font-weight: 400;
+              font-family: 'Noto Sans Japanese', sans-serif;
+            }
+
+            .ranking__container--159H6 {
+              background: #fff;
+              min-width: 300px;
+              z-index: 1px;
+              position: relative;
+              margin: 16px 0 0 0;
+            }
+
+            .ranking__listItem--2eaU_ {
+
+              display: -webkit-box;
+
+              display: -ms-flexbox;
+
+              display: flex;
+              position: relative;
+              -webkit-transition: all 450ms cubic-bezier(0.23, 1, 0.32, 1) 0ms;
+              transition: all 450ms cubic-bezier(0.23, 1, 0.32, 1) 0ms;
+              cursor: pointer;
+              border-bottom: solid 1px rgba(0, 0, 0, .25);
+              text-decoration: none;
+              color: #000;
+              font-size: 14px;
+            }
+
+            .ranking__listItem--2eaU_::before {
+              content: "\5916\90E8\30EA\30F3\30AF";
+              z-index: 100;
+              opacity: 0;
+              position: absolute;
+              top: -8px;
+              left: 0;
+              background-color: rgb(86, 86, 86);
+              -webkit-transform: translate(-8px, -100%);
+                      transform: translate(-8px, -100%);
+              color: #fff;
+              white-space: nowrap;
+              font-size: 10px;
+              line-height: 1;
+              padding: 8px 16px;
+              /* transition: opacity 450ms cubic-bezier(0.23, 1, 0.32, 1) 0ms; */
+            }
+
+            .ranking__listItem--2eaU_::after {
+              content: "";
+              z-index: 100;
+              opacity: 0;
+              position: absolute;
+              top: -8px;
+              left: -8px;
+              width: 0px;
+              height: 0px;
+              border-style: solid;
+              border-width: 0px 8px 8px 0px;
+              border-color: transparent rgb(0, 0, 0) transparent transparent;
+              /* transition: opacity 450ms cubic-bezier(0.23, 1, 0.32, 1) 0ms; */
+            }
+
+            .ranking__listItem--2eaU_:hover::before,
+            .ranking__listItem--2eaU_:hover::after {
+              opacity: 1;
+            }
+
+            .device-type-mobile {
+              .ranking__wrapper--2j-Zu {
+                padding: 16px 0;
+              }
+
+              .ranking__header--1bOz7 {
+                font-size: 16px;
+                font-weight: 900;
+                margin: 0 0 0 8px;
+              }
+
+              .ranking__left--1Sphx {
+                padding: 16px;
+                position: relative;
+                -webkit-box-flex: 0;
+                    -ms-flex: 0 0 160px;
+                        flex: 0 0 160px;
+                min-height: 104px;
+                -ms-flex-item-align: start;
+                    align-self: flex-start;
+              }
+
+              .ranking__right--ax4ja {
+                -webkit-box-flex: 0;
+                    -ms-flex: 0 0 calc(100% - 160px);
+                        flex: 0 0 calc(100% - 160px);
+                position: relative;
+                padding: 16px 24px 16px 0px;
+              }
+
+              .ranking__avatar--3cIpF {
+                position: absolute;
+                top: 0;
+                right: 16px;
+                bottom: 0;
+                margin: auto;
+                overflow: hidden;
+                width: 128px;
+                height: 72px;
+                background-repeat: no-repeat;
+                background-position: center;
+                background-size: cover;
+                z-index: 2;
+              }
+
+              .ranking__title--2vgWG {
+                font-size: 16px;
+                font-weight: 800;
+                line-height: 24px;
+                margin: 0;
+                padding: 0;
+              }
+
+              .ranking__subtitle--1Jaz6 {
+                font-size: 14px;
+                margin: 4px 0 0 0;
+                padding: 0;
+                line-height: 1.6em;
+              }
+
+              .ranking__onairDate--3kGh- {
+                margin-top: 8px;
+                color: #a3a3a3;
+                line-height: 1em;
+              }
+            }
+
+            .device-type-desktop {
+              .ranking__wrapper--2j-Zu {
+                margin: 32px auto;
+              }
+
+              .ranking__header--1bOz7 {
+                font-size: 18px;
+                font-weight: 900;
+                margin: 0 0 0 8px;
+              }
+
+              .ranking__left--1Sphx {
+                padding: 16px;
+                position: relative;
+                -webkit-box-flex: 0;
+                    -ms-flex: 0 0 138px;
+                        flex: 0 0 138px;
+                min-height: 104px;
+                -ms-flex-item-align: start;
+                    align-self: flex-start;
+              }
+
+              .ranking__right--ax4ja {
+                -webkit-box-flex: 0;
+                    -ms-flex: 0 0 calc(100% - 138px);
+                        flex: 0 0 calc(100% - 138px);
+                position: relative;
+                padding: 16px 24px 16px 0px;
+              }
+
+              .ranking__avatar--3cIpF {
+                position: absolute;
+                top: 0;
+                right: 16px;
+                bottom: 0;
+                margin: auto;
+                overflow: hidden;
+                width: 106px;
+                height: 60px;
+                background-repeat: no-repeat;
+                background-position: center;
+                background-size: cover;
+                z-index: 2;
+              }
+
+              .ranking__title--2vgWG {
+                font-size: 16px;
+                font-weight: 800;
+                line-height: 24px;
+                margin: 0;
+                padding: 0;
+              }
+
+              .ranking__subtitle--1Jaz6 {
+                font-size: 12px;
+                margin: 4px 0 0 0;
+                padding: 0;
+                line-height: 1.6em;
+              }
+
+              .ranking__onairDate--3kGh- {
+                font-size: 11px;
+                margin-top: 8px;
+                color: #a3a3a3;
+                line-height: 1em;
+              }
+
+              .ranking__container--159H6 {
+                -webkit-box-shadow: rgba(0, 0, 0, .117647) 0px 1px 6px, rgba(0, 0, 0, .117647) 0px 1px 4px;
+                        box-shadow: rgba(0, 0, 0, .117647) 0px 1px 6px, rgba(0, 0, 0, .117647) 0px 1px 4px;
+              }
+
+              .ranking__listItem--2eaU_ {
+                border-bottom: solid 1px rgba(0, 0, 0, .06)
+              }
+
+              .ranking__listItem--2eaU_:last-child {
+                border: none;
+              }
+            }
+
+            .device-type-desktop #common-tver-ranking-desktop.ranking-type-card {
+              .ranking__wrapper--2j-Zu {
+                margin: 32px auto;
+              }
+
+              .ranking__header--1bOz7 {
+                font-size: 18px;
+                font-weight: 900;
+                margin: 0 0 0 8px;
+              }
+
+              .ranking__left--1Sphx {
+                padding: 16px;
+                position: relative;
+                -webkit-box-flex: 0;
+                    -ms-flex: 0 0 138px;
+                        flex: 0 0 138px;
+                min-height: 104px;
+                -ms-flex-item-align: start;
+                    align-self: flex-start;
+              }
+
+              .ranking__right--ax4ja {
+                -webkit-box-flex: 0;
+                    -ms-flex: 0 0 calc(100% - 138px);
+                        flex: 0 0 calc(100% - 138px);
+                position: relative;
+                padding: 16px 24px 16px 0px;
+              }
+
+              .ranking__avatar--3cIpF {
+                position: absolute;
+                top: 0;
+                right: 0;
+                bottom: 0;
+                margin: auto;
+                overflow: hidden;
+                width: 100%;
+                height: auto;
+                background-repeat: no-repeat;
+                background-position: center;
+                background-size: cover;
+                z-index: 2;
+              }
+
+              .ranking__title--2vgWG {
+                font-size: 13px;
+                font-weight: 800;
+                line-height: 24px;
+                margin: 0;
+                padding: 0;
+              }
+
+              .ranking__subtitle--1Jaz6 {
+                font-size: 12px;
+                margin: 4px 0 0 0;
+                padding: 0;
+                line-height: 1.6em;
+              }
+
+              .ranking__onairDate--3kGh- {
+                font-size: 11px;
+                margin-top: 8px;
+                color: #a3a3a3;
+                line-height: 1em;
+              }
+
+              .ranking__container--159H6 {
+                display: -webkit-box;
+                display: -ms-flexbox;
+                display: flex;
+                -webkit-box-shadow: none;
+                        box-shadow: none;
+              }
+
+              .ranking__listItem--2eaU_ {
+                -webkit-box-flex: 1;
+                    -ms-flex: 1;
+                        flex: 1;
+                border-bottom: none;
+                -webkit-box-shadow: rgba(0, 0, 0, .117647) 0px 1px 6px, rgba(0, 0, 0, .117647) 0px 1px 4px;
+                        box-shadow: rgba(0, 0, 0, .117647) 0px 1px 6px, rgba(0, 0, 0, .117647) 0px 1px 4px;
+                margin-right: 8px;
+                -webkit-box-orient: vertical;
+                -webkit-box-direction: normal;
+                    -ms-flex-direction: column;
+                        flex-direction: column
+              }
+
+              .ranking__listItem--2eaU_:last-child {
+                border: none;
+              }
+
+
+              .ranking__left--1Sphx {
+                padding: 0;
+                position: relative;
+                -webkit-box-flex: 0;
+                    -ms-flex: 0 0 auto;
+                        flex: 0 0 auto;
+                min-height: 104px;
+                -ms-flex-item-align: auto;
+                    align-self: auto;
+              }
+
+              .ranking__right--ax4ja {
+                -webkit-box-flex: 0;
+                    -ms-flex: 0 0 auto;
+                        flex: 0 0 auto;
+                position: relative;
+                padding: 16px;
+              }
+
+              .ranking__arrow--1U8he {
+                display: none;
+              }
+
+              .ranking__rankingIcon--3MRi6 {
+                z-index: 2;
+                position: absolute;
+                top: auto;
+                bottom: -16px;
+                left: 0px;
+              }
+            }
+
+            .ranking__image--3DaTm {
+              max-width: 100%;
+              height: auto;
+            }
+
+            .ranking__arrow--1U8he {
+              position: absolute;
+              top: 0px;
+              right: 4px;
+              bottom: 0px;
+              margin: auto;
+              font-size: 18px;
+              height: 18px;
+              line-height: 18px;
+            }
+
+            .ranking__linkIcon--3Gm2d {
+              fill: #00a0c6;
+            }
+
+            .ranking__rankingIcon--3MRi6 {
+              z-index: 2;
+              position: absolute;
+              top: 6px;
+              left: 6px;
+              width: 30px;
+              height: 30px;
+              color: #fff;
+              font-family: "Aleo Regular";
+              font-size: 16px;
+              line-height: 24px;
+              font-weight: bold;
+              text-align: center;
+              border-radius: 50%;
+              border: solid 3px #fff;
+            }
+
+            .ranking__rankingColor1 {
+              background-image: linear-gradient(165deg, rgba(197, 127, 0, 1) 44%,rgba(226, 191, 0, 1) 45%);
+            }
+
+            .ranking__rankingColor2 {
+              background-image: linear-gradient(165deg, rgba(157, 157, 157, 1) 44%,rgba(180, 180, 180, 1) 45%);
+            }
+
+            .ranking__rankingColor3 {
+              background-image: linear-gradient(165deg, rgba(147, 84, 33, 1) 44%,rgba(172, 120, 47, 1) 45%);
+            }
+
+            .ranking__rankingColor4 {
+              background-image: linear-gradient(165deg, rgba(97, 97, 97, 1) 44%,rgba(134, 134, 134, 1) 45%);
+            }
+
+            .ranking__rankingColor5 {
+              background-image: linear-gradient(165deg, rgba(97, 97, 97, 1) 44%,rgba(134, 134, 134, 1) 45%);
+            }
+            </style>
+            <style>
+.present__wrapper--e4Gar * {
+  -webkit-box-sizing: border-box;
+          box-sizing: border-box;
+  font-weight: 400;
+  font-family: 'Noto Sans Japanese', sans-serif;
+}
+
+.present__wrapper--e4Gar {
+  margin: 32px auto;
+}
+
+.present__header--3Wuxp {
+  font-size: 20px;
+  margin: 0;
+}
+
+.present__container--1MuAf {
+  background: #fff;
+  min-width: 300px;
+  -webkit-box-shadow: rgba(0, 0, 0, .117647) 0px 1px 6px, rgba(0, 0, 0, .117647) 0px 1px 4px;
+          box-shadow: rgba(0, 0, 0, .117647) 0px 1px 6px, rgba(0, 0, 0, .117647) 0px 1px 4px;
+  z-index: 1px;
+  position: relative;
+  margin: 16px 0;
+}
+
+.present__listItem--3W-sI {
+
+  display: -webkit-box;
+
+  display: -ms-flexbox;
+
+  display: flex;
+  // display: block;
+  position: relative;
+  -webkit-transition: all 450ms cubic-bezier(0.23, 1, 0.32, 1) 0ms;
+  transition: all 450ms cubic-bezier(0.23, 1, 0.32, 1) 0ms;
+  cursor: pointer;
+  border-bottom: solid 1px rgba(0, 0, 0, .06);
+  text-decoration: none;
+  color: #000;
+  font-size: 14px
+}
+
+.present__listItem--3W-sI:last-child {
+  border: none;
+}
+
+.present__left--1Xjvw {
+  // padding: 16px;
+  // width: 40%;
+  -webkit-box-flex: 0;
+      -ms-flex: 0 0 40%;
+          flex: 0 0 40%;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+}
+
+.present__right--E_OKE {
+  -webkit-box-flex: 0;
+      -ms-flex: 0 0 60%;
+          flex: 0 0 60%;
+  position: relative;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+}
+
+.present__leftInner--1W4Fu {
+  padding: 16px;
+}
+
+.present__rightInner--tKSPM {
+  padding: 16px 24px 16px 0px;
+}
+
+.present__image--1ey10 {
+  max-width: 100%;
+  width: 100%;
+  height: auto;
+}
+
+.present__title--FdWqB {
+  font-size: 14px;
+  line-height: 20px;
+  margin: 0;
+  padding: 0;
+}
+
+.present__text--2Jbm1 {
+  padding: 20px 25px 0;
+  display: block;
+}
+
+.present__moreLinkContainer--2TZE6 {
+  margin: 10px 0 0;
+}
+
+.present__moreLink--17YFp {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  -webkit-box-pack: end;
+      -ms-flex-pack: end;
+          justify-content: flex-end;
+  font-size: 14px;
+  font-weight: bold;
+  -webkit-transition: all 450ms cubic-bezier(0.23, 1, 0.32, 1) 0ms;
+  transition: all 450ms cubic-bezier(0.23, 1, 0.32, 1) 0ms;
+  text-decoration: none;
+}
+
+.present__moreLinkText--319Z1 {
+  margin-right: 8px;
+}
+
+.present__circle--1kU-7 {
+  display: grid;
+  place-content: center;
+  border: 1px solid currentColor;
+  border-radius: 100vh;
+  width: 28px;
+  height: 28px;
+  fill: currentColor;
+}
+
+.present__linkIcon--tXoMG {
+  width: 24px;
+  height: 24px;
+  fill: #00a0c6 !important;
+  position: absolute;
+  right: 8px;
+  top: 50%;
+  transform: translateY(-50%);
+}
+
+/* .arrow {
+  position: absolute;
+  top: 0px;
+  right: 4px;
+  bottom: 0px;
+  margin: auto;
+  font-size: 18px;
+  height: 18px;
+  line-height: 18px;
+}
+
+.linkIcon {
+  composes: arrow;
+  fill: #00a0c6;
+} */
+
+/* .moreLinkContainer {
+  display: block;
+  position: relative;
+  text-align: right;
+  margin: 10px 4px 0 0;
+}
+
+.moreLink {
+  composes: hoverCyanText from "../styles/hover.css";
+  padding: 5px 40px 5px 5px;
+  font-size: 14px;
+  font-weight: bold;
+  transition: all 450ms cubic-bezier(0.23, 1, 0.32, 1) 0ms;
+  text-decoration: none;
+}
+
+.moreLinkText {
+  padding: 4px 40px 5px 5px;
+  font-size: 14px;
+  font-weight: bold;
+  transition: all 450ms cubic-bezier(0.23, 1, 0.32, 1) 0ms;
+}
+
+.circle {
+  border: 1px solid;
+  border-radius: 50%;
+  position: absolute;
+  right: 3px;
+  bottom: 2px;
+  width: 20px;
+  height: 20px;
+  opacity: 0.8;
+  transform: scale(1.3) rotate(0.001deg);
+} */
+</style>
+<style>
+.ranking__wrapper--fKdcH * {
+  -webkit-box-sizing: border-box;
+          box-sizing: border-box;
+  font-weight: 400;
+  font-family: 'Noto Sans Japanese', sans-serif;
+}
+
+.ranking__wrapper--fKdcH {
+  margin: 32px auto;
+}
+
+.ranking__header--XZdMW {
+  font-size: 20px;
+  margin: 0;
+}
+
+.ranking__container--19yMW {
+  background: #fff;
+  min-width: 300px;
+  -webkit-box-shadow: rgba(0, 0, 0, .117647) 0px 1px 6px, rgba(0, 0, 0, .117647) 0px 1px 4px;
+          box-shadow: rgba(0, 0, 0, .117647) 0px 1px 6px, rgba(0, 0, 0, .117647) 0px 1px 4px;
+  z-index: 1px;
+  position: relative;
+  margin: 16px 0;
+}
+
+.ranking__listItem--BbiSs {
+
+  display: -webkit-box;
+
+  display: -ms-flexbox;
+
+  display: flex;
+  // display: block;
+  position: relative;
+  -webkit-transition: all 450ms cubic-bezier(0.23, 1, 0.32, 1) 0ms;
+  transition: all 450ms cubic-bezier(0.23, 1, 0.32, 1) 0ms;
+  cursor: pointer;
+  border-bottom: solid 1px rgba(0, 0, 0, .06);
+  text-decoration: none;
+  color: #000;
+  font-size: 14px
+}
+
+.ranking__listItem--BbiSs:last-child {
+  border: none;
+}
+
+.ranking__left--2DaFV {
+  // padding: 16px;
+  // width: 40%;
+  position: relative;
+  -webkit-box-flex: 0;
+      -ms-flex: 0 0 100px;
+          flex: 0 0 100px;
+  min-height: 100px;
+  -ms-flex-item-align: start;
+      align-self: flex-start;
+}
+
+.ranking__right--1pfII {
+  -webkit-box-flex: 0;
+      -ms-flex: 0 0 calc(100% - 100px);
+          flex: 0 0 calc(100% - 100px);
+  position: relative;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  padding: 16px 24px 16px 0px;
+}
+
+.ranking__avatar--3VZqt {
+  position: absolute;
+  top: 0;
+  right: 16px;
+  bottom: 0;
+  margin: auto;
+  border-radius: 50%;
+  overflow: hidden;
+  height: 64px;
+  width: 64px;
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: cover;
+  z-index: 2;
+  -webkit-transition: all 200ms cubic-bezier(0.23, 1, 0.32, 1) 0ms;
+  transition: all 200ms cubic-bezier(0.23, 1, 0.32, 1) 0ms;
+  -webkit-transform-origin: top left;
+          transform-origin: top left;
+}
+
+.ranking__image--1jDhw {
+  max-width: 100%;
+  height: auto;
+}
+
+.ranking__title--1fEID {
+  font-size: 16px;
+  line-height: 24px;
+  margin: 0;
+  padding: 0;
+}
+
+.ranking__arrow--30DDg {
+  position: absolute;
+  top: 0px;
+  right: 4px;
+  bottom: 0px;
+  margin: auto;
+  font-size: 18px;
+  height: 18px;
+  line-height: 18px;
+}
+
+.ranking__linkIcon--38SoS {
+  fill: #00a0c6;
+}
+
+.ranking__rankingIcon--2DqI5 {
+  z-index: 2;
+  position: absolute;
+  top: 6px;
+  left: 6px;
+  width: 30px;
+  height: 30px;
+  color: #fff;
+  font-family: "Aleo Regular";
+  font-size: 16px;
+  line-height: 24px;
+  font-weight: bold;
+  text-align: center;
+  border-radius: 50%;
+  border: solid 3px #fff;
+}
+
+.ranking__rankingColor1 {
+  background-image: linear-gradient(165deg, rgba(197, 127, 0, 1) 44%,rgba(226, 191, 0, 1) 45%);
+}
+
+.ranking__rankingColor2 {
+  background-image: linear-gradient(165deg, rgba(157, 157, 157, 1) 44%,rgba(180, 180, 180, 1) 45%);
+}
+
+.ranking__rankingColor3 {
+  background-image: linear-gradient(165deg, rgba(147, 84, 33, 1) 44%,rgba(172, 120, 47, 1) 45%);
+}
+
+.ranking__rankingColor4 {
+  background-image: linear-gradient(165deg, rgba(97, 97, 97, 1) 44%,rgba(134, 134, 134, 1) 45%);
+}
+
+.ranking__rankingColor5 {
+  background-image: linear-gradient(165deg, rgba(97, 97, 97, 1) 44%,rgba(134, 134, 134, 1) 45%);
+}
+</style>
+    )
+  }
+}}

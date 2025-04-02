@@ -1,0 +1,58 @@
+---
+const { class: className, html, onlyUse, ...rest } = Astro.props;
+import '@styles/next-story.css';
+---
+<next-story
+  class={[className]}
+  data-html={html}
+  data-only-use={onlyUse}
+></next-story>
+
+<script>
+import deviceType from '@scripts/device-type.js';
+const { device } = deviceType();
+let htmlItems = [];
+let elItems = [];
+
+class NextStory extends HTMLElement {
+  constructor() {
+    super();
+    const { onlyUse, html } = this.dataset;
+    if (onlyUse && onlyUse !== device) return;
+    htmlItems.push(html);
+    elItems.push(this);
+  }
+}
+customElements.define('next-story', NextStory);
+
+
+htmlItems.forEach(async(htmlPath, i) => {
+  const response = await fetch(htmlPath);
+  const result = await response.text();
+  // const dom = await new DOMParser().parseFromString(result, 'text/html');
+  elItems[i].innerHTML = result;
+
+  const videoThumb = elItems[i].querySelector('.video-thumb');
+  if (videoThumb) {
+    videoThumb.addEventListener('click', (e) => {
+      const iframe = elItems[i].querySelector('iframe');
+      if (iframe && iframe.getAttribute('data-src')) {
+        iframe.setAttribute('src', iframe.getAttribute('data-src'));
+      }
+    }, { once: true });
+  }
+
+  const modal = elItems[i].querySelector('#modal');
+  if (modal) {
+    modal.addEventListener('click', (e) => {
+      e.preventDefault();
+      location.hash = e.target.hash;
+      history.pushState({}, '', location.pathname);
+    });
+  }
+});
+
+async function fetchHTML(path) {
+  return await fetch(path);
+}
+</script>

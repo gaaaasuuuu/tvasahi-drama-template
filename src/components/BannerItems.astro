@@ -1,0 +1,49 @@
+---
+const { class: className, json, onlyUse, ...rest } = Astro.props;
+---
+<banner-items
+  class:list={[className]}
+  data-json={json}
+  data-only-use={onlyUse}
+></banner-items>
+
+<script>
+import deviceType from '@scripts/device-type.js';
+const { device } = deviceType();
+let jsonItems = [];
+let elItems = [];
+
+class BannerItems extends HTMLElement {
+  constructor() {
+    super();
+    const { onlyUse, json } = this.dataset;
+    if (onlyUse && onlyUse !== device) {
+      this.classList.add('empty__container');
+      return;
+    }
+    jsonItems.push(json);
+    elItems.push(this);
+  }
+}
+customElements.define('banner-items', BannerItems);
+
+jsonItems.forEach(async(json, i) => {
+  // console.log(json);
+  const response = await fetch(json);
+  const result = await response.json();
+  const bannerHTML = createElements(result);
+  elItems[i].innerHTML = bannerHTML.join('');
+});
+
+function createElements(items) {
+  return items.map((item) => {
+    const img = `<img src="${item.img}" alt=""/>`;
+    const className = `class="banner__item ${item.class}"`;
+    const blank = item.blank && ' target="_blank"';
+    const label = item.label && ` aria-label="${item.label}"`;
+    return item.url
+      ? `<a href="${item.url}" ${className}${blank}${label}>${img}</a>`
+      : `<div${className}>${img}</div$>`;
+  });
+}
+</script>

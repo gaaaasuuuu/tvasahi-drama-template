@@ -1,0 +1,25 @@
+.rebroadcast__container:has(.banner__items:empty) {
+  display: none;
+}
+
+.rebroadcast__container {
+  display: grid;
+  grid-auto-columns: auto;
+  gap: 1rem;
+
+  .banner__items {
+    display: grid;
+    padding: 0 1rem;
+
+    .device-type-desktop & {
+      gap: 1rem;
+      grid-template-columns: auto auto;
+    }
+
+    .device-type-mobile & {
+      gap: 1rem;
+      grid-auto-columns: auto;
+    }
+  }
+}
+

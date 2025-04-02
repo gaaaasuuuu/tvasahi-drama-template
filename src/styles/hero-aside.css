@@ -1,0 +1,25 @@
+.hero__image:not(.hero__aside:empty) {
+  position: relative;
+}
+.hero__aside {
+  position: absolute;
+  top: 25px;
+  right: 0;
+  width: 320px;
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 1rem;
+
+  .bnr__aside__items {
+    display: flex;
+    flex-wrap: wrap;
+    flex-direction: row;
+    gap: 1rem;
+
+    img {
+      width: 100%;
+    }
+  }
+}
+
+

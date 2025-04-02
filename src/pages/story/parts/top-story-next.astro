@@ -1,0 +1,41 @@
+---
+import { directory } from '@settings';
+import Button from '@components/Button.astro';
+---
+<div class="next-story">
+  <h2 class="h2-ttl">次回予告<span>next</span></h2>
+  <div class="contents-box">
+    <div class="cap-box loading-box">
+      <!-- クリックでページ遷移パターン -->
+      <!-- <a class="opac" href="story/"> -->
+      <!-- 再生ボタン -->
+      <!-- <div class="play"><img src=`/${directory}/common-img/play.png` alt=""></div> -->
+      <!-- ▼通常の場合 -->
+      <!-- <div class="cap"><img src=`/${directory}/story/0001/img/01.jpg` alt=""></div> -->
+      <!-- ▼ジャニーズ対応の場合 -->
+      <!-- <div class="cap protect"><img src=`/${directory}/https://placehold.jp/40/cccccc/ffffff/680x400.png?text=%E3%82%B8%E3%83%A3%E3%83%8B%E3%83%BC%E3%82%BA%E7%94%BB%E5%83%8F" alt=""></div> -->
+      <!-- </a> -->
+      <!-- モーダルパターン（読み込み先は modal/index.html） -->
+      <a class="opac video-thumb" data-action="click" data-label="modal" href="#modal">
+        <div class="play"><img src=`/${directory}/common-img/play.png` alt=""></div>
+        <div class="cap"><img src=`/${directory}/story/0001/img/01.jpg` alt=""></div>
+      </a>
+    </div><!-- cap-box -->
+    <div class="txt-box">
+      <span class="num">第1話</span>
+      <span class="detail">○○月○○日（○）よる9時～</span>
+      <!-- <div class="btn-box u-mts"><a class="opac" href="story/">詳しくはこちら</a></div> -->
+    </div>
+  </div><!-- contents-box -->
+
+  <div class="modal">
+    <a id="modal" class="modal__background" href="#modal-close"></a>
+    <div class="modal__container">
+      <svg class="modal__close__button" height="24px" viewBox="0 -960 960 960" width="24px" fill="#fff"><path d="m251.85-220.77-30.77-31.08L448.92-480 221.08-708.15l30.77-31.08L480-511.08l228.15-228.15 30.77 31.08L511.08-480l227.84 228.15-30.77 31.08L480-448.92 251.85-220.77Z"/></svg>
+      <iframe title="YouTube" data-src="https://www.youtube.com/embed/djB-lW-WeLs?rel=0&showinfo=0&autoplay=1&wmode=transparent" frameborder="0" allowfullscreen="" allow="autoplay"></iframe>
+      <Button class="primary__button center__pos no__icon opac" href="story/">ストーリーはこちら</Button>
+    </div>
+  </div>
+
+</div><!-- next-movie -->
+

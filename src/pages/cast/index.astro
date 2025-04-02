@@ -1,0 +1,53 @@
+---
+import { name, directory, tsukasaId } from '@settings';
+import Layout from '@layouts/Layout.astro';
+import Cast from '@components/Cast.astro';
+
+import '@styles/page-cast.css';
+---
+
+<Layout title={`キャスト｜${name}｜テレビ朝日`}>
+  <div class="cast__container">
+    <h2 class="typ__h2" data-label="キャスト">CAST</h2>
+    <div class="cast__items__container">
+      <img id="chart-img" class="chart-img" src=`/${directory}/cast/img/chart.jpg` usemap="#Map" />
+      <map name="Map" id="Map">
+        <area shape="rect" coords="80,61,273,251" href="#鷲津 政彦" alt="鷲津 政彦" onfocus="this.blur();" />
+        <area shape="rect" coords="413,166,605,359" href="#芝野 健夫" alt="芝野 健夫" onfocus="this.blur();" />
+        <area shape="rect" coords="124,481,317,675" href="#松平 貴子" alt="月本 幸子" onfocus="this.blur();" />
+      </map>
+      <Cast class="cast__items" json={`/${directory}/api/cast.json`} />
+    </div>
+  </div>
+
+  <script>
+    import imageMapResize from 'image-map-resizer';
+    import deviceType from '@scripts/device-type.js';
+    const { device } = deviceType();
+    device === 'mobile' && imageMapResize();
+  </script>
+
+  <script id="cast-template" type="text/x-handlebars-template">
+    {{#if isCast}}
+      <div id="cast-{{number}}" class="cast-box">
+        {{#if image}}
+          <!-- ▼通常の場合 -->
+          <p class="cast-thumb">
+            <img src="{{image}}" alt="{{role}}{{#if cast}}………{{/if}}{{cast}}">
+          </p>
+          <!-- ▼ジャニーズ対応の場合 -->
+          <!-- <p class="cast-thumb protect">
+          <img src="{{image}}" class="protect" alt="{{role}}{{#if cast}}………{{/if}}{{cast}}">
+          </p> -->
+        {{/if}}
+        <div class="cast-txt">
+          <p class="cast-name">{{role}}<span class="cast-name-kana">{{#if roman}}（{{/if}}{{roman}}{{#if roman}}）{{/if}}</span><span class="cast-age">{{#if age}}（{{age}}）{{/if}}</span>{{#if cast}}………{{/if}}{{cast}}</p>
+          <p>{{{text}}}</p>
+        </div>
+      </div>
+      {{#if dot}}
+        <div class="cast-dot">・</div>
+      {{/if}}
+    {{/if}}
+  </script>
+</Layout>

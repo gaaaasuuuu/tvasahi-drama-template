@@ -1,0 +1,108 @@
+---
+const { class: className, onlyUse, ...rest } = Astro.props;
+import scrollToTopImage from '@images/page_top.png';
+import '@styles/scroll-to-top.css';
+---
+<scroll-to-top
+  id="scroll__to__top"
+  class:list={['scroll__to__top', className]}
+  data-only-use={onlyUse}
+  data-icon={scrollToTopImage.src}
+></scroll-to-top>
+
+<script>
+  import { debounce } from 'throttle-debounce';
+  import deviceType from '@scripts/device-type.js';
+
+  const { device } = deviceType();
+  let elItems = [];
+  let iconItems = [];
+
+  class ScrollToTop extends HTMLElement {
+    constructor() {
+      super();
+      const { onlyUse, icon } = this.dataset;
+      if (onlyUse && onlyUse !== device) return;
+      elItems.push(this);
+      iconItems.push(icon);
+    }
+  }
+  customElements.define('scroll-to-top', ScrollToTop);
+
+  elItems.forEach((el, i) => {
+    const state = {
+      scrollY: 0,
+      el: null,
+      display: false,
+    };
+
+    if (el) {
+      addButton(el, iconItems[i]);
+      el.addEventListener('click', (e) => {
+        console.log('click!');
+        window.addEventListener('scrollend', (e) => {
+          history.pushState({}, '', location.pathname);
+        }, {
+          once: true
+        });
+      });
+      onHandleAppearance();
+    }
+
+    function addButton(el, icon) {
+      const button = document.createElement('a');
+      button.href = '#';
+      const img = document.createElement('img');
+      img.src = icon;
+      button.appendChild(img);
+      el.appendChild(button);
+    }
+
+    function onHandleAppearance() {
+      window.addEventListener('scroll', debounce(250, () => {
+        const scrollY = window.scrollY;
+        if (scrollY !== 0 && !state.display) {
+          fadeIn();
+          state.display = true;
+        } else if (scrollY === 0 && state.display) {
+          fadeOut();
+          state.display = false;
+        }
+      }), false);
+    }
+
+    function fadeOut() {
+      el.style.opacity = 1;
+
+      let val = 1;
+      (function fade() {
+        if (val >= 0) {
+          val -= 0.075;
+          el.style.opacity = val;
+          window.requestAnimationFrame(fade);
+        } else {
+          el.style.display = 'none';
+          val = 1;
+        }
+      })();
+    }
+
+    function fadeIn() {
+      el.style.opacity = 0;
+      el.style.display = 'block';
+
+      let val = 0;
+      (function fade() {
+        if (val <= 1) {
+          val += 0.075;
+          el.style.opacity = val;
+          window.requestAnimationFrame(fade);
+        } else {
+          val = 0;
+        }
+      })();
+    }
+
+});
+</script>
+

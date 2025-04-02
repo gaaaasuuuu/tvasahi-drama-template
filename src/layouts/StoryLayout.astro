@@ -1,0 +1,72 @@
+---
+import { directory, calendarScriptName } from '@settings';
+import Layout from '@layouts/Layout.astro';
+import Guest from '@components/Guest.astro';
+import Glossary from '@components/Glossary.astro';
+import CalendarButton from '@components/CalendarButton.astro';
+import ImportHTML from '@components/ImportHTML.astro';
+
+const { title } = Astro.props;
+---
+<Layout title={title}>
+  <div class="story__container">
+    <h2 class="typ__h2" data-label="ストーリー">STORY</h2>
+    <div class="story__items__container">
+
+
+      <slot />
+      <Glossary json={`/${directory}/api/cast.json`} />
+
+      <div class="guest__container">
+        <h3 class="h3-ttl">ゲスト</h3>
+        <Guest json={`/${directory}/api/cast.json`} class="guest__items">
+      </div>
+
+      <CalendarButton html={`/${directory}/story/parts/calendar-btn.html`} name={calendarScriptName} />
+
+      <h2 class="h2-ttl-inner" data-label="バックナンバー">BACKNUMBER</h2>
+      <ImportHTML html={`/${directory}/story/parts/story-list.html`} class="backnumber__items" />
+    </div>
+
+
+    <script id="cast-template" type="text/x-handlebars-template">
+      <div id="cast-{{number}}" class="cast-box{{#if rank}} has-rank{{/if}}">
+        {{#if image}}
+
+          <!-- 通常の場合 -->
+          <p class="cast-thumb"><img src="{{image}}" alt="{{role}}{{#if cast}}………{{/if}}{{cast}}"></p>
+          <!-- ジャニーズ対応の場合 -->
+          <!-- <p class="cast-thumb protect"><img src="{{image}}" alt="{{role}}{{#if cast}}………{{/if}}{{cast}}"></p> -->
+
+        {{/if}}
+        <div class="cast-txt">
+          <p class="cast-name">{{role}}<span class="cast-name-kana">{{#if roman}}（{{/if}}{{roman}}{{#if roman}}）{{/if}}</span><span class="cast-age">{{#if age}}（{{age}}）{{/if}}</span>{{#if cast}}………{{/if}}{{cast}}</p>
+          <p class="cast-read">{{{linebreak text}}}</p>
+        </div>
+      </div>
+    </script>
+
+
+  </div>
+</Layout>
+
+<script>
+  (() => {
+    const el = document.querySelector('.story__items__container iframe[data-src]');
+    if (!el) return;
+
+    const options = {
+      threshold: 0,
+    }
+    const observer = new IntersectionObserver((entries) => {
+      for(const e of entries) {
+        if (e.isIntersecting === true) {
+          const src = el.getAttribute('data-src')
+          el.setAttribute('src', src);
+          observer.unobserve(el);
+        }
+      }
+    }, options);
+    observer.observe(el);
+  })();
+</script>

@@ -1,0 +1,49 @@
+---
+const { class: className, json, onlyUse, ...rest } = Astro.props;
+import '@styles/cast-modal.css';
+---
+<glossary-words
+  id="glossary-words"
+  class:list={[className]}
+  data-json={json}
+  data-only-use={onlyUse}
+></glossary-words>
+
+<script>
+import Glossary from '@scripts/glossary.js';
+import deviceType from '@scripts/device-type.js';
+
+const { device } = deviceType();
+let jsonItems = [];
+let elItems = [];
+
+class GlossaryWords extends HTMLElement {
+  constructor() {
+    super();
+    const { onlyUse, json } = this.dataset;
+    if (!json) return;
+    if (onlyUse && onlyUse !== device) {
+      this.classList.add('empty__container');
+      return;
+    }
+    jsonItems.push(json);
+    elItems.push(this);
+  }
+}
+customElements.define('glossary-words', GlossaryWords);
+
+jsonItems.forEach(async(json, i) => {
+  const glossary = new Glossary({
+    jsonList: [json],
+    selector: '.episode__summary',
+    modalTemplate: '#cast-template',
+    trimSpaceKeys: ['role', 'cast'],
+    trackingPath: 'cast',
+    helpers: {
+      linebreak: (txt) => {
+        return txt.replace(/\\n/g, '<br>');
+      }
+    }
+  });
+});
+</script>

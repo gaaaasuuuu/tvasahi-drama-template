@@ -1,0 +1,54 @@
+import { defineConfig } from 'astro/config';
+import { directory } from "./src/settings";
+
+
+const SUB_DIR = `/${directory}`;
+
+export default defineConfig({
+  base: SUB_DIR,
+  outDir: `./dist${SUB_DIR}`,
+  site: 'https://www.tv-asahi.co.jp',
+  compressHTML: true,
+  build: {
+    assets: 'assets',
+    inlineStylesheets: 'never',
+    format: 'preserve',
+  },
+  vite: {
+    server: true,
+    resolve: {
+      alias: {
+        '@components': '/src/components',
+        '@layouts': '/src/layouts',
+        '@scripts': '/src/scripts',
+        '@styles': '/src/styles',
+        '@images': '/src/images',
+        '@settings': '/src/settings.js',
+      },
+    },
+    build: {
+      assetsInlineLimit: 0,
+      rollupOptions: {
+        output: {
+          entryFileNames: `assets/scripts/entry.[hash].js`,
+          chunkFileNames: `assets/scripts/chunk.[hash].js`,
+          assetFileNames: (asset) => {
+            console.log(asset.name);
+            let extType = asset.name.split('.').at(-1);
+            if (/png|jpe?g|webp|avif|svg|gif|tiff|bmp|ico/i.test(extType)) {
+              extType = 'images';
+            }
+            if (/css|scss/i.test(extType)) {
+              extType = 'styles';
+            }
+            return `assets/${extType}/[name][extname]`;
+          },
+        },
+      },
+    },
+  },
+  devToolbar: {
+    enabled: false
+  },
+});
+

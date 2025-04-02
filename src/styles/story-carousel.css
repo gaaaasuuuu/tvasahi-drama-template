@@ -1,0 +1,212 @@
+.story__carousel {
+  --text-body: rgb(54, 49, 61);
+  --detail-high-contrast: rgb(192, 192, 192);
+  --text-high-contrast-rgb-value: 49, 49, 49;
+}
+
+
+.story__carousel {
+  max-width: 680px;
+  margin: auto;
+  --slide-height: 19rem;
+  --slide-spacing: 1rem;
+  --slide-size: 100%;
+}
+.story__carousel__viewport {
+  overflow: hidden;
+}
+.story__carousel__container {
+  display: flex;
+  touch-action: pan-y pinch-zoom;
+  margin-left: calc(var(--slide-spacing) * -1);
+}
+.story__carousel__slide {
+  transform: translate3d(0, 0, 0);
+  flex: 0 0 var(--slide-size);
+  min-width: 0;
+  padding-left: var(--slide-spacing);
+}
+.story__carousel__slide > img {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: auto;
+}
+.story__carousel__controls {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  justify-content: space-between;
+  gap: 1.2rem;
+  margin-top: 1.8rem;
+}
+
+.story__carousel__floating {
+  position: relative;
+}
+
+.story__carousel__floating:hover {
+  > .story__carousel__button--prev {
+    animation: carouselPrev 0.5s ease-out 0s 1;
+    opacity: 1;
+  }
+  > .story__carousel__button--next {
+    animation: carouselNext 0.5s ease-out 0s 1;
+    opacity: 1;
+  }
+}
+
+@keyframes carouselPrev {
+  from {
+    transform: translate(30px, -50%);
+    transform: translate(30px, -50%);
+    opacity: 0;
+  }
+  to {
+    transform: translate(-50%, -50%);
+    transform: translate(-50%, -50%);
+    opacity: 1;
+  }
+}
+@keyframes carouselNext {
+  from {
+    transform: translate(-30px, -50%);
+    transform: translate(-30px, -50%);
+    opacity: 0;
+  }
+  to {
+    transform: translate(50%, -50%);
+    transform: translate(50%, -50%);
+    opacity: 1;
+  }
+}
+
+
+.story__carousel__button {
+  position: absolute;
+  top: 50%;
+  transition: 0.3s;
+  opacity: 0;
+  -webkit-tap-highlight-color: rgba(var(--text-high-contrast-rgb-value), 0.5);
+  -webkit-appearance: none;
+  appearance: none;
+  background-color: transparent;
+  touch-action: manipulation;
+  display: inline-flex;
+  text-decoration: none;
+  cursor: pointer;
+  border: 0;
+  padding: 0;
+  margin: 0;
+  width: 2.5rem;
+  height: 5rem;
+  z-index: 2;
+  border-radius: 50%;
+  color: var(--text-body);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  > svg {
+    width: 2.5rem;
+    height: 5rem;
+  }
+}
+.story__carousel__button:disabled {
+  color: var(--detail-high-contrast);
+}
+
+.story__carousel__button--prev {
+  left: 0;
+  transform: translate(-50%, -50%);
+
+}
+.story__carousel__button--next {
+  right: 0;
+  transform: translate(50%, -50%);
+}
+
+.story__carousel__button__svg {
+  width: 35%;
+  height: 35%;
+}
+.story__carousel__dots {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
+  margin-top: 2rem;
+}
+.story__carousel__dot {
+  -webkit-tap-highlight-color: rgba(var(--text-high-contrast-rgb-value), 0.5);
+  -webkit-appearance: none;
+  appearance: none;
+  background-color: transparent;
+  touch-action: manipulation;
+  display: inline-flex;
+  text-decoration: none;
+  cursor: pointer;
+  border: 0;
+  padding: 0;
+  margin: 0;
+  width: 1.5rem;
+  height: 1.5rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+}
+.story__carousel__dot:after {
+  background-color: #cccccc;
+  width: .75rem;
+  height: .75rem;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  content: '';
+}
+.story__carousel__dot--selected:after {
+  background-color: var(--_link-color);
+}
+.story__carousel__container {
+  align-items: flex-start;
+}
+
+
+.story__carousel__thumbs__container {
+  display: grid;
+
+  .device-type-desktop & {
+    grid-template-columns: repeat(var(--_item-count, 5), 1fr);
+    margin-top: 1rem;
+    gap: .5rem;
+  }
+  .device-type-mobile & {
+    grid-template-columns: repeat(var(--_item-count, 5), 1fr);
+    margin-top: 1rem;
+    gap: .5rem;
+  }
+}
+.story__carousel__thumbs__slide {
+  cursor: pointer;
+
+  img {
+    width: 100%;
+    height: auto;
+    filter: opacity(.5);
+    transition: filter .5s cubic-bezier(0.075, 0.82, 0.165, 1);
+  }
+
+  &:hover {
+    img {
+      filter: opacity(1);
+    }
+  }
+}
+.story__carousel__thumbs__slide--selected {
+  img {
+    filter: opacity(1);
+  }
+}
+
+

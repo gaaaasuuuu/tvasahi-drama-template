@@ -1,0 +1,30 @@
+.footer__nav__container {
+  --_item-color: #333;
+  --_label-color: #999;
+  --_item-bg: #ddd;
+  --_item-border: 1px solid rgba(0 0 0 / .2);
+
+  .navigation__item {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: var(--_item-color);
+    background: var(--_item-bg);
+    font-weight: 600;
+    text-decoration: none;
+    border-top: var(--_item-border);
+    padding: 1rem .75rem;
+    gap: .5rem;
+    font-size: calc(14vw / var(--_mbw));
+
+    .navigation__item__subtitle {
+      color: var(--_label-color);
+      font-size: calc(12vw / var(--_mbw));
+    }
+
+    > svg {
+      fill: currentColor;
+      margin-left: auto;
+    }
+  }
+}

@@ -1,0 +1,240 @@
+:root {
+  --_body-color: #212121;
+  --_body-bg: #eeeeee;
+  --_link-color: #00a0c6;
+  --_content-bg: #fff;
+  --_btn-color: #fff;
+  --_btn-bg: #00a0c6;
+  --_appendix-title-color: #fff;
+  --_appendix-title-bg: #393e40;
+
+
+  --_container-width: 1080px;
+  --_main-width: 760px;
+  --_aside-width: 300px;
+  --_aside-left-margin: calc(var(--_container-width) - var(--_main-width) - var(--_aside-width));
+  --_container-gap: 2rem;
+  --_leading-trim: calc((1em - 1lh) / 2);
+  --_transition-hover: color .45s cubic-bezier(.23, 1, .32, 1) 0ms, opacity .45s cubic-bezier(.23, 1, .32, 1) 0ms, background-color .45s cubic-bezier(.23, 1, .32, 1) 0ms, fill .45s cubic-bezier(.23, 1, .32, 1) 0ms;
+  --_mobile-base-width: 375;
+  --_mbw: calc(var(--_mobile-base-width) / 100);
+  --_floating-navbar-height: calc(58vw / var(--_mbw));
+}
+html {
+  scroll-behavior: smooth;
+}
+body {
+  font-family: "游ゴシック体", "Yu Gothic", YuGothic, "ヒラギノ角ゴ Pro",
+    "Hiragino Kaku Gothic Pro", "メイリオ", "Meiryo", "sans-serif";
+  background-color: var(--_body-bg);
+  color: var(--_body-color);
+}
+
+.information__container,
+.main__container {
+  .device-type-mobile & {
+    margin: 0 calc(8vw / var(--_mbw));
+  }
+}
+
+.empty__container {
+  display: none !important;
+}
+
+iframe.youtube__playlist {
+  display: contents;
+}
+
+.typ__h2 {
+  display: grid;
+  grid-auto-flow: row;
+  place-content: center;
+  text-align: center;
+  color: var(--_body-color);
+  &::after {
+    content: attr(data-label);
+  }
+
+  .device-type-mobile & {
+    font-size: calc(24vw / var(--_mbw));
+    &::after {
+      font-size: calc(14vw / var(--_mbw));
+    }
+  }
+  .device-type-desktop & {
+    font-size: 2rem;
+    &::after {
+      font-size: .875rem;
+    }
+  }
+}
+
+.appendix__title {
+  color: var(--_appendix-title-color);
+  color: #fff;
+  padding: .5rem 1rem;
+
+  .device-type-desktop & {
+    font-size: 1.25rem;
+    background-color: var(--_appendix-title-bg);
+  }
+
+  .device-type-mobile & {
+    font-size: calc(14vw / var(--_mbw));
+    border-image-source: linear-gradient(var(--_appendix-title-bg) 0 0);
+    border-image-slice: fill 0;
+    border-image-outset: 0 100lvi;
+  }
+}
+
+
+
+.protect {
+  pointer-events: none;
+  -webkit-touch-callout: none;
+  user-select: none;
+
+  @media print {
+    & {
+      background-color: #0000001a;
+
+      > img {
+        visibility: hidden
+      }
+    }
+  }
+}
+
+
+
+
+.u-pink {
+  color: #f0027f !important;
+}
+
+.wrapper {
+  background: linear-gradient(0deg, white 0%, #f8f7f3 2%, #f3f0ea 4%);
+}
+.contents-bg-color {
+  background-color: rgb(255 255 255 / 1);
+}
+
+.opac {
+  opacity: 1;
+  filter: alpha(opacity=100);
+  display: block;
+  transition: 0.3s ease-in-out;
+}
+.opac:hover {
+  animation: backToOpac1 0.7s linear 0s;
+}
+@keyframes backToOpac1 {
+    0% { opacity: 0.4; }
+  100% { opacity: 1; }
+}
+
+img {
+  vertical-align: bottom;
+}
+
+a[href*="//"]:not(a[href*=".tv-asahi.co.jp"]) {
+  position: relative;
+
+  &:hover::before {
+    content: "外部リンク";
+    z-index: calc(infinity);
+    position: absolute;
+    top: -8px;
+    left: 0px;
+    background-color: rgba(0 0 0 / .6);
+    backdrop-filter: blur(8px) brightness(100%);
+    transform: translate(-8px, -100%);
+    color: rgba(255 255 255 / 1);
+    font-size: 10px;
+    line-height: 1;
+    white-space: nowrap;
+    padding: 8px 16px;
+    border-radius: 2px 2px 2px 0px;
+  }
+  &:hover::after {
+    content: "";
+    z-index: calc(infinity);
+    position: absolute;
+    top: -8px;
+    left: -8px;
+    width: 0px;
+    height: 0px;
+    border-style: solid;
+    border-width: 0px 8px 8px 0px;
+    border-color: transparent rgba(0 0 0 / .8) transparent transparent;
+  }
+}
+
+.opac {
+  opacity: 1;
+  filter: alpha(opacity=100);
+  display: block;
+  -webkit-transition: 0.3s ease-in-out;
+  transition: 0.3s ease-in-out;
+}
+.opac:hover {
+  -webkit-animation: backToOpac1 0.7s linear 0s;
+  animation: backToOpac1 0.7s linear 0s;
+}
+
+@-webkit-keyframes backToOpac1 {
+  0% {
+    opacity: 0.4;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+@keyframes backToOpac1 {
+  0% {
+    opacity: 0.4;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+
+
+.now__loading {
+  color: rgba(0 0 0 / .5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 1rem;
+  min-height: 4rem;
+
+  .spinner {
+    display: flex;
+    flex-wrap: nowrap;
+    justify-content: center;
+    align-items: center;
+    gap: .5rem;
+  }
+
+  .spinner > div {
+    --_size: .75rem;
+    width: var(--_size);
+    height: var(--_size);
+    background-color: currentColor;
+
+    border-radius: 100%;
+    display: inline-block;
+    -webkit-animation: sk-bouncedelay 1.4s infinite ease-in-out both;
+    animation: sk-bouncedelay 1.4s infinite ease-in-out both;
+  }
+
+  .spinner .bounce1 {
+    -webkit-animation-delay: -0.32s;
+    animation-delay: -0.32s;
+  }
+
+  .spinner .bounce2 {
+    -webkit-animation-delay: -0.16s;
+    animation-delay: -0.16s;
+  }
+}

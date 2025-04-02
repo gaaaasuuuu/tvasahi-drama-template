@@ -1,0 +1,83 @@
+.device-type-mobile {
+  .guest__items {
+    font-size: calc(14vw / var(--_mbw));;
+    margin-bottom: calc(16vw / var(--_mbw));
+    overflow: hidden;
+
+    .cast-box {
+      display: flex;
+      gap: calc(8vw / var(--_mbw));
+      margin-bottom: calc(32vw / var(--_mbw));
+      overflow: hidden;
+    }
+
+    .cast-thumb {
+      width: calc(120vw / var(--_mbw));
+      flex: none;
+
+      > img {
+        width: 100%;
+      }
+    }
+
+    .cast-name {
+      font-size: calc(14vw / var(--_mbw));
+      font-weight: 600;
+      margin-bottom: calc(8vw / var(--_mbw));;
+      text-align: justify;
+      font-kerning: normal;
+      overflow-wrap: anywhere;
+      font-feature-settings: "palt";
+    }
+
+    .cast-name-kana {
+      font-weight: normal;
+      font-size: calc(12vw / var(--_mbw));;
+      margin-bottom: calc(8vw / var(--_mbw));;
+    }
+  }
+}
+
+
+
+.device-type-desktop {
+  .guest__items {
+    margin-bottom: 2rem;
+    overflow: hidden;
+
+    .cast-box {
+      display: flex;
+      margin-bottom: 2rem;
+      overflow: hidden;
+    }
+
+    .cast-thumb {
+      margin-right: 1rem;
+      width: 180px;
+      -webkit-box-flex: 0;
+      -webkit-flex: none;
+      -ms-flex: none;
+      flex: none;
+
+      > img {
+        width: 100%;
+      }
+    }
+
+    .cast-name {
+      font-size: 1.125rem;
+      font-weight: 600;
+      margin-bottom: .5rem;
+      text-align: justify;
+      font-kerning: normal;
+      overflow-wrap: anywhere;
+      font-feature-settings: "palt";
+    }
+
+    .cast-name-kana {
+      font-weight: normal;
+      font-size: 1rem;
+      margin-bottom: .5rem;
+    }
+  }
+}

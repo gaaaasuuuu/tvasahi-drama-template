@@ -1,0 +1,30 @@
+---
+const { class: className, xURL, onlyUse, ...rest } = Astro.props;
+import NowLoading from "@components/NowLoading.astro";
+---
+<a aria-label="X timelene" class="twitter-timeline" data-chrome="noheader nofooter" data-lang="ja" data-width="100%" data-height="300" href={xURL}>
+  <NowLoading />
+</a>
+<script async data-src="//platform.twitter.com/widgets.js" charset="utf-8"></script>
+
+<script>
+(() => {
+  const el = document.querySelector('.twitter-timeline');
+  if (!el) return;
+  const script = el.nextElementSibling;
+
+  const options = {
+    threshold: 0,
+  }
+  const observer = new IntersectionObserver((entries) => {
+    for(const e of entries) {
+      if (e.isIntersecting === true) {
+        const src = script.getAttribute('data-src')
+        script.setAttribute('src', src);
+        observer.unobserve(el);
+      }
+    }
+  }, options);
+  observer.observe(el);
+})()
+</script>

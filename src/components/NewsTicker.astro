@@ -1,0 +1,134 @@
+---
+const { class: className, html, onlyUse, ...rest } = Astro.props;
+---
+<news-ticker
+  class={[className]}
+  data-html={html}
+  data-only-use={onlyUse}
+></news-ticker>
+
+<script>
+  import deviceType from '@scripts/device-type.js';
+  import EmblaCarousel from 'embla-carousel';
+
+const { device } = deviceType();
+let htmlItems = [];
+let elItems = [];
+
+class NewsTickerEmbla extends HTMLElement {
+  constructor() {
+    super();
+    const { onlyUse, html } = this.dataset;
+    if (onlyUse && onlyUse !== device) return;
+    htmlItems.push(this.dataset.html);
+    elItems.push(this);
+  }
+}
+customElements.define('news-ticker', NewsTickerEmbla);
+
+
+htmlItems.forEach(async(htmlPath, i) => {
+  // console.log(htmlPath);
+  const response = await fetch(htmlPath);
+  const result = await response.text();
+  elItems[i].innerHTML = getNewsTickerHTML(result);
+
+
+const OPTIONS = { align: 'start', loop: true }
+
+const emblaNode = elItems[i].querySelector('.ticker')
+const viewportNode = emblaNode.querySelector('.ticker__viewport')
+const prevBtnNode = emblaNode.querySelector('.ticker__button--prev')
+const nextBtnNode = emblaNode.querySelector('.ticker__button--next')
+const emblaApi = EmblaCarousel(viewportNode, OPTIONS)
+
+const removePrevNextBtnsClickHandlers = addPrevNextBtnsClickHandlers(
+  emblaApi,
+  prevBtnNode,
+  nextBtnNode
+)
+
+emblaApi.on('destroy', removePrevNextBtnsClickHandlers)
+});
+
+const addTogglePrevNextBtnsActive = (emblaApi, prevBtn, nextBtn) => {
+  const togglePrevNextBtnsState = () => {
+    if (emblaApi.canScrollPrev()) prevBtn.removeAttribute('disabled')
+    else prevBtn.setAttribute('disabled', 'disabled')
+
+    if (emblaApi.canScrollNext()) nextBtn.removeAttribute('disabled')
+    else nextBtn.setAttribute('disabled', 'disabled')
+  }
+
+  emblaApi
+    .on('select', togglePrevNextBtnsState)
+    .on('init', togglePrevNextBtnsState)
+    .on('reInit', togglePrevNextBtnsState)
+
+  return () => {
+    prevBtn.removeAttribute('disabled')
+    nextBtn.removeAttribute('disabled')
+  }
+}
+
+const addPrevNextBtnsClickHandlers = (emblaApi, prevBtn, nextBtn) => {
+  const scrollPrev = () => {
+    emblaApi.scrollPrev()
+  }
+  const scrollNext = () => {
+    emblaApi.scrollNext()
+  }
+  prevBtn.addEventListener('click', scrollPrev, false)
+  nextBtn.addEventListener('click', scrollNext, false)
+
+  const removeTogglePrevNextBtnsActive = addTogglePrevNextBtnsActive(
+    emblaApi,
+    prevBtn,
+    nextBtn
+  )
+
+  return () => {
+    removeTogglePrevNextBtnsActive()
+    prevBtn.removeEventListener('click', scrollPrev, false)
+    nextBtn.removeEventListener('click', scrollNext, false)
+  }
+}
+
+
+function removeChevron(el) {
+  const chevronItems = el.querySelectorAll('.ticker__button');
+  chevronItems.forEach((item) => {
+    item.remove();
+  });
+  return el;
+}
+
+function getNewsTickerHTML(slot) {
+  return `
+  <div class="news__ticker">
+    <h2 class="ticker__title">新着情報</h2>
+
+      <div class="ticker">
+        <div class="ticker__viewport">
+          <div class="ticker__container">
+          ${slot}
+          </div>
+        </div>
+
+        <div class="ticker__controls">
+          <div class="ticker__buttons">
+            <button class="ticker__button ticker__button--prev" type="button" aria-label="前へ">
+              <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="#5f6368"><path d="M560-240 320-480l240-240 56 56-184 184 184 184-56 56Z"/></svg>
+            </button>
+
+            <button class="ticker__button ticker__button--next" type="button" aria-label="次へ">
+              <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="#5f6368"><path d="M504-480 320-664l56-56 240 240-240 240-56-56 184-184Z"/></svg>
+            </button>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  `
+}
+</script>

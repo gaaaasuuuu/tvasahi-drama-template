@@ -1,0 +1,109 @@
+---
+const { class: className, x, facebook, line, onlyUse, ...rest } = Astro.props;
+import '@styles/sns-share.css'
+---
+<sns-share
+  class={[className]}
+  data-x={x ? 'true' : 'false'}
+  data-facebook={facebook ? 'true' : 'false'}
+  data-line={line ? 'true' : 'false'}
+  data-only-use={onlyUse}
+></sns-share>
+
+<script>
+import deviceType from '@scripts/device-type.js';
+const { device } = deviceType();
+
+class SnsShare extends HTMLElement {
+  constructor() {
+    super();
+    const { onlyUse, x, facebook, line } = this.dataset;
+    const isIcons = {
+      x: x === 'true' ? true : false,
+      facebook: facebook === 'true' ? true : false,
+      line: line === 'true' ? true : false,
+    }
+    if (onlyUse && onlyUse !== device) return;
+    const iconItems = getIcons(isIcons);
+    const fragment = document.createDocumentFragment();
+    // const template = document.createElement('template');
+    // const fragment = new DocumentFragment();
+    iconItems.forEach((icon) => {
+      fragment.appendChild(icon);
+    });
+    this.appendChild(fragment);
+  }
+}
+customElements.define('sns-share', SnsShare);
+
+function getIcons({ x, facebook, line }) {
+  return [
+    x ? getXIcon() : '',
+    facebook ? getFacebookIcon() : '',
+    line ? getLineIcon() : '',
+  ]
+}
+
+function getXIcon() {
+  const x = document.createElement('button');
+  x.className = 'sns__share__button sns__share__button__x';
+  x.ariaLabel = 'X';
+  x.innerHTML = `<svg xmlns="http://www.w3.org/2000/svg" style="enable-background:new 0 0 36 37" viewBox="0 0 36 37" width="36px" height="37px"><path d="M21.4 15.7 34.8.1h-3.2L20 13.6 10.7.1H0l14.1 20.5L0 36.9h3.2l12.3-14.3 9.8 14.3H36L21.4 15.7zm-4.3 5-1.4-2L4.3 2.5h4.9l9.1 13.1 1.4 2 11.9 17h-4.9l-9.6-13.9z" style="fill:#fff"/></svg>`;
+  x.addEventListener('click', (e) => {
+    e.preventDefault();
+    const title = encodeURIComponent(document.title);
+    const url = getLocationURL();
+    const shareURL = `https://x.com/share?text=${title}&url=${url}`;
+    openWindow(shareURL);
+  });
+  return x;
+}
+
+function getFacebookIcon() {
+  const facebook = document.createElement('button');
+  facebook.ariaLabel = 'Facebook';
+  facebook.className = 'sns__share__button sns__share__button__facebook';
+  facebook.innerHTML = `<svg xmlns="http://www.w3.org/2000/svg" xml:space="preserve" style="enable-background:new 0 0 36 36" viewBox="0 0 36 36" width="36px" height="36px"><path d="m25 23.2.8-5.2h-5v-3.4c0-1.4.7-2.8 2.9-2.8H26V7.4S24 7 22 7c-4.1 0-6.8 2.5-6.8 7v4h-4.6v5.2h4.6v12.6c.9.1 1.8.2 2.8.2s1.9-.1 2.8-.2V23.2H25z" style="fill:#fff"/></svg>`;
+  facebook.addEventListener('click', (e) => {
+    e.preventDefault();
+    const url = getLocationURL();
+    const shareURL = `https://www.facebook.com/sharer/sharer.php?u=${url}`;
+    openWindow(shareURL);
+  }, false);
+  return facebook;
+}
+
+function getLineIcon() {
+  const line = document.createElement('button');
+  line.ariaLabel = 'LINE';
+  line.className = 'sns__share__button sns__share__button__line';
+  line.innerHTML = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 36 36" width="36" height="36" fill="#fff"><path d="M32.14 24.46C28.366 28.82 19.92 34.13 18 34.94s-1.638-.517-1.56-.972c.047-.272.257-1.547.257-1.547.062-.46.124-1.175-.058-1.63-.203-.5-1-.765-1.587-.89C6.403 28.754 0 22.687 0 15.45 0 7.372 8.076.8 18 .8c9.926 0 18 6.57 18 14.646 0 3.234-1.25 6.145-3.86 9.012zm-21.186-6.1H8.32v-6.225c0-.52-.422-.947-.943-.947-.52 0-.942.426-.942.947v7.172c0 .523.423.947.942.947h3.577c.52 0 .943-.424.943-.947 0-.52-.422-.946-.943-.946zm3.698-6.225c0-.52-.423-.947-.942-.947-.52 0-.943.426-.943.947v7.172c0 .523.423.947.943.947s.942-.424.942-.947v-7.172zm8.61 0c0-.52-.422-.947-.943-.947-.522 0-.944.426-.944.947v4.44l-3.666-5.007c-.177-.238-.46-.38-.754-.38-.102 0-.202.017-.3.05-.386.13-.645.49-.645.897v7.172c0 .523.425.947.945.947s.943-.424.943-.947V14.87l3.666 5.005c.178.238.46.38.754.38.102 0 .203-.018.3-.05.386-.13.646-.49.646-.898v-7.172zm5.788 4.533c.52 0 .943-.425.943-.946 0-.523-.423-.947-.943-.947h-2.633v-1.693h2.633c.52 0 .943-.425.943-.947 0-.52-.423-.947-.943-.947h-3.577c-.52 0-.943.426-.943.947v7.172c0 .522.424.947.943.947h3.577c.52 0 .943-.425.943-.947 0-.52-.424-.946-.943-.946h-2.633V16.67h2.633z"/></svg>`;
+  line.addEventListener('click', (e) => {
+    e.preventDefault();
+    const url = getLocationURL();
+    let shareURL = '';
+    if (device === 'mobile') {
+      const title = encodeURIComponent(document.title);
+      shareURL = `http://line.me/R/msg/text/?${title}%0D%0A${url}`;
+    } else {
+      shareURL = `https://lineit.line.me/share/ui?url=${url}`;
+    }
+    openWindow(shareURL);
+  });
+  return line;
+}
+
+function getLocationURL() {
+  const url = `${location.protocol}//${location.host.replace(/^(.+?)(www|wws)(\.tv-asahi\.co\.jp)/, '$2$3')}${location.pathname}${location.search}${location.hash.replace(/\?category=.+?$/, '')}`;
+  return encodeURIComponent(url.replace(/\/index\.html(.+?)#\//, '$1#/').replace(/#\/$/, ''));
+}
+
+function openWindow(url) {
+  if (device === 'mobile') {
+    window.open(url, '_blank');
+    return;
+  }
+  window.open(url, '_blank', `width=500,height=500,scrollbars=1,location=0,menubar=0,toolbar=0,status=1,directories=0,resizable=1,left=${(window.innerWidth - 500) / 2},top=${(window.innerHeight - 500) / 2}`);
+}
+
+</script>

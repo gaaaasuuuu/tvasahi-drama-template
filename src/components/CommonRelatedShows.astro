@@ -1,0 +1,86 @@
+---
+---
+{ () => {
+  if (import.meta.env.MODE === 'production') {
+    return (
+      <div id="common-related-shows" class="common-related-shows"></div>
+    )
+  } else {
+    return (
+      <div id="common-related-shows" class="common-related-shows">
+        <h3 class="dummy__shows__header">テレビ朝日のおすすめ番組</h3>
+        <div class="dummy__shows__items">
+          {[...Array(8).keys()].map(() => {
+            return (
+              <div class="dummy__shows__item">
+                <div class="dummy__shows__image">dummy</div>
+                <div class="dummy__shows__date">よる7:00</div>
+                <div class="dummy__shows__title">番組名</div>
+              </div>
+            )
+          })}
+        </div>
+      </div>
+      <style>
+        .device-type-mobile .common-related-shows {
+          display: none;
+        }
+        .common-related-shows {
+          font-family: 'Noto Sans Japanese', sans-serif;
+        }
+        .dummy__shows__header {
+          font-size: 1.25rem;
+          margin-bottom: 1rem;
+        }
+        .dummy__shows__items {
+          display: grid;
+          grid-template-columns: repeat(4, 1fr);
+          gap: .5rem;
+          margin-bottom: 2rem;
+        }
+        .dummy__shows__item {
+          background-color: #fff;
+          box-shadow: rgba(0, 0, 0, .12) 0px 1px 6px, rgba(0, 0, 0, .12) 0px 1px 4px;
+          display: grid;
+          grid-auto-flow: row;
+          gap: 1rem;
+          padding-bottom: 1rem;
+        }
+        .dummy__shows__image {
+          display: grid;
+          place-content: center;
+          color: #fff;
+          aspect-ratio: 16 / 9;
+          background-color: rgba(0 0 0 / .3);
+          height: auto;
+          position: relative;
+
+          &::after {
+            content: "月";
+            display: grid;
+            place-content: center;
+            position: absolute;
+            font-size: 1rem;
+            right: 1rem;
+            width: 2rem;
+            height: 2rem;
+            bottom: -1rem;
+            color: #fff;
+            background-color: #f0027f;
+            border-radius: 100vh;
+          }
+        }
+        .dummy__shows__date {
+          padding: 0 1rem;
+          font-size: .875rem;
+        }
+        .dummy__shows__title {
+          padding: 0 1rem;
+          color: #00a0c6;
+          font-size: 1rem;
+          font-weight: 600;
+        }
+      </style>
+    )
+  }
+}}

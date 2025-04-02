@@ -1,0 +1,123 @@
+---
+import '@styles/button.css';
+const { class: className, html, onlyUse, name, ...rest } = Astro.props;
+---
+
+<calendar-button
+  class:list={[className]}
+  data-html={html}
+  data-only-use={onlyUse}
+  data-name={name}
+></calendar-button>
+
+<script>
+  import deviceType from '@scripts/device-type.js';
+  const { device } = deviceType();
+  let htmlItems = [];
+  let elItems = [];
+  let nameItems = [];
+
+  class CalendarButton extends HTMLElement {
+    constructor() {
+      super();
+      const { onlyUse, html, name } = this.dataset;
+      if (onlyUse && onlyUse !== device) return;
+      nameItems.push(name);
+      htmlItems.push(html);
+      elItems.push(this);
+    }
+  }
+  customElements.define('calendar-button', CalendarButton);
+
+
+  htmlItems.forEach(async(htmlPath, i) => {
+    const response = await fetch(htmlPath);
+    const result = await response.text();
+    const dom = await new DOMParser().parseFromString(result, 'text/html');
+    const { currentDate, eventDetailDate } = dateCalendarView(dom);
+    if (currentDate <= eventDetailDate) elItems[i].innerHTML = result;
+    addCalpushScript(nameItems[i]);
+  });
+
+  async function fetchHTML(path) {
+    return await fetch(path);
+  }
+
+  function addCalpushScript(name) {
+    const calpush = `https://calpush.addirect.promise-mail.com/${name}/calpush.js`;
+    const calpushChk = 'https://calpush.addirect.promise-mail.com/calpushCore/calpush_chk_date.js';
+    const scriptList = [calpush, calpushChk];
+    const headScriptList = document.querySelectorAll('head > script');
+    scriptList.forEach((src) => {
+      const hasScript = Array.from(headScriptList).some((hs) => {
+        return hs.getAttribute('src') === src;
+      });
+      if (!hasScript) {
+        const script = document.createElement('script');
+        script.src = src;
+        document.head.appendChild(script);
+      }
+    });
+  }
+
+  function dateCalendarView(dom) {
+    var now = new Date();
+    var year = now.getFullYear();
+    var month = now.getMonth() + 1;
+    var date = now.getDate();
+    var hour = now.getHours();
+    var minute = now.getMinutes();
+
+    if (month < 10) {
+      month = "0" + month;
+    }
+
+    if (date < 10) {
+      date = "0" + date;
+    }
+
+    if (hour < 10) {
+      hour = "0" + hour;
+    }
+
+    if (minute < 10) {
+      minute = "0" + minute;
+    }
+
+    var currentDate =
+      year + "/" + month + "/" + date + " " + hour + ":" + minute;
+    var btnElements = dom.getElementsByClassName("event_datetime");
+    var eventDate = btnElements[0].textContent
+      .split(" ")[0]
+      .replace("年", "/")
+      .replace("月", "/")
+      .replace("日", "");
+    var eventTime = btnElements[0].textContent.split("～")[1];
+    var eventDetailDate = eventDate + " " + eventTime;
+
+    //終了時間が24時をまたいでいる場合、翌日の時間に変換
+    var timeLeft = eventTime.split(":")[0];
+    var timeRight = eventTime.split(":")[1];
+    if (timeLeft >= 24) {
+      var a = new Date(eventDate);
+      a.setDate(a.getDate() + 1);
+      var passTimeLeft = timeLeft - 24;
+      eventDetailDate =
+        String(a.getFullYear()) +
+        "/" +
+        String(a.getMonth() + 1) +
+        "/" +
+        String(a.getDate()) +
+        " " +
+        passTimeLeft +
+        ":" +
+        timeRight;
+    }
+
+    return {
+      currentDate: new Date(currentDate),
+      eventDetailDate: new Date(eventDetailDate),
+    }
+  }
+</script>
+

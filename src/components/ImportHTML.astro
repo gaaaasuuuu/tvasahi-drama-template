@@ -1,0 +1,62 @@
+---
+const { class: className, html, onlyUse, ...rest } = Astro.props;
+---
+<import-html
+  class:list={[className]}
+  data-html={html}
+  data-only-use={onlyUse}
+></import-html>
+
+<script>
+import deviceType from '@scripts/device-type.js';
+const { device } = deviceType();
+let htmlItems = [];
+let elItems = [];
+
+class HtmlItems extends HTMLElement {
+  constructor() {
+    super();
+    const { onlyUse, html } = this.dataset;
+    if (onlyUse && onlyUse !== device) return;
+    htmlItems.push(html);
+    elItems.push(this);
+  }
+}
+customElements.define('import-html', HtmlItems);
+
+
+htmlItems.forEach(async(htmlPath, i) => {
+  // console.log(htmlPath);
+  const response = await fetch(htmlPath);
+  const result = await response.text();
+  elItems[i].innerHTML = result;
+  youtubeObserver(elItems[i]);
+
+  // const dom = await new DOMParser().parseFromString(result, 'text/html');
+  // elItems[i].appendChild(dom.querySelector('body'));
+});
+
+async function fetchHTML(path) {
+  return await fetch(path);
+}
+
+function youtubeObserver(html) {
+  const el = html.querySelector('iframe[data-src]');
+  if (!el) return;
+
+  const options = {
+    threshold: 0,
+  }
+  const observer = new IntersectionObserver((entries) => {
+    for(const e of entries) {
+      if (e.isIntersecting === true) {
+        const src = el.getAttribute('data-src')
+        el.setAttribute('src', src);
+        observer.unobserve(el);
+      }
+    }
+  }, options);
+  observer.observe(el);
+}
+
+</script>

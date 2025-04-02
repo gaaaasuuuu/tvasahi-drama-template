@@ -1,0 +1,26 @@
+
+
+.device-type-mobile .hero__logo {
+  --_logo-width: 46%;
+  --_date-width: 44%;
+  --_gap: calc(100% - var(--_logo-width) - var(--_date-width));
+
+  display: grid;
+  grid-template-columns: var(--_logo-width) var(--_date-width);
+  gap: var(--_gap);
+  align-items: end;
+  padding: calc(16vw / var(--_mbw)) calc(8vw / var(--_mbw));
+
+  img {
+    width: 100%;
+    height: auto;
+  }
+}
+
+.device-type-desktop .hero__logo {
+  display: flex;
+  justify-content: space-between;
+  align-items: end;
+  padding: 1rem;
+}
+

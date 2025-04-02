@@ -1,0 +1,40 @@
+.device-type-mobile .banner__vod__items {
+  --_gap: 1rem;
+}
+.device-type-desktop .banner__vod__items {
+  --_gap: calc(8vw / var(--_mbw));
+}
+.banner__vod__items {
+  display: flex;
+  justify-content: center;
+  gap: var(--_gap);
+
+  img {
+    width: 100%;
+  }
+}
+
+
+.banner__items {
+  display: flex;
+  gap: 1rem;
+
+  > a {
+    width: fit-content;
+  }
+
+  img {
+    width: 100%;
+  }
+}
+
+
+.banner__items.banner__column {
+  justify-content: center;
+  align-items: center;
+}
+
+.banner__items.banner__row {
+  flex-direction: column;
+  justify-content: start;
+}

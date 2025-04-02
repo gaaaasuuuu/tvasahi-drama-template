@@ -1,0 +1,35 @@
+---
+import { name, directory } from '@settings';
+import StoryLayout from '@layouts/StoryLayout.astro';
+// import StoryCarousel from '@components/StoryCarousel.astro';
+import StoryCarousel from '@components/StoryCarouselThumbs.astro';
+
+import '@styles/page-story.css';
+import '@styles/button.css';
+---
+
+<StoryLayout title={`ストーリー｜${name}｜テレビ朝日`}>
+  <h1 data-date="HHHH年m月dd日">第１話：ダミーテキスト</h1>
+  <iframe data-src="https://www.youtube.com/embed/pWDgK87xAEo?rel=0&showinfo=0&wmode=transparent" frameborder="0" allowfullscreen></iframe>
+
+  <StoryCarousel>
+    {[...Array(5)].map((_, i) => (
+      <div class="story__carousel__slide">
+        <span class="protect"><img src={`img/0${i+1}.jpg`} alt=""></span>
+      </div>
+    ))}
+  </StoryCarousel>
+
+  <a href="#rebroadcast" class="button__primary opac">
+    視聴する（見逃し配信）
+    <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="#5f6368"><path d="M480-325.91 221.91-584 296-658.09l184 184 184-184L738.09-584 480-325.91Z"/></svg>
+  </a>
+
+  <div class="episode__summary">
+    <p> 　時は1997年。バブル崩壊後、末期的な危機に陥った日本の金融業界――銀行もまた膨大な不良債権を抱え、生きるか死ぬかの瀬戸際に立たされていた。<br> 　そんな中、大手都市銀行のひとつである三葉銀行は、回収困難な不良債権を投資会社に一括でまとめ売りする“バルクセール”を実施。日本初となるこの試みを担うこととなった三葉銀行・資産流動化開発室の室長・芝野健夫（渡部篤郎）は、その席で外資系投資ファンド『ホライズンジャパン・パートナーズ』の代表・鷲津政彦（綾野剛）と対面する。 </p>
+    <p> 　簿価総額は723億6458万円。芝野は「最低でも300億円で買い取ってほしい」と申し出るも、鷲津は「誠心誠意、丁寧な査定をさせていただきます」と返すに留め、その態度に芝野は一抹の不安を抱くのだった。<br> 　芝野を除く三葉銀行の面々は、査定に向け想定以上の手応えを感じている様子。しかし4週間後に迎えた回答期日、芝野たちは鷲津から衝撃の評価額を提示される！ </p>
+    <p> 　外資の“ハゲタカ”に丸め込まれたことに憤慨した三葉銀行常務取締役の飯島亮介（小林薫）は、第2回目のバルクセールを自らが仕切ると、名乗り出る。「三葉のためだけに働け」と強いる飯島に芝野は…？<br> 　一方鷲津は、バルクセールで手中に収めた債務者から怒号を浴びせられていた。たまたまその場に居合わせた、『東京クラウンセンチュリーホテル』のフロントマネージャー・松平貴子（沢尻エリカ）は、その様子を目にし…。 </p>
+  </div>
+</StoryLayout>
+
+

@@ -1,0 +1,177 @@
+---
+import {
+  name,
+  directory,
+  description,
+  keywords,
+  category,
+  activeGroup,
+} from "@settings";
+import CommonHeader from "@components/CommonHeader.astro";
+import CommonFooter from "@components/CommonFooter.astro";
+import CommonRelatedShows from "@components/CommonRelatedShows.astro";
+import CommonAside from "@components/CommonAside.astro";
+import Hero from '@components/Hero.astro';
+import HeroLogo from '@components/HeroLogo.astro';
+import HeroAside from '@components/HeroAside.astro';
+import Navigation from '@components/Navigation.astro';
+import NavBar from '@components/NavBar.astro';
+import BannerItems from '@components/BannerItems.astro';
+import ImportHTML from "@components/ImportHTML.astro";
+import NewsTicker from '@components/NewsTicker.astro';
+import SnsShare from '@components/SnsShare.astro';
+import ScrollToTop from "@components/ScrollToTop.astro";
+
+import mainSp from '@images/main_sp.jpg';
+import secondLogo from '@images/second_logo.png';
+
+import "@styles/reset.css";
+import "@styles/initial.css";
+import "@styles/root.css";
+import "@styles/layout.css";
+import '@styles/enhanced-vod.css';
+import '@styles/emergency.css';
+import '@styles/news-ticker.css';
+import '@styles/banner-items.css';
+import '@styles/rebroadcast.css';
+
+interface Props {
+  title: string;
+  update?: string;
+}
+const { title, update } = Astro.props;
+const pathname = Astro.url.pathname;
+const currentClassName = (pathname === `/${directory}` || pathname === `/${directory}/`) ? 'top' : pathname.split('/').filter((p) => p !== '').join(' ');
+const isHome = (pathname === `/${directory}` || pathname === `/${directory}/` || pathname === `/${directory}/index.html`);
+---
+<!doctype html>
+<html class="no-js" lang="ja" prefix="og: http://ogp.me/ns#">
+  <head itemscope itemtype="http://schema.org/WebSite">
+    <meta charset="utf-8" />
+    <meta
+      name="copyright"
+      content="Copyright(C) tv asahi All rights reserved."
+    />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>{title}</title>
+    <meta property="og:title" content={title} />
+    <meta name="description" content={description} />
+    <meta property="og:description" content={description} />
+    <meta name="keywords" content={keywords} />
+    <meta name="category" content={category} />
+    <meta
+      property="mixi:image"
+      content={`http://www.tv-asahi.co.jp/${directory}/OG.jpg`}
+    />
+    <meta
+      property="og:image"
+      content={`http://www.tv-asahi.co.jp/${directory}/OG.jpg`}
+    />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta
+      property="og:url"
+      content={`http://www.tv-asahi.co.jp/${directory}/`}
+    />
+    { isHome
+      ? <link rel="preload" fetchpriority="high" as="image" href={mainSp.src} type="image/jpeg">
+      : <link rel="preload" fetchpriority="high" as="image" href={secondLogo.src} type="image/png">
+    }
+    { update && <meta data-created-at={update}> }
+  </head>
+  <body class:list={[currentClassName, 'page-full']}>
+
+    <CommonHeader title={title} />
+
+    <div class="container">
+      <div class="hero__container">
+        {() => {
+          if (isHome){
+            return (
+              <Hero>
+                <HeroAside />
+              </Hero>
+            )
+          } else {
+            return <HeroLogo />
+          }}
+        }
+      </div>
+
+
+      <div class="vod__container">
+        <ImportHTML html={`/${directory}/vod/vod-enhanced-area.html`} class="vod__center__items" />
+      </div>
+
+
+      <div class="navigation__container" style={`--_bg-img: url(/${directory}/common-img/container_wrap_bg.jpg)`}>
+        <Navigation json=`/${directory}/api/nav-main.json` class="navigation nav__main" activeGroup={activeGroup} showUpdate />
+        <Navigation json=`/${directory}/api/nav-sub.json` class="navigation nav__sub" activeGroup={activeGroup} />
+      </div>
+
+
+      <div class="information__container">
+        <ImportHTML html={`/${directory}/parts/emergency.html`} class="parts__emergency" />
+        <BannerItems json={`/${directory}/api/bnr-vod-b-pc.json`} class="banner__vod__items" onlyUse="desktop" />
+        <BannerItems json={`/${directory}/api/bnr-vod-b-sp.json`} class="banner__vod__items" onlyUse="mobile" />
+        {isHome && (
+        <BannerItems json={`/${directory}/api/bnr-b.json`} class="banner__items banner__column " onlyUse="desktop" />
+        <NewsTicker html={`/${directory}/parts/ticker.html`} class="parts__ticker" />
+        )}
+      </div>
+
+
+      <div class="main__container">
+
+
+        <slot />
+
+
+        <div class="rebroadcast__container" id="rebroadcast">
+          <h2 class="appendix__title">放送を見逃した方はコチラ</h2>
+          <BannerItems json={`/${directory}/api/bnr-vod-d.json`} class="banner__items banner__row" />
+          <BannerItems json={`/${directory}/api/bnr-c.json`} class="banner__items banner__row" />
+        </div>
+
+
+        <div class="sns__share__container">
+          <h2 class="appendix__title">SNSシェア</h2>
+          <SnsShare class="sns__share__items" x={true} facebook={true} line={true} />
+        </div>
+      </div>
+
+
+
+
+      <div class="common__parts__container">
+        <div id="post-articles"></div>
+        <div id="common-tver-ranking-mobile"></div>
+        <CommonRelatedShows />
+      </div>
+
+
+      <CommonAside />
+    </div>
+
+
+
+    <div class="footer__nav__container">
+      <Navigation json=`/${directory}/api/nav-main.json` class="footer__nav__items" arrow onlyUse="mobile" />
+    </div>
+
+
+    <CommonFooter />
+
+    <div class="floating">
+      <NavBar json=`/${directory}/api/nav-bar.json` class="nav__bar" activeGroup={activeGroup} />
+      <div class="subcategory subcategory__menu">
+        <Navigation json=`/${directory}/api/nav-main.json` class="subcategory__item nav__main" activeGroup={activeGroup} onlyUse="mobile" />
+        <Navigation json=`/${directory}/api/nav-sub.json` class="subcategory__item nav__sub" activeGroup={activeGroup} onlyUse="mobile" />
+      </div>
+      <ImportHTML html={`/${directory}/vod/vod-enhanced-area.html`} class="subcategory subcategory__vod" onlyUse="mobile" />
+    </div>
+    <ScrollToTop />
+  </body>
+</html>
+
+<script src="@scripts/commons"></script>
+

@@ -1,0 +1,157 @@
+---
+const { class: className, json, arrow, activeGroup = [], onlyUse, showUpdate, ...rest } = Astro.props;
+const navigationListClass = className;
+import '@styles/navigation-main.css';
+import '@styles/navigation-sub.css';
+import '@styles/navigation-footer.css';
+---
+<navigation-list
+  class={navigationListClass}
+  data-json={json}
+  data-arrow={arrow}
+  data-active-group={activeGroup}
+  data-only-use={onlyUse}
+  data-show-update={showUpdate ? 'true' : 'false'}
+>
+  <div class="navigation__list__container"></div>
+</navigation-list>
+
+<script>
+  import deviceType from '@scripts/device-type.js';
+  const { device } = deviceType();
+
+  let jsonItems = [];
+  let arrowItems = [];
+  let activeGroupItems = [];
+  let elItems = [];
+  let showUpdateItems = [];
+  class NavigationList extends HTMLElement {
+    constructor() {
+      super();
+      const { json, arrow, activeGroup, onlyUse, showUpdate } = this.dataset;
+      if (onlyUse && onlyUse !== device) return;
+      jsonItems.push(json);
+      arrowItems.push(arrow === 'true' ? true : false)
+      activeGroupItems.push(activeGroup.split(','));
+      elItems.push(this.firstElementChild);
+      showUpdateItems.push(showUpdate === 'true' ? true : false)
+    }
+  }
+  customElements.define('navigation-list', NavigationList);
+
+  jsonItems.forEach(async(json, i) => {
+    const response = await fetch(json);
+    const result = await response.json();
+    const navItems = addActiveLink(result, i);
+    const navHTML = createElements(navItems, i);
+    elItems[i].innerHTML = navHTML;
+    showUpdateItems[i] && addUpdateLabel(elItems[i], navItems);
+  });
+
+  function createElements(items, i) {
+    let elements = '';
+    items.forEach((item) => {
+      if (item.onlyUse && item.onlyUse !== device) return;
+      const target = item.blank ? 'target="_blank"' : '';
+
+      let itemWrapper = '';
+      let wrapperClose = '';
+      if (item.url) {
+        itemWrapper = item.url.match(/^https?:\/\/|^\/\//) && item.url.indexOf('tv-asahi.co.jp') === -1 && item.externalLink
+          ? `<a class="navigation__item external-link ${item.class}" href="${item.url}" target="_blank">`
+          : `<a class="navigation__item ${item.class}" href="${item.url}" ${target}>`;
+        wrapperClose = '</a>';
+      } else {
+        itemWrapper = `<div class="${item.class}">`;
+        wrapperClose = '</div>';
+      }
+
+      // const update = await getUpdate(item.url, showUpdateItems[i]);
+      // const update = item.update ? ` data-update="${item.update} UP"` : '';
+      // console.log(update);
+
+      const title = item.title
+        // ? `<span class="navigation__item__title"${update}>${item.title}</span>`
+        ? `<span class="navigation__item__title">${item.title}</span>`
+        : '';
+
+      const subtitle = item.subtitle
+        ? `<span class="navigation__item__subtitle">${item.subtitle}</span>`
+        : '';
+
+      const arrow = arrowItems[i]
+        ? `<svg class="navigation__item__icon" xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="#5f6368"><path d="M504-480 320-664l56-56 240 240-240 240-56-56 184-184Z"/></svg>`
+        : '';
+
+      elements += `
+        ${itemWrapper}
+          ${title}
+          ${subtitle}
+          ${arrow}
+        ${wrapperClose}
+      `;
+    });
+    return elements;
+  }
+
+  function addActiveLink(items, itemIndex) {
+    const pathname = location.pathname.replace(/index\.(html|htm|php)$/, '');
+    return items.map((item) => {
+      if (pathname === item.url) {
+        item.class = `${item.class} active`.replace(/^ /, '');
+        return item;
+      }
+      if (activeGroupItems[itemIndex].length) {
+        activeGroupItems[itemIndex].map((activeItem) => {
+          if (item.url.indexOf(activeItem) !== -1 && pathname.indexOf(activeItem) !== -1) {
+            item.class = `${item.class} active`.replace(/^ /, '');
+            return item;
+          }
+        });
+      }
+      return item;
+    });
+  }
+
+  async function addUpdateLabel(el, navItems) {
+    const updateItems = navItems.filter(({ url }) => {
+      return /^\//.test(url);
+    }).map(async ({ url }, i) => {
+      return new Promise(async (resolve, reject) => {
+        const response = await fetch(url);
+        const result = await response.text();
+        const dom = await new DOMParser().parseFromString(result, 'text/html');
+
+        const createdAtEl = dom.head.querySelector('meta[data-created-at]');
+        !createdAtEl && resolve({
+          createdAt: null,
+          url,
+        });
+
+        const createdAt = createdAtEl ? createdAtEl.getAttribute('data-created-at') : '';
+        resolve({
+          createdAt,
+          url,
+        });
+      });
+    });
+    const results = await Promise.all(updateItems);
+    results
+      .filter(({ createdAt }) => createdAt)
+      .forEach(({ createdAt, url }) => {
+        const index = navItems.findIndex((item) => {
+          return item.url === url;
+        });
+        const targetItem = el.querySelector(`:nth-child(${index+1}) > .navigation__item__title`);
+        const date = getDateLabel(createdAt);
+        targetItem.setAttribute('data-update', `${date} UP`);
+      });
+  }
+
+  function getDateLabel(day) {
+    const dt = new Date(day);
+    const m = ((dt.getMonth() + 1 ));
+    const d = (dt.getDate());
+    return `${m}.${d}`;
+  }
+</script>

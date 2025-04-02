@@ -1,0 +1,19 @@
+{
+  "compilerOptions": {
+    "target": "es2017",
+    "allowSyntheticDefaultImports": false,
+    "baseUrl": "./",
+    "paths": {
+      "@components/*": ["src/components/*"],
+      "@layouts/*": ["src/layouts/*"],
+      "@scripts/*": ["src/scripts/*"],
+      "@styles/*": ["src/styles/*"],
+      "@images/*": ["src/images/*"],
+      "@settings": ["src/settings.js"]
+    }
+  },
+  "exclude": [
+    "node_modules",
+  ],
+  "extends": "astro/tsconfigs/base"
+}

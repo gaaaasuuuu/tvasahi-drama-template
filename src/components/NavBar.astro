@@ -1,0 +1,147 @@
+---
+const { class: className, json, activeGroup = [], ...rest } = Astro.props;
+const navigationListClass = className;
+import '@styles/navigation-bar.css';
+---
+<nav-bar class={navigationListClass} data-json={json} data-active-group={activeGroup}>
+  <div class="navbar__list__container"></div>
+</nav-bar>
+
+<script>
+  import deviceType from '@scripts/device-type.js';
+  const { device } = deviceType();
+
+  let jsonItems = [];
+  let activeGroupItems = [];
+  let elItems = [];
+  class NavBar extends HTMLElement {
+    constructor() {
+      super();
+      if (device === 'desktop') return;
+      const { json, activeGroup } = this.dataset;
+      jsonItems.push(json);
+      activeGroupItems.push(activeGroup && activeGroup.split(','));
+      elItems.push(this.firstElementChild);
+      navObserver(this);
+    }
+  }
+  customElements.define('nav-bar', NavBar);
+
+  jsonItems.forEach(async(json, i) => {
+    const response = await fetch(json);
+    const result = await response.json();
+    const navItems = addActiveLink(result, i);
+    const navHTML = createElements(navItems);
+    elItems[i].innerHTML = navHTML;
+    onlyOneCheck(elItems[i]);
+  });
+
+  function createElements(items) {
+    let elements = '';
+    items.forEach((item) => {
+      const target = item.blank ? 'target="_blank"' : '';
+
+      let itemWrapper = '';
+      let wrapperClose = '';
+      if (item.subCategory) {
+        itemWrapper = `<label for="subcategory__${item.subCategory}" class="navbar__item ${item.class}"><input type="checkbox" id="subcategory__${item.subCategory}" name="check" class="subcategory__check">`;
+        wrapperClose = '</label>';
+      } else if (item.url) {
+        itemWrapper = item.url.match(/^https?:\/\/|^\/\//) && item.url.indexOf('tv-asahi.co.jp') === -1 && item.externalLink
+          ? `<a class="navbar__item external-link ${item.class}" href="${item.url}" target="_blank">`
+          : `<a class="navbar__item ${item.class}" href="${item.url}" ${target}>`;
+        wrapperClose = '</a>';
+      } else {
+        itemWrapper = `<div class="navbar__item ${item.class}">`;
+        wrapperClose = '</div>';
+      }
+
+      const update = item.update ? ` data-update="${item.update} UP"` : '';
+
+      const icon = ((item) => {
+        if (item.icon === 'menu') return '<div class="line"><span></span><span></span><span></span></div>';
+        return item.icon
+          ? `<div class="navbar__item__icon" style="mask-image: url(${item.icon})"></div>`
+          : '';
+      })(item);
+
+      const title = item.title
+        ? `<span class="navigation__item__title"${update}>${item.title}</span>`
+        : '';
+
+      const subtitle = item.subtitle
+        ? `<span class="navigation__item__subtitle">${item.subtitle}</span>`
+        : '';
+
+      elements += `
+        ${itemWrapper}
+          ${icon}
+          ${title}
+          ${subtitle}
+        ${wrapperClose}
+      `;
+    });
+    return elements;
+  }
+
+  function addActiveLink(items, itemIndex) {
+    const pathname = location.pathname.replace(/index\.(html|htm|php)$/, '');
+    return items.map((item) => {
+      if (pathname === item.url) {
+        item.class = `${item.class} active`.replace(/^ /, '');
+        return item;
+      }
+
+      if (activeGroupItems[itemIndex].length) {
+        activeGroupItems[itemIndex].map((activeItem) => {
+          if (item.url.indexOf(activeItem) !== -1 && pathname.indexOf(activeItem) !== -1) {
+            item.class = `${item.class} active`.replace(/^ /, '');
+            return item;
+          }
+        });
+      }
+      return item;
+    });
+  }
+
+  function navObserver(floatingNav) {
+    const nav = document.querySelector('.navigation');
+    const floating = floatingNav.parentNode;
+    const options = {
+      // root: document.querySelector('.root'),
+      // rootMargin: '5%',
+      // threshold: [0, 0.5, 1.0],
+      threshold: 0,
+    }
+    const observer = new IntersectionObserver((entries) => {
+      for(const e of entries) {
+        // console.log(e);
+        // console.log(e.isIntersecting);
+
+        if (e.isIntersecting === false) {
+          floating.classList.add('fixed');
+        }
+        if (e.isIntersecting === true) {
+          floating.classList.remove('fixed');
+        }
+
+      }
+    }, options);
+
+    observer.observe(nav);
+  }
+
+  function onlyOneCheck(el) {
+    const buttonItems = el.querySelectorAll('.subcategory__check');
+    buttonItems.forEach((button) => {
+      button.addEventListener('click', (e) => {
+        const isCheked = e.currentTarget.checked;
+        buttonItems.forEach(b => b.checked = false);
+        !isCheked
+          ? e.currentTarget.checked = false
+          : e.currentTarget.checked = true;
+      });
+    });
+  }
+
+</script>

@@ -1,0 +1,62 @@
+---
+const { class: className, json, onlyUse, ...rest } = Astro.props;
+import '@styles/guest.css';
+---
+<guest-list
+  id='guest-list'
+  class:list={[className]}
+  data-json={json}
+  data-only-use={onlyUse}
+></guest-list>
+
+<script>
+import Cast from '@scripts/cast.js';
+import deviceType from '@scripts/device-type.js';
+
+const { device } = deviceType();
+let jsonItems = [];
+let elItems = [];
+
+class GuestList extends HTMLElement {
+  constructor() {
+    super();
+    const { onlyUse, json } = this.dataset;
+    if (!json) return;
+    if (onlyUse && onlyUse !== device) {
+      this.classList.add('empty__container');
+      return;
+    }
+    jsonItems.push(json);
+    elItems.push(this);
+  }
+}
+customElements.define('guest-list', GuestList);
+
+jsonItems.forEach(async(json, i) => {
+  const response = await fetch(json);
+  const result = await response.json();
+  const guestItems = getGuest(result);
+
+  const cast = new Cast ({
+    selector: '#guest-list',
+    template: '#cast-template',
+    setItems: guestItems,
+    trimSpaceKeys: ['role', 'cast'],
+    helpers: {
+      linebreak: (txt) => {
+        return txt.replace(/\\n/g, '<br>');
+      }
+    }
+  });
+});
+
+function getGuest(items) {
+  const ep = parseInt(location.pathname.match(/\/(\d{4})\//)[1], 10) || 0;
+  return items.filter(({ guest }) => {
+    if (!guest) return false;
+    return guest.some((g) => {
+      return g === ep;
+    });
+  });
+}
+</script>

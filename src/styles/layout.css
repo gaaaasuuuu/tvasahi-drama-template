@@ -1,0 +1,119 @@
+#superbanner-mobile,
+#rectangle-mobile {
+  display: grid;
+  place-content: center;
+}
+
+#rectangle-desktop {
+  margin-bottom: 1rem;
+}
+
+
+.device-type-desktop {
+  /* overflow: scroll !important; */
+
+  .rectangle-desktop {
+    margin-bottom: 1rem;
+  }
+
+  .container {
+    display: grid;
+    width: var(--_container-width);
+    margin: 0 auto;
+    gap: var(--_container-gap) var(--_aside-left-margin);
+    /* row-gap: 2rem; */
+    grid-template:
+      "hero hero" auto
+      "vod vod" auto
+      "nav nav" auto
+      "informa informa" auto
+      "main aside" auto
+      "common aside" 1fr
+      / var(--_main-width) var(--_aside-width);
+  }
+
+  .hero__container {
+    grid-area: hero;
+  }
+
+  .vod__container {
+    grid-area: vod;
+  }
+
+  .navigation__container {
+    grid-area: nav;
+    display: grid;
+    grid-auto-flow: row;
+    gap: var(--_container-gap);
+    grid-template-columns: var(--_container-width);
+  }
+
+  .information__container {
+    grid-area: informa;
+    display: grid;
+    grid-auto-flow: row;
+    gap: var(--_container-gap);
+    grid-template-columns: var(--_container-width);
+  }
+
+  .main__container {
+    grid-area: main;
+    display: grid;
+    grid-auto-flow: row;
+    gap: var(--_container-gap);
+  }
+
+  .aside__container {
+    grid-area: aside;
+    display: flex;
+    flex-direction: column;
+    margin-top: 3rem;
+    gap: 1rem;
+  }
+
+  .common__parts__container {
+    grid-area: common;
+  }
+}
+
+.device-type-mobile {
+
+  .superbanner-mobile
+  .rectangle-mobile {
+    display: grid;
+    place-content: center;
+  }
+
+  .container {
+    display: flex;
+    flex-flow: column;
+    gap: var(--_container-gap);
+  }
+
+  .hero__container {
+    order: -1;
+  }
+
+  .navigation__container {
+    order: 0;
+  }
+
+  .information__container,
+  .navigation__container,
+  .main__container {
+    display: grid;
+    grid-auto-flow: row;
+    gap: var(--_container-gap);
+    grid-template-columns: 100%;
+  }
+
+  .main__container {
+    img {
+      max-width: 100%;
+    }
+  }
+
+  .aside__container {
+    display: none;
+  }
+}

@@ -1,0 +1,184 @@
+.navigation.nav__main {
+  --_link-color: var(--_body-color);
+  --_link-bg: var(--_content-bg);
+  --_link-hover-color: var(--_btn-color);
+  --_link-hover-bg: var(--_btn-bg);
+  --_badge-color: #fff;
+  --_badge-bg: #f0027f;
+  --_nav-border: 1px solid rgba(0 0 0 / .2);
+
+  border-image-source: var(--_bg-img);
+  border-image-slice: fill 0;
+  border-image-outset: 0 100lvi;
+  border-image-repeat: repeat;
+  padding: var(--_container-gap) 0;
+
+  .navigation__list__container {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(calc((100% / var(--column-count))), 1fr));
+    border-top: var(--_nav-border);
+    border-left: var(--_nav-border);
+  }
+
+  .navigation__item {
+    display: block grid;
+    grid-template-rows: subgrid;
+    grid-row: span 2;
+    justify-content: center;
+    text-align: center;
+    text-decoration: none;
+    transition: var(--_transition-hover);
+    background: var(--_content-bg);
+    color: var(--_link-color);
+
+    &:hover {
+      background-color: var(--_link-hover-bg);
+
+      > span {
+        color: var(--_link-hover-color);
+      }
+    }
+
+    &.active {
+      color: var(--_link-hover-color);
+      background: var(--_link-hover-bg);
+    }
+
+    > span {
+      transition: var(--_transition-hover);
+    }
+  }
+
+  .navigation__item__title {
+    &:not([data-update]):before {
+      display: none;
+    }
+
+    &:before {
+      content: attr(data-update);
+      position: absolute;
+      top: 0;
+      left: 50%;
+    }
+  }
+}
+
+
+
+.device-type-mobile .navigation.nav__main {
+  --column-count: 3;
+
+  .navigation__list__container {
+    overflow: hidden;
+    border-left: none;
+  }
+
+  .navigation__item {
+    display: flex;
+    flex-direction: column;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+    gap: calc(4vw / var(--_mbw));
+    border-right: var(--_nav-border);
+    border-bottom: var(--_nav-border);
+    /* display: block grid;
+    grid-template-rows: subgrid;
+    grid-row: span 2;
+    justify-content: center; */
+
+    position:relative;
+    text-decoration: none;
+    text-align: center;
+    padding: calc(16vw / var(--_mbw)) 0;
+    text-decoration: none;
+    position: relative;
+
+    &:before,
+    &:after {
+      content: '';
+      position: absolute;
+      background-color: var(--nav-color);
+      z-index: 1;
+    }
+    &:after {
+      width: 100vw;
+      height: 1px;
+      left: 0;
+      top: -1px;
+    }
+    &:before {
+      width: 1px;
+      height: 100vh;
+      left: -1px;
+      top: 0;
+    }
+  }
+
+  .navigation__item__title {
+    line-height: 1;
+    font-weight: 600;
+    font-size: calc(13vw / var(--_mbw));
+
+    &:before {
+      transform: translate(-50%, calc(2vw / var(--_mbw)));
+      font-size: calc(9vw / var(--_mbw));
+      color: var(--_badge-color);
+      background-color: var(--_badge-bg);
+      line-height: 1;
+      margin-block: calc((1em - 1lh) / 2);
+      padding: calc(2vw / var(--_mbw)) calc(16vw / var(--_mbw));
+      border-radius: calc(2vw / var(--_mbw));
+    }
+
+    .navigation__item.line-break & {
+      white-space: pre-wrap;
+      text-align: left;
+    }
+  }
+
+  .navigation__item__subtitle {
+    line-height: 1;
+    font-size: calc(9vw / var(--_mbw));
+    letter-spacing: 0;
+  }
+}
+
+
+
+
+
+.device-type-desktop .navigation.nav__main {
+  --column-count: 6;
+  margin-top: calc(-1 * var(--_container-gap));
+
+  .navigation__item {
+    text-align: center;
+    padding: 20px 0;
+    text-decoration: none;
+    position: relative;
+    border-right: var(--_nav-border);
+    border-bottom: var(--_nav-border);
+  }
+
+  .navigation__item__title {
+    font-size: 1rem;
+    font-weight: bold;
+
+    &:before {
+      transform: translate(-50%, -0.5rem);
+      font-size: .75rem;
+      color: var(--_badge-color);
+      background-color: var(--_badge-bg);
+      line-height: 1;
+      margin-block: calc((1em - 1lh) / 2);
+      padding: .25rem 1rem;
+      border-radius: .25rem;
+    }
+  }
+
+  .navigation__item__subtitle {
+    font-size: .75rem;
+  }
+}
+

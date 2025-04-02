@@ -1,0 +1,81 @@
+
+
+
+.card__vod {
+  display: grid;
+  background: var(--_content-bg);
+
+  .device-type-mobile & {
+    padding: calc(16vw / var(--_mbw));
+    margin-top: calc(16vw / var(--_mbw));
+  }
+
+  .device-type-desktop & {
+    grid-template-columns: 320px auto;
+    padding: 2.5rem;
+    margin-top: 1rem;
+  }
+}
+
+.card__vod__image {
+  position: relative;
+
+  .video__thumb {
+    width: 100%;
+  }
+  .play__icon {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+  }
+}
+.card__vod__container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  font-weight: 600;
+
+  .device-type-mobile & {
+    gap: calc(8vw / var(--_mbw));
+    font-size: calc(24vw / var(--_mbw));
+    padding: calc(16vw / var(--_mbw));
+  }
+
+  .device-type-desktop & {
+    gap: 1rem;
+    font-size: 1.5rem;
+  }
+}
+.card__vod__logo__telasa {
+  .device-type-mobile & {
+    width: calc(120vw / var(--_mbw));
+  }
+
+  .device-type-desktop & {
+    width: 120px;
+  }
+}
+.card__vod__logo__tver {
+  .device-type-mobile & {
+    width: calc(80vw / var(--_mbw));
+  }
+
+  .device-type-desktop & {
+    width: 80px;
+  }
+}
+.card__vod__image__and__text {
+  font-size: 1rem;
+  font-weight: 600;
+}
+.card__vod__caption {
+  background-color: #e0e0e0;
+  color: #666;
+  line-height: 1;
+  padding: .5rem 1rem;
+  margin-block: var(--_leading-trim);
+  font-weight: 400;
+  font-size: 1rem;
+}

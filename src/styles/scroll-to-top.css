@@ -1,0 +1,29 @@
+.scroll__to__top {
+  --_button-color: #e9e9e9;
+  --_arrow-color: #212121;
+  position: fixed;
+  z-index: 100;
+  cursor: pointer;
+  display:none;
+}
+
+.device-type-desktop {
+  .scroll__to__top {
+    --_size: 64px;
+    bottom: 40px;
+    right: 40px;
+  }
+}
+
+.device-type-mobile {
+  .scroll__to__top {
+    --_size: calc(48vw / var(--_mbw));
+    bottom: calc(var(--_floating-navbar-height) + calc(8vw / var(--_mbw)));
+    right: calc(8vw / var(--_mbw));
+    width: var(--_size);
+
+    img {
+      width: 100%;
+    }
+  }
+}

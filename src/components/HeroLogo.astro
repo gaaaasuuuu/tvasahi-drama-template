@@ -1,0 +1,12 @@
+---
+import { directory, name, onair } from '@settings';
+import secondLogo from '@images/second_logo.png';
+import secondDate from '@images/second_date.png';
+import '@styles/hero-logo.css';
+---
+<div class="hero__logo">
+  <a class="hero__logo__image" href={`/${directory}/`}>
+    <img src={secondLogo.src} width={secondLogo.width} height={secondLogo.height} alt={name}>
+  </a>
+  <img class="hero__logo__date" src={secondDate.src} width={secondDate.width} height={secondDate.height} alt={onair}>
+</div>

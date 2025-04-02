@@ -1,0 +1,260 @@
+---
+const { class: className, json, tId, limit, onlyUse, itemStyle='card', infinite, moreLabel='もっと見る', lazyLoad, ...rest } = Astro.props;
+import '@styles/news-items.css';
+---
+<news-items
+  class=`news__items ${[className]}`
+  data-json={json}
+  data-t-id={tId}
+  data-limit={limit}
+  data-only-use={onlyUse}
+  data-item-style={itemStyle}
+  data-infinite={infinite}
+  data-more-label={moreLabel}
+  data-lazy-load={lazyLoad}
+>
+  <slot />
+</news-items>
+
+<script>
+import deviceType from '@scripts/device-type.js';
+import { directory } from '@settings';
+const { device } = deviceType();
+let jsonItems = [];
+let elItems = [];
+let tIdItems = [];
+let limitItems = [];
+let itemStyleItems = [];
+let infiniteItems = [];
+let moreLabelItems = [];
+let lazyLoadItems = [];
+let currentCountItems = [];
+let allNewsItems = [];
+const specifyButton = document.querySelector('news-items[data-infinite="true"] > button');
+
+class NewsItems extends HTMLElement {
+  constructor() {
+    super();
+    const { onlyUse, json, tId, limit, itemStyle, infinite, moreLabel, lazyLoad } = this.dataset;
+    if (onlyUse && onlyUse !== device) return;
+    jsonItems.push(json);
+    tIdItems.push(tId);
+    limitItems.push(parseInt(limit, 10));
+    itemStyleItems.push(itemStyle);
+    infiniteItems.push(infinite === 'true' ? true : false);
+    moreLabelItems.push(moreLabel);
+    lazyLoadItems.push(lazyLoad === 'true' ? true : false);
+    currentCountItems.push(parseInt(limit, 10));
+    elItems.push(this);
+  }
+}
+customElements.define('news-items', NewsItems);
+
+jsonItems.forEach(async(json, i) => {
+  const postJson = import.meta.env.MODE === 'production'
+    ? `/post/json/tsukasa_${tIdItems[i]}.json`
+    : `/${directory}/__dummy__/tsukasa_${tIdItems[i]}.json`;
+
+  const postData = await fetchPostJson(postJson, limitItems[i]);
+  const newsListData = await fetchNewsListJson(json, limitItems[i]);
+  const allItems = [
+      ...postData,
+      ...newsListData,
+    ].sort((a, b) => {
+      return a.datetime < b.datetime ? 1 : -1;
+    });
+
+  allNewsItems.push(allItems || []);
+  if (!allItems.length) return;
+
+  const newsItems = allItems.slice(0, limitItems[i]);
+  const newsHTML = itemStyleItems[i] === 'card'
+    ? createCardElements(newsItems, i)
+    : createListElements(newsItems);
+  elItems[i].innerHTML = newsHTML.join('');
+
+  lazyLoadItems[i] && setLazyLoad(elItems[i]);
+  infiniteItems[i] && setMoreButton(i);
+});
+
+function setLazyLoad(newsItemsElement) {
+  const imgList = newsItemsElement.querySelectorAll('.news__item__image');
+  Array.from(imgList).forEach((img) => {
+    lazyLoadObserver(img);
+  });
+}
+
+function lazyLoadObserver(el) {
+  const options = {
+    threshold: 0,
+  }
+  const observer = new IntersectionObserver((entries) => {
+    for(const e of entries) {
+      if (e.isIntersecting === true) {
+        const src = el.getAttribute('data-src')
+        el.setAttribute('src', src);
+        observer.unobserve(el);
+      }
+    }
+  }, options);
+  observer.observe(el);
+}
+
+
+function setMoreButton(index) {
+  if (allNewsItems[index].length < currentCountItems[index]) return;
+
+  const button = (() => {
+    if (specifyButton) {
+      return specifyButton;
+    }
+    const newButton = document.createElement('button');
+    newButton.classList.add('get__more__items');
+    newButton.innerHTML = moreLabelItems[index];
+    newButton.innerHTML += `<svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="#5f6368"><path d="M480-325.91 221.91-584 296-658.09l184 184 184-184L738.09-584 480-325.91Z"/></svg>`;
+    return newButton;
+  })();
+  button.addEventListener('click', (e) => {
+    e.preventDefault();
+    getMoreItems(index, button);
+  });
+  elItems[index].appendChild(button);
+  elItems[index].parentNode.insertBefore(button, elItems[index].nextElementSibling);
+}
+
+function getMoreItems(index, button) {
+  const from = currentCountItems[index];
+  const to = from + limitItems[index];
+  // console.log(from);
+  // console.log(to);
+  // console.log(allNewsItems[index]);
+  const items = allNewsItems[index].slice(from, to);
+  const newsHTML = itemStyleItems[index] === 'card'
+    ? createCardElements(items, index)
+    : createListElements(items);
+
+  newsHTML.forEach((newsString, i) => {
+    const newsEl = new DOMParser().parseFromString(newsString, 'text/html').body.firstElementChild;
+    const delay = i * 100;
+    newsEl.classList.add('add__item');
+    setTimeout(() => {
+      newsEl.classList.add('fadein')
+    }, delay);
+    elItems[index].appendChild(newsEl);
+  });
+
+
+  // elItems[index].insertAdjacentHTML('beforeend', newsHTML.join(''));
+
+
+
+  currentCountItems[index] = to;
+  // console.log(allNewsItems[index].length);
+  // console.log(currentCountItems[index]);
+  if (allNewsItems[index].length <= currentCountItems[index]) {
+    button.remove();
+    return;
+  }
+}
+
+
+
+
+function fetchPostJson(url, limit) {
+  return new Promise(async(resolve) => {
+    try {
+      const response = await fetch(url);
+      if (!response.ok) resolve([]);
+      const json = await response.json();
+      resolve(formatJson(json.data_items));
+    } catch (error) { }
+  });
+}
+
+function fetchNewsListJson(url, limit) {
+  return new Promise(async(resolve) => {
+    try {
+      const response = await fetch(url);
+      if (!response.ok) resolve([]);
+      const json = await response.json();
+      resolve(json.filter((item) => item.attentionViewFlag));
+    } catch (error) { }
+  });
+}
+
+function createCardElements(items, index) {
+  return items.map((item) => {
+    const target = item.target ? ` target="${item.target}"` : '';
+    const img = item.thumbnail ? getImg(item.thumbnail, index) : '';
+    const title = item.title ? `<div class="news__item__title">${item.title}</div>` : '';
+    const tag = item.category ? `<div class="news__item__tag">${getTag(item.category)}</div>` : '';
+    const date = item.datetime ? `<div class="news__item__date">${getDateJP(item.datetime)}</div>` : '';
+    return item.url
+      ? `<a class="news__item news__item__${item.category} opac" href="${item.url}"${target}>
+        ${img}
+        ${tag}
+        ${title}
+        ${date}
+      </a>`
+      : `<div class="news__item news__item__${item.category}">
+        ${img}
+        ${tag}
+        ${title}
+        ${date}
+      </div>`;
+  });
+}
+
+function getImg(src, index) {
+  if (lazyLoadItems[index]) {
+    return `<img class="news__item__image" data-src="${src}" alt=""/>`;
+  }
+  return `<img class="news__item__image" src="${src}" alt=""/>`;
+}
+
+function createListElements(items) {
+  return items.map((item) => {
+    const target = item.target ? ` target="${item.target}"` : '';
+    const title = item.url
+      ? `<a class="news__item__title" href="$${item.url}"${target}>${item.title}</a>`
+      : `<div class="news__item__title">${item.title}</div>`;
+    const tag = item.category ? `<div class="news__item__tag">${getTag(item.category)}</div>` : '';
+    const date = item.datetime ? `<div class="news__item__date">${getDateJP(item.datetime)}</div>` : '';
+    return `<div class="news__item">
+      ${tag}
+      ${date}
+      ${title}
+    </div>`
+  });
+}
+
+
+
+function formatJson(items) {
+  return items.map((item) => {
+    item.category = 'post';
+    item.target = '_blank';
+    return item;
+  });
+}
+
+function getTag(category) {
+  switch (category) {
+    case 'news':
+      return 'ニュース';
+    case 'post':
+      return 'テレ朝POST';
+    default:
+      return category;
+  }
+}
+
+function getDateJP(date) {
+  return date.substr(0, 11)
+    .replace('-','年')
+    .replace('-','月')
+    .replace(' ','日')
+    .replace('年0','年')
+    .replace('月0','月');
+}
+</script>

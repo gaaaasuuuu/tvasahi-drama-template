@@ -1,0 +1,50 @@
+---
+const { class: className, json, onlyUse, ...rest } = Astro.props;
+import '@styles/cast-modal.css';
+---
+<cast-list
+  id='cast-list'
+  class:list={[className]}
+  data-json={json}
+  data-only-use={onlyUse}
+>
+  <slot />
+</cast-list>
+
+<script>
+import Cast from '@scripts/cast.js';
+import deviceType from '@scripts/device-type.js';
+
+const { device } = deviceType();
+
+let jsonItems = [];
+let elItems = [];
+
+
+class CastList extends HTMLElement {
+  constructor() {
+    super();
+    const { onlyUse, json } = this.dataset;
+    if (!json) return;
+    if (onlyUse && onlyUse !== device) {
+      this.classList.add('empty__container');
+      return;
+    }
+    jsonItems.push(json);
+    elItems.push(this);
+  }
+}
+customElements.define('cast-list', CastList);
+
+jsonItems.forEach(async(json, i) => {
+  const cast = new Cast ({
+    json: json,
+    selector: '#cast-list',
+    template: '#cast-template',
+    trimSpaceKeys: ['role', 'cast'],
+    modalSelector: 'area[href^="#"]',
+    modalTemplate: '#cast-template',
+    modalMatchKey: 'role'
+  });
+});
+</script>

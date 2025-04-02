@@ -1,0 +1,115 @@
+.cast__items__container {
+  background: var(--_content-bg);
+  display: grid;
+  grid-auto-flow: row;
+}
+
+.device-type-mobile {
+
+  .cast__items__container {
+    padding: calc(16vw / var(--_mbw)) calc(8vw / var(--_mbw));
+    gap: calc(16vw / var(--_mbw));
+  }
+
+  .cast__items {
+    display: grid;
+    grid-auto-flow: row;
+    gap: 2rem;
+  }
+
+  .cast-box {
+    overflow: hidden;
+  }
+  .cast-box:last-child {
+    margin-bottom: 0;
+  }
+  .cast-thumb {
+    float: left;
+    width: calc(120vw / var(--_mbw));
+    margin-right: calc(16vw / var(--_mbw));
+    margin-bottom: 0;
+  }
+  .cast-name {
+    font-weight: 600;
+    font-size: calc(14vw / var(--_mbw));
+    margin-bottom: calc(8vw / var(--_mbw));
+    font-kerning: normal;
+    overflow-wrap: anywhere;
+  }
+  .cast-name-kana {
+    font-weight: 400;
+    font-size: calc(12vw / var(--_mbw));
+    margin-bottom: calc(8vw / var(--_mbw));
+  }
+  .cast-txt > p {
+    font-size: calc(14vw / var(--_mbw));;
+    text-align: justify;
+    font-kerning: normal;
+    overflow-wrap: anywhere;
+    font-feature-settings: "palt";
+  }
+  .cast-dot {
+    text-align: center;
+    margin: auto;
+    font-size: calc(24vw / var(--_mbw));
+  }
+}
+
+.device-type-desktop {
+
+  .cast__items__container {
+    padding: 2rem 2.5rem;
+    gap: 1rem;
+  }
+
+  .cast__items {
+    display: grid;
+    grid-auto-flow: row;
+    gap: 2rem;
+  }
+
+  .cast-box {
+    flex-wrap: nowrap;
+    display: flex;
+    overflow: hidden;
+  }
+  .cast-box:last-child {
+    margin-bottom: 0;
+  }
+  .cast-box .cast-thumb {
+    -webkit-box-flex: 0;
+    -webkit-flex: none;
+    -ms-flex: none;
+    flex: none;
+    width: 240px;
+    margin-right: 2rem;
+  }
+  .cast-box .cast-thumb img {
+    width: 100%;
+  }
+  .cast-name {
+    font-weight: 600;
+    font-size: 1.125rem;
+    margin-bottom: .5rem;
+    text-align: justify;
+    font-kerning: normal;
+    overflow-wrap: anywhere;
+    font-feature-settings: "palt";
+  }
+  .cast-name-kana {
+    font-weight: 400;
+    font-size: 1rem;
+    margin-bottom: .5rem;
+  }
+  .cast-txt > p {
+    text-align: justify;
+    font-kerning: normal;
+    overflow-wrap: anywhere;
+    font-feature-settings: "palt";
+  }
+  .cast-dot {
+    text-align: center;
+    margin: 1rem auto;
+    font-size: 2rem;
+  }
+}

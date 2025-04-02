@@ -1,0 +1,173 @@
+---
+import '@styles/story-carousel.css';
+---
+<section class="story__carousel story__carousel__buttons">
+
+  <div class="story__carousel__floating">
+    <div class="story__carousel__viewport">
+      <div class="story__carousel__container">
+        <slot />
+      </div>
+    </div>
+
+    <button
+      class="story__carousel__button story__carousel__button--prev"
+      type="button"
+      disabled=""
+    >
+      <svg class="story__carousel__button__svg" viewBox="0 0 40 80" ><path d="M38.7 78.7l1.3-1.4L2.7 40 40 2.7l-1.3-1.4L0 40l38.7 38.7z"/></svg>
+    </button>
+    <button
+      class="story__carousel__button story__carousel__button--next"
+      type="button"
+      disabled=""
+    >
+    <svg class="story__carousel__button__svg" viewBox="0 0 40 80"><path d="M1.3 78.7L0 77.3 37.3 40 0 2.7l1.3-1.4L40 40 1.3 78.7z"/></svg>
+    </button>
+  </div>
+  <div class="story__carousel__dots"></div>
+</section>
+
+<script>
+import EmblaCarousel from 'embla-carousel';
+import Autoplay from 'embla-carousel-autoplay';
+import AutoHeight from 'embla-carousel-auto-height';
+
+
+const addTogglePrevNextBtnsActive = (emblaApi, prevBtn, nextBtn) => {
+  const togglePrevNextBtnsState = () => {
+    if (emblaApi.canScrollPrev()) prevBtn.removeAttribute('disabled')
+    else prevBtn.setAttribute('disabled', 'disabled')
+
+    if (emblaApi.canScrollNext()) nextBtn.removeAttribute('disabled')
+    else nextBtn.setAttribute('disabled', 'disabled')
+  }
+
+  emblaApi
+    .on('select', togglePrevNextBtnsState)
+    .on('init', togglePrevNextBtnsState)
+    .on('reInit', togglePrevNextBtnsState)
+
+  return () => {
+    prevBtn.removeAttribute('disabled')
+    nextBtn.removeAttribute('disabled')
+  }
+}
+
+const addPrevNextBtnsClickHandlers = (
+  emblaApi,
+  prevBtn,
+  nextBtn,
+  onButtonClick
+) => {
+  const scrollPrev = () => {
+    emblaApi.scrollPrev()
+    if (onButtonClick) onButtonClick(emblaApi)
+  }
+  const scrollNext = () => {
+    emblaApi.scrollNext()
+    if (onButtonClick) onButtonClick(emblaApi)
+  }
+  prevBtn.addEventListener('click', scrollPrev, false)
+  nextBtn.addEventListener('click', scrollNext, false)
+
+  const removeTogglePrevNextBtnsActive = addTogglePrevNextBtnsActive(
+    emblaApi,
+    prevBtn,
+    nextBtn
+  )
+
+  return () => {
+    removeTogglePrevNextBtnsActive()
+    prevBtn.removeEventListener('click', scrollPrev, false)
+    nextBtn.removeEventListener('click', scrollNext, false)
+  }
+}
+
+
+const addDotBtnsAndClickHandlers = (
+  emblaApi,
+  dotsNode,
+  onButtonClick
+) => {
+  let dotNodes = []
+
+  const addDotBtnsWithClickHandlers = () => {
+    dotsNode.innerHTML = emblaApi
+      .scrollSnapList()
+      .map(() => '<button class="story__carousel__dot" type="button"></button>')
+      .join('')
+
+    const scrollTo = (index) => {
+      emblaApi.scrollTo(index)
+      if (onButtonClick) onButtonClick(emblaApi)
+    }
+
+    dotNodes = Array.from(dotsNode.querySelectorAll('.story__carousel__dot'))
+    dotNodes.forEach((dotNode, index) => {
+      dotNode.addEventListener('click', () => scrollTo(index), false)
+    })
+  }
+
+  const toggleDotBtnsActive = () => {
+    const previous = emblaApi.previousScrollSnap()
+    const selected = emblaApi.selectedScrollSnap()
+    dotNodes[previous].classList.remove('story__carousel__dot--selected')
+    dotNodes[selected].classList.add('story__carousel__dot--selected')
+  }
+
+  emblaApi
+    .on('init', addDotBtnsWithClickHandlers)
+    .on('reInit', addDotBtnsWithClickHandlers)
+    .on('init', toggleDotBtnsActive)
+    .on('reInit', toggleDotBtnsActive)
+    .on('select', toggleDotBtnsActive)
+
+  return () => {
+    dotsNode.innerHTML = ''
+  }
+}
+
+
+const OPTIONS = { loop: true }
+
+const emblaNode = document.querySelector('.story__carousel')
+const viewportNode = emblaNode.querySelector('.story__carousel__viewport')
+const prevBtn = emblaNode.querySelector('.story__carousel__button--prev')
+const nextBtn = emblaNode.querySelector('.story__carousel__button--next')
+const dotsNode = document.querySelector('.story__carousel__dots')
+
+const emblaApi = EmblaCarousel(viewportNode, OPTIONS,
+  [
+    Autoplay({ delay: 4000 }),
+    AutoHeight()
+  ]
+)
+
+const onNavButtonClick = (emblaApi) => {
+  const autoplay = emblaApi?.plugins()?.autoplay
+  if (!autoplay) return
+
+  const resetOrStop =
+    autoplay.options.stopOnInteraction === false
+      ? autoplay.reset
+      : autoplay.stop
+
+  resetOrStop()
+}
+
+const removePrevNextBtnsClickHandlers = addPrevNextBtnsClickHandlers(
+  emblaApi,
+  prevBtn,
+  nextBtn
+)
+const removeDotBtnsAndClickHandlers = addDotBtnsAndClickHandlers(
+  emblaApi,
+  dotsNode
+)
+
+emblaApi
+  .on('destroy', removePrevNextBtnsClickHandlers)
+  .on('destroy', removeDotBtnsAndClickHandlers)
+
+</script>
