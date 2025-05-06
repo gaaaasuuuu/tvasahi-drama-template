@@ -29,5 +29,19 @@ const deleteDir = (targetPath, deletePaths) => {
     })
   })
 }
+deleteDir(distDir, delDir);
 
-deleteDir(distDir, delDir)
+
+const htmlToTpl = (targetPath) => {
+  const TPL_FILE = 'news/peco_template.tpl.html';
+  const targetDir = path.join(__dirname, '../../' + targetPath);
+  if (!fs.existsSync(targetDir)) return;
+  fs.rename(
+    `${targetDir}/${TPL_FILE}`,
+    `${distDir}/${TPL_FILE.replace('.html', '')}`,
+    (err) => {
+      if (err) throw err;
+      console.log('change file exist ".tpl.html -> .tpl"');
+  });
+}
+htmlToTpl(distDir);

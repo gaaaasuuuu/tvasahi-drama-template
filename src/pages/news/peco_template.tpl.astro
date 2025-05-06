@@ -1,0 +1,23 @@
+---
+import { name, directory, tsukasaId } from '@settings';
+
+import Layout from '@layouts/Layout.astro';
+import NewsItems from '@components/NewsItems.astro';
+import Button from '@components/Button.astro';
+
+import '@styles/button.css';
+import '@styles/page-news.css';
+---
+
+<Layout title={`{$fix_textarea_1}｜ニュース｜${name}｜テレビ朝日`}>
+  <div class="news__container">
+    <h2 class="typ__h2" data-label="NEWS">ニュース</h2>
+    <div class="news__item__container">
+      {'{BLOCK_SPACE}'}
+    </div>
+
+    <h2 class="typ__h2" data-label="バックナンバー">BACKNUMBER</h2>
+    <NewsItems json={`/${directory}/news/list.json`} class="news__items__split__screen" tId={tsukasaId} limit=4 lazyLoad={true} />
+    <Button href="news/" class="center__pos opac">ニュース一覧へ</Button>
+  </div>
+</Layout>

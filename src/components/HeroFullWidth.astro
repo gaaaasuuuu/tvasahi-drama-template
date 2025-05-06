@@ -1,21 +1,17 @@
 ---
 import { directory } from '@settings';
 import mainSp from '@images/main_sp.jpg';
-import mainPc from '@images/main_pc.png';
-import mainPCBg from '@images/main_bg.jpg';
+import mainPcFullWidth from '@images/main_pc_full_width.jpg';
 const _mainImageMobile = `url(${mainSp.src})`;
-const _mainImageDesktop = `url(${mainPc.src})`;
-const _mainPCBg = `url(${mainPCBg.src})`;
+const _mainImageDesktopFullWidth = `url(${mainPcFullWidth.src})`;
 const _aspectRatioMobile = `${mainSp.width} / ${mainSp.height}`;
-const _aspectRatioDesktop = `${mainSp.width} / ${mainSp.height}`;
-const _mainPcWidth = `${mainPc.width}px`;
-const _mainPcHeight = `${mainPc.height}px`;
+const _mainPcFullWidthHeight = `${mainPcFullWidth.height}px`;
 ---
 <div class="hero__image">
   <slot />
 </div>
 
-<style is:global define:vars={{ _mainImageMobile, _mainImageDesktop, _mainPCBg, _aspectRatioMobile, _aspectRatioDesktop, _mainPcWidth, _mainPcHeight }}>
+<style is:global define:vars={{ _mainImageMobile, _mainImageDesktopFullWidth, _aspectRatioMobile, _mainPcFullWidthHeight }}>
   .device-type-mobile .hero__image {
     background-image: var(--_mainImageMobile);
     aspect-ratio: var(--_aspectRatioMobile);
@@ -38,21 +34,15 @@ const _mainPcHeight = `${mainPc.height}px`;
 
   .device-type-desktop .hero__image {
     width: 100%;
-    height: var(--_mainPcHeight);
+    height: var(--_mainPcFullWidthHeight);
 
-    border-image-source: var(--_mainPCBg);
+    border-image-source: var(--_mainImageDesktopFullWidth);
     border-image-slice: fill 0;
     border-image-outset: 0 100lvi;
     border-image-repeat: repeat;
 
-    &::after {
-      content: var(--_mainImageDesktop);
-      width: var(_mainPcWidth);
-      height: var(_mainPcHeight);
-      position: absolute;
-      top: 0;
-      left: 0;
-      z-index: 1;
-    }
+    background-image: var(--_mainImageDesktopFullWidth);
+    background-repeat: no-repeat;
+    background-position: 50%;
   }
 </style>

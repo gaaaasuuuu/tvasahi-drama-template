@@ -3,9 +3,13 @@ import '@styles/hero-aside.css';
 import { directory, calendarScriptName } from '@settings';
 import NextStory from '@components/NextStory.astro';
 import CalendarButton from '@components/CalendarButton.astro';
+import ImportHTML from '@components/ImportHTML.astro';
+import BannerItems from '@components/BannerItems.astro';
 ---
 
 <div class="hero__aside">
   <NextStory html={`/${directory}/story/parts/top-story-next.html`} onlyUse="desktop" />
   <CalendarButton html={`/${directory}/story/parts/calendar-btn.html`} name={calendarScriptName} onlyUse="desktop" />
+  <ImportHTML html={`/${directory}/vod/vod-enhanced-area.html`} class="vod__aside__items" onlyUse="desktop" />
+  <BannerItems json={`/${directory}/api/bnr-a.json`} class="bnr__aside__items" onlyUse="desktop" name={calendarScriptName} />
 </div>

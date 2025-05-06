@@ -1,0 +1,43 @@
+---
+import { directory } from '@settings';
+import mainSp from '@images/main_sp.jpg';
+import mainPc from '@images/main_pc.jpg';
+// const _mainImageMobile = `url("/${directory}/assets/images/main_sp.jpg")`;
+// const _mainImageDesktop = `url("/${directory}/assets/images/main_pc.jpg")`;
+const _mainImageMobile = `url(${mainSp.src})`;
+const _mainImageDesktop = `url(${mainPc.src})`;
+const _aspectRatioMobile = `${mainSp.width} / ${mainSp.height}`;
+const _aspectRatioDesktop = `${mainPc.width} / ${mainPc.height}`;
+---
+<div class="hero__image">
+  <slot />
+</div>
+
+<style is:global define:vars={{ _mainImageMobile, _mainImageDesktop, _aspectRatioMobile, _aspectRatioDesktop }}>
+  .hero__image {
+    width: 100%;
+    height: auto;
+    background-size: contain;
+
+    &::after {
+      content: "";
+      height: 0;
+      padding-bottom: calc(100% * var(--_aspectRatioMobile));
+      position: fixed;
+      bottom: 0;
+      left: 0;
+      width: 100%;
+      z-index: -1;
+    }
+  }
+
+  .device-type-mobile .hero__image {
+    background-image: var(--_mainImageMobile);
+    aspect-ratio: var(--_aspectRatioMobile);
+  }
+
+  .device-type-desktop .hero__image {
+    background-image: var(--_mainImageDesktop);
+    aspect-ratio: var(--_aspectRatioDesktop);
+  }
+</style>

@@ -6,7 +6,7 @@
     "dev": "astro dev",
     "start": "astro dev",
     "build-origin": "astro build",
-    "build": "astro build && node src/scripts/delete-dir.js && npm run format-dist",
+    "build": "astro build && npm run format-dist && node src/scripts/post-build.js",
     "preview": "astro preview",
     "astro": "astro",
     "format-dist": "prettier --write ./dist/**/*.html ./dist/**/**/*.html ./dist/**/**/**/*.html --ignore-path .prettierignore"
