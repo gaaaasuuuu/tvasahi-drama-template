@@ -11,7 +11,10 @@ import CommonHeader from "@components/CommonHeader.astro";
 import CommonFooter from "@components/CommonFooter.astro";
 import CommonRelatedShows from "@components/CommonRelatedShows.astro";
 import CommonAside from "@components/CommonAside.astro";
+
 import Hero from '@components/Hero.astro';
+// import Hero from '@components/HeroFullWidth.astro';
+
 import HeroLogo from '@components/HeroLogo.astro';
 import HeroAside from '@components/HeroAside.astro';
 import Navigation from '@components/Navigation.astro';
@@ -41,7 +44,11 @@ interface Props {
 }
 const { title, update } = Astro.props;
 const pathname = Astro.url.pathname;
-const currentClassName = (pathname === `/${directory}` || pathname === `/${directory}/`) ? 'top' : pathname.split('/').filter((p) => p !== '').join(' ');
+console.log('pathname: ' + pathname);
+const currentClassName = (pathname === `/${directory}` || pathname === `/${directory}/`)
+  ? 'top'
+  : pathname.split('/').filter((p) => p !== '').filter((p) => !p.includes('.')).join(' ');
+console.log(currentClassName);
 const isHome = (pathname === `/${directory}` || pathname === `/${directory}/` || pathname === `/${directory}/index.html`);
 ---
 <!doctype html>
@@ -78,7 +85,7 @@ const isHome = (pathname === `/${directory}` || pathname === `/${directory}/` ||
     }
     { update && <meta data-created-at={update}> }
   </head>
-  <body class:list={[currentClassName, 'page-full']}>
+  <body class:list={[currentClassName]}>
 
     <CommonHeader title={title} />
 
@@ -170,6 +177,10 @@ const isHome = (pathname === `/${directory}` || pathname === `/${directory}/` ||
       <ImportHTML html={`/${directory}/vod/vod-enhanced-area.html`} class="subcategory subcategory__vod" onlyUse="mobile" />
     </div>
     <ScrollToTop />
+
+
+    <link rel="stylesheet" href={`/${directory}/styles/override.css`}>
+    <script src={`/${directory}/scripts/app.js`}></script>
   </body>
 </html>
 

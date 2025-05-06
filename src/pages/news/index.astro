@@ -11,7 +11,7 @@ import '@styles/page-news.css';
 <Layout title={`ニュース｜${name}｜テレビ朝日`} update="2025-6-1">
   <div class="news__container">
     <h2 class="typ__h2" data-label="NEWS">ニュース</h2>
-    <NewsItems json={`/${directory}/news/list.json`} class="news__items__default" tId={tsukasaId} limit=30 infinite={true} lazyLoad={true}>
+    <NewsItems json={`/${directory}/news/list.json`} class="news__items__default" tId={tsukasaId} limit=10 infinite={true} lazyLoad={true}>
       <button class="button__primary opac">
         もっと見る
         <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="#5f6368"><path d="M480-325.91 221.91-584 296-658.09l184 184 184-184L738.09-584 480-325.91Z"/></svg>

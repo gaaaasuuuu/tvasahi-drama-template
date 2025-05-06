@@ -1,20 +1,25 @@
 ---
 import { directory } from '@settings';
 import mainSp from '@images/main_sp.jpg';
-import mainPc from '@images/main_pc.jpg';
-// const _mainImageMobile = `url("/${directory}/assets/images/main_sp.jpg")`;
-// const _mainImageDesktop = `url("/${directory}/assets/images/main_pc.jpg")`;
+import mainPc from '@images/main_pc.png';
+import mainPCBg from '@images/main_bg.jpg';
 const _mainImageMobile = `url(${mainSp.src})`;
 const _mainImageDesktop = `url(${mainPc.src})`;
+const _mainPCBg = `url(${mainPCBg.src})`;
 const _aspectRatioMobile = `${mainSp.width} / ${mainSp.height}`;
-const _aspectRatioDesktop = `${mainPc.width} / ${mainPc.height}`;
+const _aspectRatioDesktop = `${mainSp.width} / ${mainSp.height}`;
+const _mainPcWidth = `${mainPc.width}px`;
+const _mainPcHeight = `${mainPc.height}px`;
 ---
 <div class="hero__image">
   <slot />
 </div>
 
-<style is:global define:vars={{ _mainImageMobile, _mainImageDesktop, _aspectRatioMobile, _aspectRatioDesktop }}>
-  .hero__image {
+<style is:global define:vars={{ _mainImageMobile, _mainImageDesktop, _mainPCBg, _aspectRatioMobile, _aspectRatioDesktop, _mainPcWidth, _mainPcHeight }}>
+  .device-type-mobile .hero__image {
+    background-image: var(--_mainImageMobile);
+    aspect-ratio: var(--_aspectRatioMobile);
+
     width: 100%;
     height: auto;
     background-size: contain;
@@ -31,13 +36,23 @@ const _aspectRatioDesktop = `${mainPc.width} / ${mainPc.height}`;
     }
   }
 
-  .device-type-mobile .hero__image {
-    background-image: var(--_mainImageMobile);
-    aspect-ratio: var(--_aspectRatioMobile);
-  }
-
   .device-type-desktop .hero__image {
-    background-image: var(--_mainImageDesktop);
-    aspect-ratio: var(--_aspectRatioDesktop);
+    width: 100%;
+    height: var(--_mainPcHeight);
+
+    border-image-source: var(--_mainPCBg);
+    border-image-slice: fill 0;
+    border-image-outset: 0 100lvi;
+    border-image-repeat: repeat;
+
+    &::after {
+      content: var(--_mainImageDesktop);
+      width: var(_mainPcWidth);
+      height: var(_mainPcHeight);
+      position: absolute;
+      top: 0;
+      left: 0;
+      z-index: 1;
+    }
   }
 </style>

@@ -5,6 +5,7 @@ import Guest from '@components/Guest.astro';
 import Glossary from '@components/Glossary.astro';
 import CalendarButton from '@components/CalendarButton.astro';
 import ImportHTML from '@components/ImportHTML.astro';
+import GuestHandlebars from '@templates/guest-handlebars.html?raw';
 
 const { title } = Astro.props;
 ---
@@ -29,22 +30,7 @@ const { title } = Astro.props;
     </div>
 
 
-    <script id="cast-template" type="text/x-handlebars-template">
-      <div id="cast-{{number}}" class="cast-box{{#if rank}} has-rank{{/if}}">
-        {{#if image}}
-
-          <!-- 通常の場合 -->
-          <p class="cast-thumb"><img src="{{image}}" alt="{{role}}{{#if cast}}………{{/if}}{{cast}}"></p>
-          <!-- ジャニーズ対応の場合 -->
-          <!-- <p class="cast-thumb protect"><img src="{{image}}" alt="{{role}}{{#if cast}}………{{/if}}{{cast}}"></p> -->
-
-        {{/if}}
-        <div class="cast-txt">
-          <p class="cast-name">{{role}}<span class="cast-name-kana">{{#if roman}}（{{/if}}{{roman}}{{#if roman}}）{{/if}}</span><span class="cast-age">{{#if age}}（{{age}}）{{/if}}</span>{{#if cast}}………{{/if}}{{cast}}</p>
-          <p class="cast-read">{{{linebreak text}}}</p>
-        </div>
-      </div>
-    </script>
+    <script id="cast-template" type="text/x-handlebars-template" set:html={GuestHandlebars}></script>
 
 
   </div>

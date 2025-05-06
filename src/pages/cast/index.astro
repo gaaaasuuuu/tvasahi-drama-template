@@ -2,6 +2,7 @@
 import { name, directory, tsukasaId } from '@settings';
 import Layout from '@layouts/Layout.astro';
 import Cast from '@components/Cast.astro';
+import CastHandlebars from '@templates/cast-handlebars.html?raw';
 
 import '@styles/page-cast.css';
 ---
@@ -27,27 +28,5 @@ import '@styles/page-cast.css';
     device === 'mobile' && imageMapResize();
   </script>
 
-  <script id="cast-template" type="text/x-handlebars-template">
-    {{#if isCast}}
-      <div id="cast-{{number}}" class="cast-box">
-        {{#if image}}
-          <!-- ▼通常の場合 -->
-          <p class="cast-thumb">
-            <img src="{{image}}" alt="{{role}}{{#if cast}}………{{/if}}{{cast}}">
-          </p>
-          <!-- ▼ジャニーズ対応の場合 -->
-          <!-- <p class="cast-thumb protect">
-          <img src="{{image}}" class="protect" alt="{{role}}{{#if cast}}………{{/if}}{{cast}}">
-          </p> -->
-        {{/if}}
-        <div class="cast-txt">
-          <p class="cast-name">{{role}}<span class="cast-name-kana">{{#if roman}}（{{/if}}{{roman}}{{#if roman}}）{{/if}}</span><span class="cast-age">{{#if age}}（{{age}}）{{/if}}</span>{{#if cast}}………{{/if}}{{cast}}</p>
-          <p>{{{text}}}</p>
-        </div>
-      </div>
-      {{#if dot}}
-        <div class="cast-dot">・</div>
-      {{/if}}
-    {{/if}}
-  </script>
+  <script id="cast-template" type="text/x-handlebars-template" set:html={CastHandlebars}></script>
 </Layout>

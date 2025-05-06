@@ -23,6 +23,7 @@ export default defineConfig({
         '@scripts': '/src/scripts',
         '@styles': '/src/styles',
         '@images': '/src/images',
+        '@templates': '/src/templates',
         '@settings': '/src/settings.js',
       },
     },

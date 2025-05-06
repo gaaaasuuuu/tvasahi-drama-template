@@ -38,6 +38,7 @@
 
   .vod__container {
     grid-area: vod;
+    margin-top: calc(var(--_container-gap) * -1);
   }
 
   .navigation__container {
