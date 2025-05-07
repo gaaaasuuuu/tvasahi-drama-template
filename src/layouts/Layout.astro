@@ -41,8 +41,9 @@ import '@styles/rebroadcast.css';
 interface Props {
   title: string;
   update?: string;
+  pegeDescription?: string;
 }
-const { title, update } = Astro.props;
+const { title, update, pegeDescription } = Astro.props;
 const pathname = Astro.url.pathname;
 console.log('pathname: ' + pathname);
 const currentClassName = (pathname === `/${directory}` || pathname === `/${directory}/`)
@@ -62,8 +63,8 @@ const isHome = (pathname === `/${directory}` || pathname === `/${directory}/` ||
     <meta name="viewport" content="width=device-width,initial-scale=1" />
     <title>{title}</title>
     <meta property="og:title" content={title} />
-    <meta name="description" content={description} />
-    <meta property="og:description" content={description} />
+    <meta name="description" content={pegeDescription || description} />
+    <meta property="og:description" content={pegeDescription || description} />
     <meta name="keywords" content={keywords} />
     <meta name="category" content={category} />
     <meta

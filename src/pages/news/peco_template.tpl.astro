@@ -9,7 +9,19 @@ import '@styles/button.css';
 import '@styles/page-news.css';
 ---
 
-<Layout title={`{$fix_textarea_1}｜ニュース｜${name}｜テレビ朝日`}>
+<Layout title={`{$fix_textarea_1}｜ニュース｜${name}｜テレビ朝日`} pegeDescription={`{$fix_textarea_1}`}>
+  <Fragment is:raw>{if $fix_selected_data_3 == 2}
+  <style>
+    .news__container img {
+      user-select: none;
+    }
+    @media print {
+      .news__container img {
+        visibility: hidden;
+      }
+    }
+  </style>
+  {/if}</Fragment>
   <div class="news__container">
     <h2 class="typ__h2" data-label="NEWS">ニュース</h2>
     <div class="news__item__container">
