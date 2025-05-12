@@ -1,11 +1,13 @@
 ---
-import { directory } from "@settings";
+import { directory, imageProtection } from "@settings";
 ---
 
 <div class="enhanced__vod__list">
   <a href="//tver.jp/" class="enhanced__vod__item item-tver opac">
-    <div class="enhanced__vod__item__label">無料</div>
-    <img src=`/${directory}/vod/img/tver_01.jpg` alt="" class="enhanced__vod__item__image">
+    <div class="enhanced__vod__item__image__container">
+      <div class="enhanced__vod__item__label">無料</div>
+      <img src=`/${directory}/vod/img/tver_01.jpg` alt="" class:list={['enhanced__vod__item__image', imageProtection && 'protect']}>
+    </div>
     <img src=`/${directory}/vod/common-img/vod-tver-logo.png` alt="TVer" class="enhanced__vod__item__icon">
     <div class="enhanced__vod__item__text">
       <p>
@@ -16,7 +18,9 @@ import { directory } from "@settings";
     </div>
   </a>
   <a href="//www.telasa.jp/unlimited" class="enhanced__vod__item item-telasa opac">
-    <img src=`/${directory}/vod/img/telasa_01.jpg` alt="" class="enhanced__vod__item__image">
+    <div class="enhanced__vod__item__image__container">
+      <img src=`/${directory}/vod/img/telasa_01.jpg` alt="" class:list={['enhanced__vod__item__image', imageProtection && 'protect']}>
+    </div>
     <img src=`/${directory}/vod/common-img/vod-telasa-logo.png` alt="TELASA" class="enhanced__vod__item__icon">
     <div class="enhanced__vod__item__text">
       <p>全話一挙配信中！<br class="sp">初回無料でお試し</p>

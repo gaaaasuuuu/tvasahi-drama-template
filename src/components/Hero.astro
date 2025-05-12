@@ -1,5 +1,5 @@
 ---
-import { directory } from '@settings';
+import { directory, imageProtection } from '@settings';
 import mainSp from '@images/main_sp.jpg';
 import mainPc from '@images/main_pc.png';
 import mainPCBg from '@images/main_bg.jpg';
@@ -11,7 +11,7 @@ const _aspectRatioDesktop = `${mainSp.width} / ${mainSp.height}`;
 const _mainPcWidth = `${mainPc.width}px`;
 const _mainPcHeight = `${mainPc.height}px`;
 ---
-<div class="hero__image">
+<div class:list={['hero__image', imageProtection && 'hero__image__protect']}>
   <slot />
 </div>
 

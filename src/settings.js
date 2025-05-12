@@ -7,6 +7,7 @@ const keywords = 'キーワード,キーワード';
 const category = '●●●●（ドラマ・バラエティなど）';
 const tsukasaId = '3566';
 const activeGroup = ['news', 'story', 'backnumber'];
+const imageProtection = true;
 
 export {
   name,
@@ -18,4 +19,5 @@ export {
   category,
   tsukasaId,
   activeGroup,
+  imageProtection,
 }

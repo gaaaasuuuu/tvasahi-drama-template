@@ -5,9 +5,11 @@
   --_content-bg: #fff;
   --_btn-color: #fff;
   --_btn-bg: #00a0c6;
+  --_accent-color: #fff;
+  --_accent-bg: #f0027f;
   --_appendix-title-color: #fff;
   --_appendix-title-bg: #393e40;
-
+  --_common-title-color: currentColor;
 
   --_container-width: 1080px;
   --_main-width: 760px;
@@ -26,14 +28,35 @@ html {
 body {
   font-family: "游ゴシック体", "Yu Gothic", YuGothic, "ヒラギノ角ゴ Pro",
     "Hiragino Kaku Gothic Pro", "メイリオ", "Meiryo", "sans-serif";
-  background-color: var(--_body-bg);
   color: var(--_body-color);
+}
+
+.container {
+  border-image-source: linear-gradient(var(--_body-bg) 0 0);
+  border-image-slice: fill 0;
+  border-image-outset: 0 100lvi;
 }
 
 .information__container,
 .main__container {
   .device-type-mobile & {
     margin: 0 calc(8vw / var(--_mbw));
+  }
+}
+
+.main__container {
+  .device-type-mobile & {
+    --_section-gap :calc(10vw / var(--_mbw));
+  }
+
+  .device-type-desktop & {
+    --_section-gap: 1.25rem;
+  }
+
+  > section {
+    display: grid;
+    grid-auto-flow: row;
+    gap: var(--_section-gap);
   }
 }
 
@@ -96,15 +119,21 @@ iframe.youtube__playlist {
 
   @media print {
     & {
-      background-color: #0000001a;
-
-      > img {
-        visibility: hidden
-      }
+        visibility: hidden;
     }
   }
 }
 
+@media print {
+  .hero__image__protect {
+    background-image: none !important;
+    border-image-source: none !important;
+
+    &::after {
+      content: '' !important;
+    }
+  }
+}
 
 
 
@@ -135,6 +164,14 @@ iframe.youtube__playlist {
 
 img {
   vertical-align: bottom;
+}
+
+a, a:visited {
+  color: var(--_link-color);
+}
+
+a:hover {
+  text-decoration: none;
 }
 
 a[href*="//"]:not(a[href*=".tv-asahi.co.jp"]) {
@@ -237,4 +274,45 @@ a[href*="//"]:not(a[href*=".tv-asahi.co.jp"]) {
     -webkit-animation-delay: -0.16s;
     animation-delay: -0.16s;
   }
+}
+
+.device-type-desktop .aside__container,
+.device-type-desktop .common-related-shows {
+  h3 {
+    font-weight: 400;
+    color: var(--_common-title-color);
+  }
+}
+
+.device-type-mobile .tver-ranking {
+  h3 {
+    color: var(--_common-title-color);
+  }
+}
+
+
+.device-type-mobile {
+  .superbanner-desktop {
+    display: none !important;
+  }
+  .rectangle-desktop {
+    display: none !important;
+  }
+}
+
+.device-type-desktop {
+  .superbanner-mobile {
+    display: none !important;
+  }
+  .rectangle-mobile {
+    display: none !important;
+  }
+}
+
+.rectangle-desktop {
+  width: 300px;
+  height: 250px;
+}
+.rectangle-mobile {
+  margin: 0 auto var(--_floating-navbar-height) auto;
 }

@@ -1,5 +1,5 @@
 ---
-import { name, directory, calendarScriptName, tsukasaId } from '@settings';
+import { name, directory, calendarScriptName, tsukasaId, imageProtection } from '@settings';
 
 import Layout from '@layouts/Layout.astro';
 import ImportHTML from '@components/ImportHTML.astro';
@@ -17,48 +17,48 @@ import '@styles/rebroadcast.css';
 ---
 
 <Layout title={`${name}｜テレビ朝日`}>
-    <div class="special__container">
+    <section class="special__container">
       <h2 class="typ__h2" data-label="特別配信">Special</h2>
       <ImportHTML html={`/${directory}/vod/top-special-telasa.html`} class="special__telasa" />
-    </div>
+    </section>
 
-    <div class="special__container">
+    <section class="special__container">
       <h2 class="typ__h2" data-label="特別配信">Special</h2>
       <ImportHTML html={`/${directory}/vod/top-special-tver.html`} class="special__tver" />
-    </div>
+    </section>
 
-    <div class="story__container">
+    <section class="story__container">
       <h2 class="typ__h2" data-label="ストーリー">STORY</h2>
       <ImportHTML html={`/${directory}/story/parts/top-story-contents.html`} class="special__tver" />
-    </div>
+    </section>
 
     <CalendarButton html={`/${directory}/story/parts/calendar-btn.html`} onlyUse="mobile" name={calendarScriptName} />
-    <BannerItems json={`/${directory}/api/bnr-vod-c.json`} class="banner__items banner__column" />
+    <BannerItems json={`/${directory}/api/bnr-vod-c.json`} class="banner__items banner__column" protect={imageProtection} />
 
-    <div class="news__container">
+    <section class="news__container">
       <h2 class="typ__h2" data-label="ニュース">NEWS</h2>
-      <NewsItems json={`/${directory}/news/list.json`} class="news__items__default" tId={tsukasaId} limit=4 lazyLoad={true} />
+      <NewsItems json={`/${directory}/news/list.json`} class="news__items__default" tId={tsukasaId} limit=4 lazyLoad={true} protect={imageProtection} />
       <Button href="news/" class="center__pos opac">ニュース一覧へ</Button>
-    </div>
+    </section>
 
-    <div class="news__container">
+    <section class="news__container">
       <h2 class="typ__h2" data-label="ニュース_画像左右ver.">NEWS</h2>
-      <NewsItems json={`/${directory}/news/list.json`} class="news__items__split__screen" tId={tsukasaId} limit=4 lazyLoad={true} />
+      <NewsItems json={`/${directory}/news/list.json`} class="news__items__split__screen" tId={tsukasaId} limit=4 lazyLoad={true} protect={imageProtection} />
       <Button href="news/" class="center__pos opac">ニュース一覧へ</Button>
-    </div>
+    </section>
 
-    <div class="news__container">
+    <section class="news__container">
       <h2 class="typ__h2" data-label="NEWS">ニュース_画像なしver.</h2>
-      <NewsItems json={`/${directory}/news/list.json`} class="news__items__list" itemStyle="list" tId={tsukasaId} limit=4 />
+      <NewsItems json={`/${directory}/news/list.json`} class="news__items__list" itemStyle="list" tId={tsukasaId} limit=4 protect={imageProtection} />
       <Button href="news/" class="center__pos opac">ニュース一覧へ</Button>
-    </div>
+    </section>
 
-    <div class="youtube__container">
+    <section class="youtube__container" id="YoutubePlaylist">
       <h2 class="typ__h2" data-label="動画">YouTube</h2>
       <YoutubePlaylist id="PLKeSkVQhqoOrrDx41RKpvSJtElZk0arIh" limit="10" />
-    </div>
+    </section>
 
-    <div class="sns__container">
+    <section id="YoutubePlaylist" class="sns__container">
       <h2 class="typ__h2" data-label="公式SNS">OFFICIAL SNS</h2>
       <div class="sns__items__container">
         <div class="x__timeline">
@@ -70,7 +70,7 @@ import '@styles/rebroadcast.css';
         </div>
         <BannerItems json={`/${directory}/api/bnr-sns.json`} class="banner__items banner__row" />
       </div>
-    </div>
+    </section>
 
 </Layout>
 

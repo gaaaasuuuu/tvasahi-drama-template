@@ -1,10 +1,10 @@
 ---
-import { directory } from "@settings";
+import { directory, imageProtection } from "@settings";
 ---
 
 <div class="card__vod">
   <a aria-label="TVerへ" class="card__vod__image opac" href="https://tver.jp/" class="" target="_blank">
-    <img src=`/${directory}/vod/img/tver_thumbnail.jpg` alt="" class="video__thumb">
+    <img class:list={[imageProtection && 'protect']} src=`/${directory}/vod/img/tver_thumbnail.jpg` alt="" class="video__thumb">
     <img src=`/${directory}/common-img/play.png` alt="" class="play__icon">
   </a>
   <div class="card__vod__container">

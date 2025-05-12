@@ -5,7 +5,9 @@ import {
   description,
   keywords,
   category,
+  tsukasaId,
   activeGroup,
+  imageProtection,
 } from "@settings";
 import CommonHeader from "@components/CommonHeader.astro";
 import CommonFooter from "@components/CommonFooter.astro";
@@ -23,6 +25,7 @@ import BannerItems from '@components/BannerItems.astro';
 import ImportHTML from "@components/ImportHTML.astro";
 import NewsTicker from '@components/NewsTicker.astro';
 import SnsShare from '@components/SnsShare.astro';
+import PostArticles from '@components/PostArticles.astro';
 import ScrollToTop from "@components/ScrollToTop.astro";
 
 import mainSp from '@images/main_sp.jpg';
@@ -85,10 +88,34 @@ const isHome = (pathname === `/${directory}` || pathname === `/${directory}/` ||
       : <link rel="preload" fetchpriority="high" as="image" href={secondLogo.src} type="image/png">
     }
     { update && <meta data-created-at={update}> }
+    {() => {
+      if (import.meta.env.MODE === 'development') {
+        return (
+          <style>
+            .superbanner-mobile,
+            .superbanner-desktop,
+            .rectangle-mobile,
+            .rectangle-desktop {
+              background-color: rgba(0 0 0 / .3);
+            }
+            .superbanner-mobile {
+              min-height: 50px;
+              width: 100%;
+            }
+            .rectangle-mobile {
+              width: 300px;
+              height: 250px;
+            };
+          </style>
+        )
+      }
+    }}
   </head>
   <body class:list={[currentClassName]}>
 
-    <CommonHeader title={title} />
+    <div id="superbanner-mobile" class="superbanner-mobile"></div>
+    <div id="common-header"></div>
+    <div id="superbanner-desktop" class="superbanner-desktop"></div>
 
     <div class="container">
       <div class="hero__container">
@@ -119,10 +146,10 @@ const isHome = (pathname === `/${directory}` || pathname === `/${directory}/` ||
 
       <div class="information__container">
         <ImportHTML html={`/${directory}/parts/emergency.html`} class="parts__emergency" />
-        <BannerItems json={`/${directory}/api/bnr-vod-b-pc.json`} class="banner__vod__items" onlyUse="desktop" />
-        <BannerItems json={`/${directory}/api/bnr-vod-b-sp.json`} class="banner__vod__items" onlyUse="mobile" />
+        <BannerItems json={`/${directory}/api/bnr-vod-b-pc.json`} class="banner__vod__items" onlyUse="desktop" protect={imageProtection} />
+        <BannerItems json={`/${directory}/api/bnr-vod-b-sp.json`} class="banner__vod__items" onlyUse="mobile" protect={imageProtection} />
         {isHome && (
-        <BannerItems json={`/${directory}/api/bnr-b.json`} class="banner__items banner__column " onlyUse="desktop" />
+        <BannerItems json={`/${directory}/api/bnr-b.json`} class="banner__items banner__column " onlyUse="desktop" protect={imageProtection} />
         <NewsTicker html={`/${directory}/parts/ticker.html`} class="parts__ticker" />
         )}
       </div>
@@ -136,8 +163,8 @@ const isHome = (pathname === `/${directory}` || pathname === `/${directory}/` ||
 
         <div class="rebroadcast__container" id="rebroadcast">
           <h2 class="appendix__title">放送を見逃した方はコチラ</h2>
-          <BannerItems json={`/${directory}/api/bnr-vod-d.json`} class="banner__items banner__row" />
-          <BannerItems json={`/${directory}/api/bnr-c.json`} class="banner__items banner__row" />
+          <BannerItems json={`/${directory}/api/bnr-vod-d.json`} class="banner__items banner__row" protect={imageProtection} />
+          <BannerItems json={`/${directory}/api/bnr-c.json`} class="banner__items banner__row" protect={imageProtection} />
         </div>
 
 
@@ -151,13 +178,19 @@ const isHome = (pathname === `/${directory}` || pathname === `/${directory}/` ||
 
 
       <div class="common__parts__container">
-        <div id="post-articles"></div>
+        <PostArticles tId={tsukasaId} />
         <div id="common-tver-ranking-mobile"></div>
-        <CommonRelatedShows />
+        <div id="common-related-shows" class="common-related-shows"></div>
       </div>
 
 
-      <CommonAside />
+      <aside class="aside__container">
+        <div id="rectangle-desktop" class="rectangle-desktop"></div>
+        <div id="common-onair"></div>
+        <div id="common-tver-ranking-desktop"></div>
+        <div id="common-present"></div>
+        <div id="common-ranking"></div>
+      </aside>
     </div>
 
 
@@ -167,7 +200,8 @@ const isHome = (pathname === `/${directory}` || pathname === `/${directory}/` ||
     </div>
 
 
-    <CommonFooter />
+    <div id="common-footer"></div>
+    <div id="rectangle-mobile" class="rectangle-mobile"></div>
 
     <div class="floating">
       <NavBar json=`/${directory}/api/nav-bar.json` class="nav__bar" activeGroup={activeGroup} />

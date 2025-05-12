@@ -1,5 +1,5 @@
 ---
-import { directory } from '@settings';
+import { directory, imageProtection } from '@settings';
 import mainSp from '@images/main_sp.jpg';
 import mainPcFullWidth from '@images/main_pc_full_width.jpg';
 const _mainImageMobile = `url(${mainSp.src})`;
@@ -7,7 +7,7 @@ const _mainImageDesktopFullWidth = `url(${mainPcFullWidth.src})`;
 const _aspectRatioMobile = `${mainSp.width} / ${mainSp.height}`;
 const _mainPcFullWidthHeight = `${mainPcFullWidth.height}px`;
 ---
-<div class="hero__image">
+<div  class:list={['hero__image', imageProtection && 'hero__image__protect']}>
   <slot />
 </div>
 

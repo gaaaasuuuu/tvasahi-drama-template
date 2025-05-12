@@ -1,4 +1,6 @@
 .floating {
+  --_navbar-highlight-color: var(--_btn-color);
+  --_navbar-highlight-bg: var(--_btn-bg);
   --_link-color: #155177;
   --_link-bg: #fff;
   --_link-active-color: #fff;
@@ -6,8 +8,8 @@
   --_menu-color: #fff;
   --_menu-bg: #000;
   --_nav-border-color: #c5c5c5;
-  --_badge-color: #fff;
-  --_badge-bg: #f0027f;
+  --_badge-color: var(--_accent-color);
+  --_badge-bg: var(--_accent-bg);
   --_nav-border: 1px solid rgba(0 0 0 / .2);
   --_sublayer-main-color: #fff;
   --_sublayer-main-bg: rgba(0 0 0 / .9);
@@ -18,7 +20,7 @@
     height: var(--_floating-navbar-height);
     background-color:#fff;
     bottom: 0;
-    z-index: 100;
+    z-index: 110;
     box-shadow: -4px -4px 13px rgba(0, 0, 0, 0.11);
     width: 100%;
     position: fixed;
@@ -38,6 +40,22 @@
       background-color: var(--_nav-border-color);
     }
 
+    .fixed & .navbar__item[data-update$="UP"]::before {
+      content: attr(data-update);
+      position: absolute;
+      top: 0;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      text-align: center;
+      font-size: calc(9vw / var(--_mbw));
+      color: var(--_badge-color);
+      background-color: var(--_badge-bg);
+      line-height: 1;
+      margin-block: calc((1em - 1lh) / 2);
+      padding: calc(2vw / var(--_mbw)) 0;
+      min-width: calc(56vw / var(--_mbw));
+    }
+
     .navbar__item {
       --_font-size: calc(10vw / var(--_mbw));
       --_icon-size: calc(28vw / var(--_mbw));
@@ -55,6 +73,7 @@
       line-height: 1;
       margin-block: var(--_leading-trim);
       color: var(--_link-color);
+      position: relative;
 
       input {
         display: none;
@@ -67,8 +86,8 @@
     }
 
     .navbar__item.active:not(:has(~ label > #subcategory__vod:checked)) {
-      color: var(--_btn-color);
-      background-color: var(--_btn-bg);
+      color: var(--_navbar-highlight-color);
+      background-color: var(--_navbar-highlight-bg);
     }
 
     label[for="subcategory__menu"] {
@@ -101,6 +120,10 @@
 .subcategory__item.nav__sub {
   --_bg-color: var(--_sublayer-sub-bg);
   --_title-size: calc(12vw / var(--_mbw));
+
+  .navigation__list__container {
+    border-top: 1px solid var(--_nav-border-color);
+  }
 }
 
 .subcategory__item.nav__main,
@@ -158,7 +181,7 @@
 
 .subcategory__vod,
 .subcategory__menu {
-  z-index: 99;
+  z-index: 101;
   width: 100%;
   position: fixed;
   left: 0;
@@ -177,13 +200,13 @@
 
 .subcategory .navigation__item.active,
 label[for="subcategory__vod"]:has(#subcategory__vod:checked) {
-  color: var(--_btn-color);
-  background-color: var(--_btn-bg);
+  color: var(--_navbar-highlight-color);
+  background-color: var(--_navbar-highlight-bg);
 }
 
 label[for="subcategory__vod"]:has(#subcategory__vod:checked) {
   .navbar__item__icon {
-    background-color: var(--_btn-color);
+    background-color: var(--_navbar-highlight-color);
   }
 }
 

@@ -1,0 +1,216 @@
+.post__articles__container {
+  --_date-color: #ccc;
+
+  .device-type-mobile & {
+    --title-size: calc(16vw / var(--_mbw));
+  }
+  .device-type-desktop & {
+    --title-size: 1rem;
+  }
+}
+
+.post-articles-item-anchor {
+  &:hover {
+    .post__articles__image {
+      opacity: 0.5;
+    }
+    .post__articles__title {
+      color: #00bcd4;
+    }
+  }
+}
+
+
+.device-type-mobile .post__articles__container {
+  .post__articles__title_container {
+    overflow: hidden;
+    width: 100%;
+    font-size: 16px;
+    line-height: 1.6;
+    max-height: 4.8em;
+  }
+
+  .post__articles__title {
+    font-size: var(--title-size);
+    line-height: 1.6;
+    color: rgba(0, 0, 0, 0.870588);
+    font-weight: bold;
+    transition: all 450ms cubic-bezier(0.23, 1, 0.32, 1) 0ms;
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+    -webkit-line-clamp: 3;
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+  }
+
+  .post__articles__subtitle {
+    color: var(--_date-color);
+    position: absolute;
+    right: 32px;
+    bottom: 24px;
+  }
+
+  .post__articles__header__container {
+    padding: 8px 16px;
+    background-color: var(--_appendix-title-bg);
+  }
+
+  .post__articles__header {
+    color: var(--_appendix-title-color);
+    margin: 0;
+    padding: 0;
+    font-size: 16px;
+  }
+
+  .post__articles__item__container {
+    margin: 16px;
+    border-radius: 6px;
+    overflow: hidden;
+    box-shadow: rgba(0, 0, 0, 0.25) 0px 2px 6px;
+    transition: all 450ms cubic-bezier(0.23, 1, 0.32, 1) 0ms;
+    background-color: #fff;
+
+    &:hover {
+      box-shadow:
+        rgba(0, 0, 0, 0.19) 0px 5px 15px,
+        rgba(0, 0, 0, 0.23) 0px 3px 5px;
+    }
+
+    > a {
+      display: block;
+
+      &:link,
+      &:visited,
+      &:hover,
+      &:active {
+        text-decoration: none !important;
+      }
+
+      &:hover {
+        & .image {
+          opacity: 0.5;
+        }
+        & .title {
+          color: #00bcd4;
+        }
+      }
+    }
+  }
+
+  .post__articles__image__container {
+    line-height: 0;
+    text-align: center;
+  }
+
+  .post__articles__text__container {
+    padding: 16px 16px 64px;
+    position: relative;
+  }
+
+  .post__articles__image {
+    text-decoration: none;
+    max-width: 100%;
+    height: auto;
+    transition: all 450ms cubic-bezier(0.23, 1, 0.32, 1) 0ms;
+    pointer-events: none;
+  }
+
+  @media print {
+    .post__articles__image {
+      visibility: hidden;
+    }
+  }
+}
+
+
+
+
+
+.device-type-desktop .post__articles__container {
+  .post__articles__header__container {
+  }
+
+  .post__articles__header {
+    color: var(--_appendix-title-color);
+    margin: 0;
+    padding: 0;
+    font-size: 16px;
+  }
+
+  .post__articles__item__container {
+    margin-top: 16px;
+    border-radius: 6px;
+    overflow: hidden;
+    box-shadow: rgba(0, 0, 0, 0.25) 0px 2px 6px;
+    transition: all 450ms cubic-bezier(0.23, 1, 0.32, 1) 0ms;
+    background-color: #fff;
+    &:hover {
+      box-shadow:
+        rgba(0, 0, 0, 0.19) 0px 5px 15px,
+        rgba(0, 0, 0, 0.23) 0px 3px 5px;
+    }
+
+    > a {
+      display: flex;
+
+      &:link,
+      &:visited,
+      &:hover,
+      &:active {
+        text-decoration: none !important;
+      }
+
+      &:hover {
+        & .image {
+          opacity: 0.5;
+        }
+        & .title {
+          color: #00bcd4;
+        }
+      }
+    }
+  }
+
+  .post__articles__image__container {
+    flex-grow: 0;
+    flex-shrink: 0;
+    flex-basis: 300px;
+    line-height: 0;
+  }
+
+  .post__articles__title {
+    font-size: var(--title-size);
+  }
+
+  .post-articles-item-subtitle {
+    color: var(--_date-color);
+    position: absolute;
+    right: 32px;
+    bottom: 24px;
+  }
+
+  .post__articles__text__container {
+    padding: 42px 36px;
+    flex-grow: 1;
+    flex-shrink: 1;
+    flex-basis: auto;
+    position: relative;
+  }
+
+  .post__articles__image {
+    text-decoration: none;
+    max-width: 100%;
+    height: auto;
+    transition: all 450ms cubic-bezier(0.23, 1, 0.32, 1) 0ms;
+    pointer-events: none;
+  }
+
+  @media print {
+    .post__articles__image {
+      visibility: hidden;
+    }
+  }
+}
+
+

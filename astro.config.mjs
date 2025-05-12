@@ -42,10 +42,29 @@ export default defineConfig({
             if (/css|scss/i.test(extType)) {
               extType = 'styles';
             }
+            if (/woff|woff2/i.test(extType)) {
+              extType = 'fonts';
+            }
             return `assets/${extType}/[name][extname]`;
           },
         },
       },
+    },
+    server: {
+      proxy: {
+        "/post/": {
+          target: "https://www.tv-asahi.co.jp/",
+          changeOrigin: true
+        },
+        "/common/": {
+          target: "https://www.tv-asahi.co.jp/",
+          changeOrigin: true
+        },
+        "/commons/": {
+          target: "https://www.tv-asahi.co.jp/",
+          changeOrigin: true
+        },
+      }
     },
   },
   devToolbar: {

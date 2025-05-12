@@ -1,5 +1,5 @@
 ---
-import { directory } from '@settings';
+import { directory, imageProtection } from '@settings';
 import Button from '@components/Button.astro';
 ---
 <div class="next-story">
@@ -18,7 +18,7 @@ import Button from '@components/Button.astro';
       <!-- モーダルパターン（読み込み先は modal/index.html） -->
       <a class="opac video-thumb" data-action="click" data-label="modal" href="#modal">
         <div class="play"><img src=`/${directory}/common-img/play.png` alt=""></div>
-        <div class="cap"><img src=`/${directory}/story/0001/img/01.jpg` alt=""></div>
+        <div class="cap"><img class:list={[imageProtection && 'protect']} src=`/${directory}/story/0001/img/01.jpg` alt=""></div>
       </a>
     </div><!-- cap-box -->
     <div class="txt-box">

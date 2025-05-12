@@ -1,5 +1,5 @@
 ---
-const { class: className, json, tId, limit, onlyUse, itemStyle='card', infinite, moreLabel='もっと見る', lazyLoad, ...rest } = Astro.props;
+const { class: className, json, tId, limit, onlyUse, itemStyle='card', infinite, moreLabel='もっと見る', lazyLoad, protect, ...rest } = Astro.props;
 import '@styles/news-items.css';
 ---
 <news-items
@@ -12,6 +12,7 @@ import '@styles/news-items.css';
   data-infinite={infinite}
   data-more-label={moreLabel}
   data-lazy-load={lazyLoad}
+  data-protect={protect}
 >
   <slot />
 </news-items>
@@ -28,6 +29,7 @@ let itemStyleItems = [];
 let infiniteItems = [];
 let moreLabelItems = [];
 let lazyLoadItems = [];
+let protectItems = [];
 let currentCountItems = [];
 let allNewsItems = [];
 const specifyButton = document.querySelector('news-items[data-infinite="true"] > button');
@@ -35,7 +37,7 @@ const specifyButton = document.querySelector('news-items[data-infinite="true"] >
 class NewsItems extends HTMLElement {
   constructor() {
     super();
-    const { onlyUse, json, tId, limit, itemStyle, infinite, moreLabel, lazyLoad } = this.dataset;
+    const { onlyUse, json, tId, limit, itemStyle, infinite, moreLabel, lazyLoad, protect } = this.dataset;
     if (onlyUse && onlyUse !== device) return;
     jsonItems.push(json);
     tIdItems.push(tId);
@@ -44,6 +46,7 @@ class NewsItems extends HTMLElement {
     infiniteItems.push(infinite === 'true' ? true : false);
     moreLabelItems.push(moreLabel);
     lazyLoadItems.push(lazyLoad === 'true' ? true : false);
+    protectItems.push(protect === 'true' ? true : false);
     currentCountItems.push(parseInt(limit, 10));
     elItems.push(this);
   }
@@ -206,10 +209,11 @@ function createCardElements(items, index) {
 }
 
 function getImg(src, index) {
+  const itemClass = protectItems[index] ? 'news__item__image protect' : 'news__item__image';
   if (lazyLoadItems[index]) {
-    return `<img class="news__item__image" data-src="${src}" alt=""/>`;
+    return `<img class="${itemClass}" data-src="${src}" alt=""/>`;
   }
-  return `<img class="news__item__image" src="${src}" alt=""/>`;
+  return `<img class="${itemClass}" src="${src}" alt=""/>`;
 }
 
 function createListElements(items) {

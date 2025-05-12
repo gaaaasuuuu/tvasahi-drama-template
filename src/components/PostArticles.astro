@@ -1,0 +1,324 @@
+---
+const { class: className, onlyUse, tId, ...rest } = Astro.props;
+import '@styles/post-articles.css';
+---
+<post-articles
+  class:list={['post__articles__container', className]}
+  data-only-use={onlyUse}
+  data-t-id={tId}
+></post-articles>
+
+<script>
+import deviceType from '@scripts/device-type.js';
+const { device } = deviceType();
+
+class PostArticles extends HTMLElement {
+  constructor() {
+    super();
+    const { onlyUse, tId } = this.dataset;
+    if (onlyUse && onlyUse !== device) return;
+    getPostArticles({
+      id: tId.split(','),
+      selector: this,
+    }, () => {});
+  }
+}
+customElements.define('post-articles', PostArticles);
+
+// const fetchOption = {
+//   credentials: 'same-origin',
+// };
+
+
+
+
+function getPostArticles({
+  selector,
+  id = '',
+  itemsPerPage = 4,
+  defaultStyle = true,
+  placeholder = '',
+  linkTarget = '_blank',
+  header = 'おすすめ！関連記事（テレ朝POST）',
+  desktopStyle = false,
+  mobileStyle = false
+}, callback) {
+
+  const state = {
+    selector,
+    id: id,
+    existsId: [],
+    items: [],
+    placeholder: [],
+    existsPlaceholder: [],
+    placeholderItems: [],
+    itemsPerPage,
+    defaultStyle,
+    linkTarget,
+    header: `<div class="${defaultStyle ? 'post__articles__header__container' : ''} post-articles-header-container"><h2 class="${defaultStyle ? 'appendix__title' : ''} post-articles-header">${header}</h2></div>`,
+  };
+
+  const config = {
+    list: '/post/json/tsukasa_list.json',
+    id:'/post/json/',
+    placeholder: '/post/json/genre_list.json',
+  };
+
+  if (placeholder) {
+    state.placeholder = [...placeholder];
+  } else {
+    const el = document.querySelector('meta[name="category"]');
+    state.placeholder = el ? [...el.getAttribute('content')] : ['new_article'];
+  }
+
+  if (state.selector) {
+    if (desktopStyle) {
+      state.selector.classList.add('post-articles-style-desktop');
+    }
+    if (mobileStyle) {
+      state.selector.classList.add('post-articles-style-mobile');
+    }
+
+    render(callback);
+  }
+
+
+  function createPromise(id) {
+    const url = `${config.id}${id}.json`;
+    return fetch(url)
+      .then(response => response.json())
+      .then(async (data) => {
+        return data;
+      });
+  }
+
+  function setPlaceholders(placeholder) {
+    switch (placeholder) {
+      case 'drama':
+      case 'movie':
+      case 'ドラマ':
+      case '映画':
+      case 'ドラマ・映画':
+        state.placeholderItems = [
+          ...state.placeholderItems,
+          14,
+          15,
+        ];
+        break;
+      case 'variety':
+      case 'バラエティ':
+        state.placeholderItems = [
+          ...state.placeholderItems,
+          19,
+        ];
+        break;
+      case 'music-top':
+        state.placeholderItems = [
+          ...state.placeholderItems,
+          20,
+        ];
+        break;
+      case 'anime':
+      case 'アニメ':
+      case 'ヒーロー':
+      case 'アニメ・ヒーロー':
+        state.placeholderItems = [
+          ...state.placeholderItems,
+          17,
+          18,
+        ];
+        break;
+      case 'news':
+      case 'ニュース':
+      case '報道':
+      case '情報':
+      case 'ドキュメンタリー':
+      case '報道・情報・ドキュメンタリー':
+        state.placeholderItems = [
+          ...state.placeholderItems,
+          21,
+          22,
+          38,
+        ];
+        break;
+      case 'sports':
+      case 'スポーツ':
+        state.placeholderItems = [
+          ...state.placeholderItems,
+          16,
+        ];
+        break;
+      case 'cooking':
+      case '料理':
+      case '旅':
+      case '暮らし':
+      case '料理・旅・暮らし':
+        state.placeholderItems = [
+          ...state.placeholderItems,
+          23,
+          39,
+          24,
+        ];
+        break;
+      case 'ranking_daily':
+      case 'デイリーランキング':
+        state.placeholderItems = [
+          ...state.placeholderItems,
+          'ranking_daily',
+        ];
+        break;
+      case 'ranking_weekly':
+      case '週間ランキング':
+      case 'ウィークリーランキング':
+        state.placeholderItems = [
+          ...state.placeholderItems,
+          'ranking_weekly',
+        ];
+        break;
+      default:
+        state.placeholderItems = [
+          ...state.placeholderItems,
+          'new_article',
+        ];
+        break;
+    }
+  }
+
+  function createElement(item) {
+    const ds = state.defaultStyle;
+    const date = item.datetime.replace(/((\d{4})-(\d{2})-(\d{2}))\s.+?$/, '$2.$3.$4');
+    const image = item.thumbnail
+      ? `<div class="${ds ? 'post__articles__image__container ' : ''} post-articles-item-image-container">
+          <img class="${ds ? 'post__articles__image' : ''} post-articles-item-image" src="${item.thumbnail}" alt=""/>
+        </div>`
+      : '';
+    const target = state.linkTarget ? ` target="${state.linkTarget}"` : '';
+    const html = `<div class="${ds ? 'post__articles__item__container' : ''} post-articles-item-container">
+      <a class="post-articles-item-anchor" href="${item.url}"${target}>
+        ${image}
+        <div class="${ds ? 'post__articles__text__container' : ''} post-articles-item-text-container">
+          <div class="${ds ? 'post__articles__title__container' : ''} post-articles-item-title-container">
+            <h3 class="${ds ? 'post__articles__title' : ''} post-articles-item-title">${item.title}</h3>
+          </div>
+          <time class="${ds ? 'post__articles__subtitle' : ''} post-articles-item-subtitle">${date}</time>
+        </div>
+
+      </a>
+    </div>`;
+    return html;
+  }
+
+  function renderItems(items) {
+    const ds = state.defaultStyle;
+    const el = state.selector;
+    el.innerHTML = `<div class="${ds ? 'post__articles__container' : ''} post-articles-container">
+      ${state.header}
+      <div class="post-articles-list ">${items.join('')}</div>
+    </div>`;
+  }
+
+  async function existsId() {
+    return fetch(config.list)
+      .then(response => {
+        if (response.status === 200) {
+          return response.json();
+        }
+      })
+      .then(async (data) => {
+        const items = state.id.map((number) => {
+          const tsukasaId = parseInt(number, 10);
+          if (data.indexOf(tsukasaId) > -1) {
+            return tsukasaId;
+          }
+        });
+        state.existsId = items;
+        return items;
+      });
+  }
+
+  async function existsPlaceholder() {
+    fetch(config.placeholder)
+      .then(response => {
+        if (response.status === 200) {
+          return response.json();
+        }
+      })
+      .then(async (data) => {
+        state.placeholderItems.forEach((item) => {
+          if (data.indexOf(item) > -1) {
+            state.existsPlaceholder.push(item);
+          }
+        });
+      });
+  }
+
+  async function createPostElement() {
+    const existsIdItems = await existsId();
+    const promises = existsIdItems.map((id) => {
+      return fetch(`${config.id}tsukasa_${id}.json`).then((res) => {
+        return res.json();
+      });
+    });
+
+    return Promise.all(promises).then((data) => {
+      const dataItems = [];
+      data.forEach((d) => {
+        d.data_items.forEach(item => { dataItems.push(item) });
+      });
+      const elements = dataItems.map((dataItem) => {
+        return createElement(dataItem);
+      });
+      return elements;
+    })
+  }
+
+  async function createPlaceholderElement() {
+    state.placeholder.forEach((item) => {
+      setPlaceholders(item);
+    });
+    await existsPlaceholder();
+    const promises = state.existsPlaceholder.map((id) => {
+      const items = createPromise(`genre_${id}`);
+      return items;
+    });
+    const results = await Promise.all(promises);
+    let dataList = [];
+    results.forEach((res) => {
+      if (res.status === 200 && res.data.data_items) {
+        dataList = dataList.concat(res.data.data_items);
+      }
+    });
+    const placeholderItems = Array.prototype.concat.apply([], dataList).sort((a, b) => {
+      const res = (a.datetime < b.datetime ? 1 : -1);
+      return res;
+    });
+
+    return placeholderItems.map((data) => {
+      const elements = createElement(data);
+      return elements;
+    });
+  }
+
+  async function render(callback) {
+    const postItems = await createPostElement();
+    if (postItems.length >= state.itemsPerPage) {
+      renderItems(postItems.slice(0, state.itemsPerPage));
+    } else {
+      const placeholderItems = await createPlaceholderElement();
+      const allItems = [...postItems, ...placeholderItems].filter((v, i, s) => {
+        const res = s.indexOf(v) === i;
+        return res;
+      });
+      if (allItems.length) {
+        renderItems(allItems.slice(0, state.itemsPerPage));
+      }
+    }
+    if (typeof callback === 'function') {
+      callback();
+    }
+  }
+}
+
+
+
+</script>
