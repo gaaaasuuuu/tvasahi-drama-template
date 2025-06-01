@@ -1,0 +1,25 @@
+---
+export const partial = true;
+---
+<Fragment is:raw>
+{literal}[{/literal}
+{php}
+$contents = <<<EOT
+{loop|count:10000|sort:item_date}{literal}  {{/literal}
+    "title":"{if $textarea_1 != ""}{$textarea_1}{/if}"{literal},{/literal}
+    "id":"{if $item_id != ""}{$item_id}{/if}"{literal},{/literal}
+    "category":"news"{literal},{/literal}
+    "datetime":"{if $item_date != ""}{$item_date}{/if}"{literal},{/literal}
+    "thumbnail":"{if $image_path_1 != ""}{$image_path_1}{/if}"{literal},{/literal}
+    "categoryViewFlag":{if $selected_data_1 == 1}true{else}false{/if}{literal},{/literal}
+    "attentionViewFlag":{if $selected_data_2 == 2}true{else}false{/if}{literal},{/literal}
+    "target":"_self"
+{literal}  },{/literal}
+{/loop}
+EOT;
+$contents = rtrim($contents);
+echo rtrim($contents, ",");
+{/php}
+{literal}
+]{/literal}
+</Fragment>

@@ -1,14 +1,30 @@
 ---
-import { name, directory, tsukasaId } from '@settings';
-
+import { name } from '@settings';
 import Layout from '@layouts/Layout.astro';
-
 import '@styles/page-staff.css';
 ---
 
 <Layout title={`主題歌・スタッフ｜${name}｜テレビ朝日`}>
-  <div class="staff__container">
-    <h2 class="typ__h2" data-label="MUSIC・STAFF">主題歌・スタッフ</h2>
-  </div>
+  <section class="staff__container section__container">
+    <h2 class="typ__h2" data-label="主題歌・スタッフ">music&staff</h2>
+    <div class="staff__items__container section__items__container">
+      <dl class="staff-box">
+        <dt>脚　本</dt>
+        <dd>徳永富彦　ほか</dd>
+        <dt>音　楽</dt>
+        <dd>𠮷川清之</dd>
+        <dt>主題歌</dt>
+        <dd>20th Century「ネバギバ ~Never Give Up!~」<br>（MENT RECORDING）</dd>
+        <dt>監　督</dt>
+        <dd>細川光信　田村孝蔵　ほか</dd>
+        <dt>ゼネラルプロデューサー</dt>
+        <dd>大川武宏（テレビ朝日）</dd>
+        <dt>プロデューサー</dt>
+        <dd>川島誠史（テレビ朝日） <br>森田大児（東映） <br>土井健生（東映）</dd>
+        <dt>制　作</dt>
+        <dd>テレビ朝日／東映</dd>
+      </dl>
+    </div>
+  </section>
 </Layout>
 

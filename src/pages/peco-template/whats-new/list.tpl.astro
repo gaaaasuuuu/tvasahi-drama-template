@@ -1,0 +1,14 @@
+---
+export const partial = true;
+---
+<Fragment is:raw>
+{loop|offset:0|count:100|sort:item_date}
+{if $text_1 != ""}
+<div class="ticker__slide">
+  {if $text_2 != ""}<a {if $selected_data_1 == "1"}class="external-link" target="_blank" {/if}href="{$text_2}">{/if}
+    {$text_1}
+  {if $text_2 != ""}</a>{/if}
+</div>
+{/if}
+{/loop}
+</Fragment>

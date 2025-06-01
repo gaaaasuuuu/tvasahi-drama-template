@@ -1,15 +1,21 @@
-.cast__items__container {
-  background: var(--_content-bg);
+.cast__container {
   display: grid;
   grid-auto-flow: row;
+  gap: var(--_section-gap);
 }
 
-.device-type-mobile {
-
-  .cast__items__container {
-    padding: calc(16vw / var(--_mbw)) calc(8vw / var(--_mbw));
-    gap: calc(16vw / var(--_mbw));
+@media print {
+  .protected__chart img {
+      visibility: hidden
   }
+}
+
+.chart-img {
+  max-width: 100%;
+}
+
+
+.device-type-mobile {
 
   .cast__items {
     display: grid;
@@ -56,11 +62,6 @@
 }
 
 .device-type-desktop {
-
-  .cast__items__container {
-    padding: 2rem 2.5rem;
-    gap: 1rem;
-  }
 
   .cast__items {
     display: grid;

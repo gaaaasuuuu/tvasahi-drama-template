@@ -1,8 +1,8 @@
 ---
 import { directory, imageProtection } from '@settings';
-import mainSp from '@images/main_sp.jpg';
+import mainSp from '@images/main_sp.png';
 import mainPc from '@images/main_pc.png';
-import mainPCBg from '@images/main_bg.jpg';
+import mainPCBg from '@images/main_bg.png';
 const _mainImageMobile = `url(${mainSp.src})`;
 const _mainImageDesktop = `url(${mainPc.src})`;
 const _mainPCBg = `url(${mainPCBg.src})`;
@@ -36,6 +36,29 @@ const _mainPcHeight = `${mainPc.height}px`;
     }
   }
 
+  /* critical css */
+  @media screen and (max-width: 1079px) {
+    body:not(.device-type-desktop):not(.device-type-mobile) {
+      background-image: var(--_mainImageMobile);
+      aspect-ratio: var(--_aspectRatioMobile);
+
+      width: 100%;
+      height: auto;
+      background-size: contain;
+
+      &::after {
+        content: "";
+        height: 0;
+        padding-bottom: calc(100% * var(--_aspectRatioMobile));
+        position: fixed;
+        bottom: 0;
+        left: 0;
+        width: 100%;
+        z-index: -1;
+      }
+    }
+  }
+
   .device-type-desktop .hero__image {
     width: 100%;
     height: var(--_mainPcHeight);
@@ -47,12 +70,35 @@ const _mainPcHeight = `${mainPc.height}px`;
 
     &::after {
       content: var(--_mainImageDesktop);
-      width: var(_mainPcWidth);
-      height: var(_mainPcHeight);
+      width: var(--_mainPcWidth);
+      height: var(--_mainPcHeight);
       position: absolute;
       top: 0;
       left: 0;
-      z-index: 1;
+      z-index: 0;
+    }
+  }
+
+    /* critical css */
+  @media screen and (min-width: 1080px) {
+    body:not(.device-type-desktop):not(.device-type-mobile) {
+      width: 100%;
+      height: var(--_mainPcHeight);
+
+      border-image-source: var(--_mainPCBg);
+      border-image-slice: fill 0;
+      border-image-outset: 0 100lvi;
+      border-image-repeat: repeat;
+
+      &::after {
+        content: var(--_mainImageDesktop);
+        width: var(--_mainPcWidth);
+        height: var(--_mainPcHeight);
+        position: absolute;
+        top: 0;
+        left: 0;
+        z-index: 0;
+      }
     }
   }
 </style>

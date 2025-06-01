@@ -1,0 +1,15 @@
+.textured__card,
+.section__items__container {
+  background: #fff url("../../common-img/bg_grunge.png") repeat center top !important;
+  box-shadow: var(--_card-shadow);
+}
+.next-story .contents-box {
+  background: #fff url("../../common-img/bg_grunge.png") repeat center top / cover;
+  box-shadow: var(--_card-shadow);
+}
+
+.news__item.textured__card {
+  background: #fff url("../../common-img/bg_grunge.png") repeat left bottom / cover;
+}
+
+

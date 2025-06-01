@@ -33,18 +33,26 @@ htmlItems.forEach(async(htmlPath, i) => {
   elItems[i].innerHTML = result;
 
   const videoThumb = elItems[i].querySelector('.video-thumb');
+  const ytPlayer = elItems[i].querySelector('iframe');
   if (videoThumb) {
     videoThumb.addEventListener('click', (e) => {
-      const iframe = elItems[i].querySelector('iframe');
-      if (iframe && iframe.getAttribute('data-src')) {
-        iframe.setAttribute('src', iframe.getAttribute('data-src'));
+      if (ytPlayer && ytPlayer.getAttribute('data-src')) {
+        ytPlayer.setAttribute('src', ytPlayer.getAttribute('data-src'));
       }
     }, { once: true });
+  }
+
+  const hash = location.hash;
+  if (hash === '#modal') {
+    if (ytPlayer && ytPlayer.getAttribute('data-src')) {
+      ytPlayer.setAttribute('src', ytPlayer.getAttribute('data-src'));
+    }
   }
 
   const modal = elItems[i].querySelector('#modal');
   if (modal) {
     modal.addEventListener('click', (e) => {
+      ytPlayer.contentWindow.postMessage('{"event":"command","func":"' + 'pauseVideo' + '","args":""}', '*');
       e.preventDefault();
       location.hash = e.target.hash;
       history.pushState({}, '', location.pathname);

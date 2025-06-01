@@ -1,18 +1,19 @@
 {
-  "name": "test_special",
+  "name": "drama_template",
   "type": "module",
   "version": "0.0.1",
   "scripts": {
     "dev": "astro dev",
     "start": "astro dev",
     "build-origin": "astro build",
-    "build": "astro build && npm run format-dist && node src/scripts/post-build.js",
+    "build": "astro build && node src/scripts/post-build.js && npm run format-dist",
     "preview": "astro preview",
     "astro": "astro",
-    "format-dist": "prettier --write ./dist/**/*.html ./dist/**/**/*.html ./dist/**/**/**/*.html --ignore-path .prettierignore"
+    "format-dist": "prettier --write ./dist/**/*.html ./dist/**/**/*.html ./dist/**/**/**/*.html ./dist/__peco-template__/news/base.tpl --parser html --ignore-path .prettierignore"
   },
   "dependencies": {
-    "astro": "^5.5.4",
+    "@fontsource/noto-sans-jp": "^5.2.5",
+    "astro": "^5.8.1",
     "embla-carousel": "^8.5.2",
     "embla-carousel-auto-height": "^8.5.2",
     "embla-carousel-autoplay": "^8.5.2",

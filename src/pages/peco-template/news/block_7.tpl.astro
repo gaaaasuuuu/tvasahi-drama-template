@@ -1,0 +1,12 @@
+---
+export const partial = true;
+---
+<Fragment is:raw>
+{if $text_1 != ""}
+    <div class="youtube-wrap">
+      <div class="youtube-box">
+        <iframe src="https://www.youtube.com/embed/{$text_1}?rel=0&showinfo=0&wmode=transparent" frameborder="0" allowfullscreen=""></iframe>
+      </div>
+    </div>
+{/if}
+</Fragment>

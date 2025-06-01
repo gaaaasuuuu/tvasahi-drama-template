@@ -3,10 +3,10 @@ const imgDir = `/${directory}/assets/images`;
 
 const data = [
   {
-    "title": "横画像レイアウト確認用",
+    "title": "横画像レイアウト確認用 attentionViewFlag=true",
     "id": "0009",
     "category": "news",
-    "datetime": "2123-02-03 12:18",
+    "datetime": "2023-02-03 12:18",
     "thumbnail": `/${directory}/__dummy__/ph-dummy-yoko.jpg`,
     "categoryViewFlag": true,
     "attentionViewFlag": true,
@@ -16,7 +16,7 @@ const data = [
     "title": "縦画像レイアウト確認用",
     "id": "0008",
     "category": "news",
-    "datetime": "2121-03-30 19:07",
+    "datetime": "2021-03-30 19:07",
     "thumbnail": `/${directory}/img/ph-dummy-tate.jpg`,
     "categoryViewFlag": true,
     "attentionViewFlag": false,

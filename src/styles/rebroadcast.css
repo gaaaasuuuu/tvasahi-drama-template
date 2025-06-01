@@ -5,20 +5,27 @@
 .rebroadcast__container {
   display: grid;
   grid-auto-columns: auto;
-  gap: 1rem;
+
+  .device-type-mobile & {
+    gap: calc(30vw / var(--_mbw));
+  }
+
+  .device-type-desktop & {
+    gap: 1.875rem;
+  }
 
   .banner__items {
     display: grid;
-    padding: 0 1rem;
-
-    .device-type-desktop & {
-      gap: 1rem;
-      grid-template-columns: auto auto;
-    }
 
     .device-type-mobile & {
-      gap: 1rem;
+      gap: calc(10vw / var(--_mbw));
       grid-auto-columns: auto;
+      margin: 0 calc(10vw / var(--_mbw));
+    }
+
+    .device-type-desktop & {
+      gap: .625rem;
+      grid-template-columns: auto auto;
     }
   }
 }

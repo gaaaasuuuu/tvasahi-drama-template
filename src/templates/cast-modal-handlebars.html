@@ -1,0 +1,11 @@
+<div id="cast-{{number}}" class="cast-box{{#if rank}} has-rank{{/if}} {{className}}">
+  {{#if image}}
+
+    <p class="cast-thumb protect-box"><img :::protect:::src="../../cast/img/{{image}}" alt="{{role}}{{#if cast}}………{{/if}}{{cast}}"></p>
+
+  {{/if}}
+  <div class="cast-txt">
+    <p class="cast-name">{{role}}<span class="cast-name-kana">{{#if roman}}（{{/if}}{{roman}}{{#if roman}}）{{/if}}</span><br class="sp">{{#if cast}}<span class="slash">／</span>{{/if}}<span class="cast">{{#if cast}}{{cast}}</span>{{/if}}<span class="cast-group">{{group}}</span></p>
+    <p class="cast-read">{{{linebreak text}}}</p>
+  </div>
+</div>

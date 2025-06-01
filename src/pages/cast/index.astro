@@ -1,32 +1,39 @@
 ---
-import { name, directory, tsukasaId } from '@settings';
+import { name, directory, tsukasaId, imageProtection } from '@settings';
 import Layout from '@layouts/Layout.astro';
 import Cast from '@components/Cast.astro';
 import CastHandlebars from '@templates/cast-handlebars.html?raw';
-
 import '@styles/page-cast.css';
----
 
+const castHandlebars = CastHandlebars.replaceAll(':::protect:::', imageProtection ? 'class="protect" ' : '');
+---
 <Layout title={`キャスト｜${name}｜テレビ朝日`}>
-  <div class="cast__container">
+  <section class="cast__container section__container">
     <h2 class="typ__h2" data-label="キャスト">CAST</h2>
-    <div class="cast__items__container">
-      <img id="chart-img" class="chart-img" src=`/${directory}/cast/img/chart.jpg` usemap="#Map" />
-      <map name="Map" id="Map">
-        <area shape="rect" coords="80,61,273,251" href="#鷲津 政彦" alt="鷲津 政彦" onfocus="this.blur();" />
-        <area shape="rect" coords="413,166,605,359" href="#芝野 健夫" alt="芝野 健夫" onfocus="this.blur();" />
-        <area shape="rect" coords="124,481,317,675" href="#松平 貴子" alt="月本 幸子" onfocus="this.blur();" />
-      </map>
-      <Cast class="cast__items" json={`/${directory}/api/cast.json`} />
+    <div class="cast__items__container section__items__container">
+      <div class:list={['chart__container', imageProtection ? 'protected__chart' : '']}
+        oncontextmenu={imageProtection ? 'return false;' : null}
+        onselectstart={imageProtection ? 'return false;' : null}
+        onmousedown={imageProtection ? 'return false;' : null}
+      >
+        <img id="chart-img" class="chart-img" src={`/${directory}/cast/img/chart.jpg`} usemap="#Map" />
+        <map name="Map" id="Map">
+          <area shape="rect" coords="80,61,273,251" href="#鷲津 政彦" alt="鷲津 政彦" onfocus="this.blur();" />
+          <area shape="rect" coords="413,166,605,359" href="#芝野 健夫" alt="芝野 健夫" onfocus="this.blur();" />
+          <area shape="rect" coords="124,481,317,675" href="#松平 貴子" alt="月本 幸子" onfocus="this.blur();" />
+        </map>
+      </div>
+
+      <Cast class="cast__items" json={`/${directory}/api/cast.json`} castList={true} />
     </div>
-  </div>
+  </section>
 
   <script>
     import imageMapResize from 'image-map-resizer';
-    import deviceType from '@scripts/device-type.js';
-    const { device } = deviceType();
-    device === 'mobile' && imageMapResize();
+    window.addEventListener('load', () => {
+      imageMapResize();
+    });
   </script>
 
-  <script id="cast-template" type="text/x-handlebars-template" set:html={CastHandlebars}></script>
+  <script id="cast-template" type="text/x-handlebars-template" set:html={castHandlebars}></script>
 </Layout>

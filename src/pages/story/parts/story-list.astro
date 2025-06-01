@@ -1,78 +1,14 @@
-{[...Array(5)].map((_, i) => (
+---
+import { imageProtection } from '@settings';
+export const partial = true;
+
+// If the latest episode is ep.5,
+// const numberOfEpisodes = 5;
+const numberOfEpisodes = 1;
+---
+{[...Array(numberOfEpisodes)].map((_, i) => (
   <a class="backnumber__item" href={`../000${i+1}/`}>
-    <img src={`../0001/img/01.jpg`} alt="">
-    <div>第1話</div>
+    <img class:list={[imageProtection && 'protect']} src={`../000${i+1}/img/01.jpg`} alt="">
+    <div>第{i+1}話</div>
   </a>
-))}
-
-
-
-<!-- <ul class="thumb-list-box cf"> -->
-  <!-- <li>
-    <a href="../0010/">
-      <div class="thumb-box"><img src="../0010/img/01.jpg" alt=""></div>
-      <div class="txt-box"><div class="ttl">第10話</div></div>
-    </a>
-  </li> -->
-  <!-- <li>
-    <a href="../0009/">
-      <div class="thumb-box"><img src="../0009/img/01.jpg" alt=""></div>
-      <div class="txt-box"><div class="ttl">第9話</div></div>
-    </a>
-  </li> -->
-  <!-- <li>
-    <a href="../0008/">
-      <div class="thumb-box"><img src="../0008/img/01.jpg" alt=""></div>
-      <div class="txt-box"><div class="ttl">第8話</div></div>
-    </a>
-  </li> -->
-  <!-- <li>
-    <a href="../0007/">
-      <div class="thumb-box"><img src="../0007/img/01.jpg" alt=""></div>
-      <div class="txt-box"><div class="ttl">第7話</div></div>
-    </a>
-  </li> -->
-  <!-- <li>
-    <a href="../0006/">
-      <div class="thumb-box"><img src="../0006/img/01.jpg" alt=""></div>
-      <div class="txt-box"><div class="ttl">第6話</div></div>
-    </a>
-  </li> -->
-  <!-- <li>
-    <a href="../0005/">
-      <div class="thumb-box"><img src="../0005/img/01.jpg" alt=""></div>
-      <div class="txt-box"><div class="ttl">第5話</div></div>
-    </a>
-  </li> -->
-  <!-- <li>
-    <a href="../0004/">
-      <div class="thumb-box"><img src="../0004/img/01.jpg" alt=""></div>
-      <div class="txt-box"><div class="ttl">第4話</div></div>
-    </a>
-  </li> -->
-  <!-- <li>
-    <a href="../0003/">
-      <div class="thumb-box"><img src="../0003/img/01.jpg" alt=""></div>
-      <div class="txt-box"><div class="ttl">第3話</div></div>
-    </a>
-  </li> -->
-  <!-- <li>
-    <a href="../0002/">
-      <div class="thumb-box"><img src="../0002/img/01.jpg" alt=""></div>
-      <div class="txt-box"><div class="ttl">第2話</div></div>
-    </a>
-  </li> -->
-  <!-- <li>
-    <a href="../0001/">
-      <div class="thumb-box"><img src="../0001/img/01.jpg" alt=""></div>
-      <div class="txt-box"><div class="ttl">第1話</div></div>
-    </a>
-  </li> -->
-  <!-- ジャニーズ対応の場合　-->
-  <!-- <li>
-    <a href="../0001/">
-      <div class="thumb-box protect"><img src="../0001/img/01.jpg" alt=""></div>
-      <div class="txt-box"><div class="ttl">第1話</div></div>
-    </a>
-  </li> -->
-<!-- </ul> -->
+)).reverse()}

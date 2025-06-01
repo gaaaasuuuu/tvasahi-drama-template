@@ -1,10 +1,18 @@
 ---
-const { id, limit } = Astro.props;
+const { id, limit, playIcon, class: className } = Astro.props;
+console.log(className);
 import '@styles/youtube-playlist.css';
 ---
-<div id={id} data-limit={limit} class="youtube__playlist"></div>
+<div
+  id={id}
+  data-limit={limit}
+  data-play-icon={playIcon}
+  class="youtube__playlist"
+  data-class={className}
+></div>
 
 <script>
+  import { directory } from '@settings';
   import EmblaCarousel from 'embla-carousel';
   const youtubePlaylist = document.querySelector('.youtube__playlist');
   const youtubeListId = youtubePlaylist.getAttribute('id');
@@ -14,15 +22,22 @@ import '@styles/youtube-playlist.css';
     const limit = parseInt(dataLimit, 10);
     return limit ? limit : 10;
   })(youtubePlaylist);
+  const playIcon = `<img src="/${directory}/common-img/play.png" alt="" class="youtube__playlist__play__icon"/>`;
+  // const playIconSrc = youtubePlaylist.getAttribute('data-play-icon');
+  // const playIcon = playIconSrc
+  //   ? `<img src="${playIconSrc}" alt="" class="youtube__playlist__play__icon"/>`
+  //   : `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="#fff"><path d="M12 22.9c3 0 5.6-1.1 7.7-3.2s3.2-4.7 3.2-7.7-1.1-5.6-3.2-7.7S15 1.1 12 1.1 6.4 2.2 4.3 4.3 1.1 9 1.1 12s1.1 5.6 3.2 7.7S9 22.9 12 22.9z" opacity=".5" fill="#000"/><path d="M9 17.4l8.4-5.4L9 6.6v10.8zm3 6.6a12.29 12.29 0 0 1-4.7-.9c-1.5-.6-2.7-1.5-3.8-2.6S1.6 18.1.9 16.7 0 13.7 0 12a12.29 12.29 0 0 1 .9-4.7c.6-1.5 1.5-2.7 2.6-3.8S5.9 1.6 7.3.9s3-.9 4.7-.9a12.29 12.29 0 0 1 4.7.9c1.5.6 2.7 1.5 3.8 2.6s1.9 2.3 2.6 3.8.9 3 .9 4.7a12.29 12.29 0 0 1-.9 4.7c-.6 1.5-1.5 2.7-2.6 3.8s-2.3 1.9-3.8 2.6-3 .9-4.7.9zm0-1.1c3 0 5.6-1.1 7.7-3.2s3.2-4.7 3.2-7.7-1.1-5.6-3.2-7.7S15 1.1 12 1.1 6.4 2.2 4.3 4.3 1.1 9 1.1 12s1.1 5.6 3.2 7.7S9 22.9 12 22.9z"/></svg>`;
   const container = document.createElement('div');
   container.innerHTML = `<div class="now__loading">
     <div class="spinner">
       <div class="bounce1"></div>
       <div class="bounce2"></div>
       <div class="bounce3"></div>
-    </div>
-  </div>`;
-  container.classList.add('youtube__playlist__container');
+      </div>
+      </div>`;
+  const youtubeClassList = youtubePlaylist.getAttribute('data-class');
+  const containerClassList = ['youtube__playlist__container', ...youtubeClassList.split(' ')];
+  container.classList.add(...containerClassList);
   youtubePlaylist.parentNode.insertBefore(container, youtubePlaylist.nextElementSibling);
 
   youtubePlaylistContainerObserver();
@@ -58,7 +73,7 @@ import '@styles/youtube-playlist.css';
           const viewportNode = emblaNode.querySelector('.youtube__playlist__viewport');
           const prevBtnNode = emblaNode.querySelector('.youtube__playlist__button--prev');
           const nextBtnNode = emblaNode.querySelector('.youtube__playlist__button--next');
-          const dotsNode = emblaNode.querySelector('.youtube__playlist__dots');
+          const dotsNode = container.querySelector('.youtube__playlist__dots');
           // const snapDisplayNode = emblaNode.querySelector('.youtube__playlist__selected-snap-display');
           const OPTIONS = { align: 'start', dragFree: true, slidesToScroll: 'auto' }
           const emblaApi = EmblaCarousel(viewportNode, OPTIONS);
@@ -86,8 +101,8 @@ import '@styles/youtube-playlist.css';
         return `
           <div class="youtube__playlist__slide">
             <a class="youtube__playlist__slide__number" href="https://youtu.be/${id}" target="_blank">
-              <img src="http://img.youtube.com/vi/${id}/mqdefault.jpg" alt="" width="320" height="180" loading="lazy"/>
-              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="#fff"><path d="M12 22.9c3 0 5.6-1.1 7.7-3.2s3.2-4.7 3.2-7.7-1.1-5.6-3.2-7.7S15 1.1 12 1.1 6.4 2.2 4.3 4.3 1.1 9 1.1 12s1.1 5.6 3.2 7.7S9 22.9 12 22.9z" opacity=".5" fill="#000"/><path d="M9 17.4l8.4-5.4L9 6.6v10.8zm3 6.6a12.29 12.29 0 0 1-4.7-.9c-1.5-.6-2.7-1.5-3.8-2.6S1.6 18.1.9 16.7 0 13.7 0 12a12.29 12.29 0 0 1 .9-4.7c.6-1.5 1.5-2.7 2.6-3.8S5.9 1.6 7.3.9s3-.9 4.7-.9a12.29 12.29 0 0 1 4.7.9c1.5.6 2.7 1.5 3.8 2.6s1.9 2.3 2.6 3.8.9 3 .9 4.7a12.29 12.29 0 0 1-.9 4.7c-.6 1.5-1.5 2.7-2.6 3.8s-2.3 1.9-3.8 2.6-3 .9-4.7.9zm0-1.1c3 0 5.6-1.1 7.7-3.2s3.2-4.7 3.2-7.7-1.1-5.6-3.2-7.7S15 1.1 12 1.1 6.4 2.2 4.3 4.3 1.1 9 1.1 12s1.1 5.6 3.2 7.7S9 22.9 12 22.9z"/></svg>
+              <img class="youtube__playlist__slide__thumb" src="http://img.youtube.com/vi/${id}/mqdefault.jpg" alt="" width="320" height="180" loading="lazy"/>
+              ${playIcon}
             </a>
           </div>`;
       });
@@ -102,30 +117,15 @@ import '@styles/youtube-playlist.css';
           </div>
         </div>
 
-        <div class="youtube__playlist__controls">
-          <div class="youtube__playlist__buttons">
-            <button class="youtube__playlist__button youtube__playlist__button--prev" type="button">
-              <svg class="youtube__playlist__button__svg" viewBox="0 0 532 532">
-                <path
-                  fill="currentColor"
-                  d="M355.66 11.354c13.793-13.805 36.208-13.805 50.001 0 13.785 13.804 13.785 36.238 0 50.034L201.22 266l204.442 204.61c13.785 13.805 13.785 36.239 0 50.044-13.793 13.796-36.208 13.796-50.002 0a5994246.277 5994246.277 0 0 0-229.332-229.454 35.065 35.065 0 0 1-10.326-25.126c0-9.2 3.393-18.26 10.326-25.2C172.192 194.973 332.731 34.31 355.66 11.354Z"
-                ></path>
-              </svg>
-            </button>
-
-            <button class="youtube__playlist__button youtube__playlist__button--next" type="button">
-              <svg class="youtube__playlist__button__svg" viewBox="0 0 532 532">
-                <path
-                  fill="currentColor"
-                  d="M176.34 520.646c-13.793 13.805-36.208 13.805-50.001 0-13.785-13.804-13.785-36.238 0-50.034L330.78 266 126.34 61.391c-13.785-13.805-13.785-36.239 0-50.044 13.793-13.796 36.208-13.796 50.002 0 22.928 22.947 206.395 206.507 229.332 229.454a35.065 35.065 0 0 1 10.326 25.126c0 9.2-3.393 18.26-10.326 25.2-45.865 45.901-206.404 206.564-229.332 229.52Z"
-                ></path>
-              </svg>
-            </button>
-          </div>
-
-          <div class="youtube__playlist__dots"></div>
-        </div>
-      </div>`;
+        <button class="youtube__playlist__button--prev" type="button">
+          <img src="/${directory}/common-img/slider_arrow_left.png" alt=""/>
+        </button>
+        <button class="youtube__playlist__button--next" type="button">
+          <img src="/${directory}/common-img/slider_arrow_right.png" alt=""/>
+        </button>
+      </div>
+      <div class="youtube__playlist__dots"></div>
+      `;
     }
 
     const addTogglePrevNextBtnsActive = (emblaApi, prevBtn, nextBtn) => {

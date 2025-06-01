@@ -1,14 +1,23 @@
+.device-type-mobile .sns__items__container {
+  padding: calc(20vw / var(--_mbw)) calc(40vw / var(--_mbw));
 
-
-.sns__items__container {
-  padding: 1rem;
-  display: grid;
-  gap: 1rem;
-  .device-type-desktop & {
-    grid-template-columns: 400px auto;
+  .banner__items {
+    display: grid;
+    grid-auto-flow: row;
+    gap: calc(10vw / var(--_mbw));
   }
 }
 
+.device-type-desktop .sns__items__container {
+  padding: 2.5rem;
+
+  .banner__items {
+    display: grid;
+    grid-auto-flow: column;
+    grid-template-columns: repeat(2, 1fr);
+    gap: .625rem;
+  }
+}
 
 .x__timeline__container {
   display: flex;

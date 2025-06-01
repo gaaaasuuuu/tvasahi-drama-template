@@ -8,7 +8,7 @@ export default defineConfig({
   base: SUB_DIR,
   outDir: `./dist${SUB_DIR}`,
   site: 'https://www.tv-asahi.co.jp',
-  compressHTML: true,
+  compressHTML: false,
   build: {
     assets: 'assets',
     inlineStylesheets: 'never',
@@ -20,6 +20,7 @@ export default defineConfig({
       alias: {
         '@components': '/src/components',
         '@layouts': '/src/layouts',
+        '@pages': '/src/pages',
         '@scripts': '/src/scripts',
         '@styles': '/src/styles',
         '@images': '/src/images',
@@ -52,16 +53,16 @@ export default defineConfig({
     },
     server: {
       proxy: {
-        "/post/": {
-          target: "https://www.tv-asahi.co.jp/",
+        '/post/': {
+          target: 'https://www.tv-asahi.co.jp/',
           changeOrigin: true
         },
-        "/common/": {
-          target: "https://www.tv-asahi.co.jp/",
+        '/common/': {
+          target: 'https://www.tv-asahi.co.jp/',
           changeOrigin: true
         },
-        "/commons/": {
-          target: "https://www.tv-asahi.co.jp/",
+        '/commons/': {
+          target: 'https://www.tv-asahi.co.jp/',
           changeOrigin: true
         },
       }

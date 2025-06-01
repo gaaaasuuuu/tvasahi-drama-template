@@ -2,6 +2,9 @@
   --text-body: rgb(54, 49, 61);
   --detail-high-contrast: rgb(192, 192, 192);
   --text-high-contrast-rgb-value: 49, 49, 49;
+  --_dot-selected-color: #1168d9;
+  --_dot-color: #79b2fc;
+  --_chevron-color: #2272db;
 }
 
 
@@ -45,7 +48,7 @@
   position: relative;
 }
 
-.story__carousel__floating:hover {
+.device-type-desktop .story__carousel__floating:hover {
   > .story__carousel__button--prev {
     animation: carouselPrev 0.5s ease-out 0s 1;
     opacity: 1;
@@ -86,7 +89,6 @@
   position: absolute;
   top: 50%;
   transition: 0.3s;
-  opacity: 0;
   -webkit-tap-highlight-color: rgba(var(--text-high-contrast-rgb-value), 0.5);
   -webkit-appearance: none;
   appearance: none;
@@ -98,8 +100,6 @@
   border: 0;
   padding: 0;
   margin: 0;
-  width: 2.5rem;
-  height: 5rem;
   z-index: 2;
   border-radius: 50%;
   color: var(--text-body);
@@ -107,9 +107,14 @@
   align-items: center;
   justify-content: center;
 
-  > svg {
-    width: 2.5rem;
-    height: 5rem;
+  .device-type-desktop & {
+    width: 2.75rem;
+    height: 5.125rem;
+    opacity: 0;
+  }
+  .device-type-mobile & {
+    width: calc(24vw / var(--_mbw));
+    height: calc(45vw / var(--_mbw));
   }
 }
 .story__carousel__button:disabled {
@@ -127,15 +132,20 @@
 }
 
 .story__carousel__button__svg {
-  width: 35%;
-  height: 35%;
+  fill: var(--_chevron-color);
 }
 .story__carousel__dots {
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
   align-items: center;
-  margin-top: 2rem;
+
+  .device-type-desktop & {
+    margin-top: .625rem;
+  }
+  .device-type-mobile & {
+    margin-top: calc(10vw / var(--_mbw));
+  }
 }
 .story__carousel__dot {
   -webkit-tap-highlight-color: rgba(var(--text-high-contrast-rgb-value), 0.5);
@@ -157,7 +167,7 @@
   border-radius: 50%;
 }
 .story__carousel__dot:after {
-  background-color: #cccccc;
+  background-color: var(--_dot-color);
   width: .75rem;
   height: .75rem;
   border-radius: 50%;
@@ -166,7 +176,7 @@
   content: '';
 }
 .story__carousel__dot--selected:after {
-  background-color: var(--_link-color);
+  background-color: var(--_dot-selected-color);
 }
 .story__carousel__container {
   align-items: flex-start;
@@ -187,6 +197,7 @@
     gap: .5rem;
   }
 }
+
 .story__carousel__thumbs__slide {
   cursor: pointer;
 

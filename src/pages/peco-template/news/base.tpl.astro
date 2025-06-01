@@ -1,5 +1,5 @@
 ---
-import { name, directory, tsukasaId } from '@settings';
+import { name, directory, tsukasaId, imageProtection } from '@settings';
 
 import Layout from '@layouts/Layout.astro';
 import NewsItems from '@components/NewsItems.astro';
@@ -22,14 +22,14 @@ import '@styles/page-news.css';
     }
   </style>
   {/if}</Fragment>
-  <div class="news__container">
-    <h2 class="typ__h2" data-label="NEWS">ニュース</h2>
-    <div class="news__item__container">
+  <section class="news__container section__container">
+    <h2 class="typ__h2" data-label="ニュース">news</h2>
+    <div class="news__item__container section__items__container">
       {'{BLOCK_SPACE}'}
     </div>
 
-    <h2 class="typ__h2" data-label="バックナンバー">BACKNUMBER</h2>
-    <NewsItems json={`/${directory}/news/list.json`} class="news__items__split__screen" tId={tsukasaId} limit=4 lazyLoad={true} />
-    <Button href="news/" class="center__pos opac">ニュース一覧へ</Button>
-  </div>
+    <h2 class="typ__h2" data-label="バックナンバー">backnumber</h2>
+    <NewsItems json={`/${directory}/news/list.json`} class="news__items__split__screen" tId={tsukasaId} limit=3 lazyLoad={true} itemClass="textured__card" protect={imageProtection} />
+    <Button href="../" class="center__pos opac">ニュース一覧へ</Button>
+  </section>
 </Layout>

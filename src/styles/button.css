@@ -1,4 +1,4 @@
-a.button__primary {
+.button__primary {
   display: flex;
   justify-content: center;
   align-items: center;
@@ -7,7 +7,6 @@ a.button__primary {
   color: var(--_btn-color);
   background: var(--_btn-bg);
   text-decoration: none;
-  border-radius: 100vh;
   position: relative;
 
   .device-type-mobile & {
@@ -50,26 +49,32 @@ a.button__primary {
   }
 }
 
+.button__full-width {
+  width: 100% !important;
+}
+
+
 
 .event_button {
   width: 100%;
   display: flex !important;
   justify-content: center;
   align-items: center;
+  height: 3.375rem;
+  font-weight: 600;
   padding: 1rem 2rem;
   font-size: 1rem;
-  gap: 1rem;
+  gap: .75rem;
   outline: none;
-  font-weight: 600;
-  color: var(--_btn-color);
-  background: var(--_btn-bg);
+  font-weight: 700;
+  color: var(--_accent-color);
+  background: var(--_accent-bg);
   text-decoration: none;
-  border-radius: 100vh;
   border: none;
 
   > svg {
-    height: 1.75rem;
-    width: 1.75rem;
-    color: currentColor;
+    height: 1.5rem;
+    width: 1.5rem;
+    fill: currentColor;
   }
 }

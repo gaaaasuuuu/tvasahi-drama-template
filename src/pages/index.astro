@@ -8,69 +8,62 @@ import BannerItems from '@components/BannerItems.astro';
 import NewsItems from '@components/NewsItems.astro';
 import Button from '@components/Button.astro';
 import YoutubePlaylist from '@components/YoutubePlaylist.astro';
-import XTimeline from '@components/XTimeline.astro';
 
+import '@styles/page-top.css';
 import '@styles/card-vod.css';
-import '@styles/card-story.css';
 import '@styles/sns.css';
 import '@styles/rebroadcast.css';
 ---
 
 <Layout title={`${name}｜テレビ朝日`}>
-    <section class="special__container">
-      <h2 class="typ__h2" data-label="特別配信">Special</h2>
-      <ImportHTML html={`/${directory}/vod/top-special-telasa.html`} class="special__telasa" />
-    </section>
+  <section class="special__container section__container">
+    <h2 class="typ__h2" data-label="特別配信">Special</h2>
+    <ImportHTML html={`/${directory}/vod/top-special-telasa.html`} class="special__telasa" />
+  </section>
 
-    <section class="special__container">
-      <h2 class="typ__h2" data-label="特別配信">Special</h2>
-      <ImportHTML html={`/${directory}/vod/top-special-tver.html`} class="special__tver" />
-    </section>
+  <section class="special__container section__container">
+    <h2 class="typ__h2" data-label="特別配信">Special</h2>
+    <ImportHTML html={`/${directory}/vod/top-special-tver.html`} class="special__tver" />
+  </section>
 
-    <section class="story__container">
-      <h2 class="typ__h2" data-label="ストーリー">STORY</h2>
-      <ImportHTML html={`/${directory}/story/parts/top-story-contents.html`} class="special__tver" />
-    </section>
+  <section class="story__container">
+    <h2 class="typ__h2" data-label="ストーリー">story</h2>
+    <ImportHTML html={`/${directory}/story/parts/top-story-contents.html`} class="top__story__container section__items__container" />
+  </section>
 
-    <CalendarButton html={`/${directory}/story/parts/calendar-btn.html`} onlyUse="mobile" name={calendarScriptName} />
-    <BannerItems json={`/${directory}/api/bnr-vod-c.json`} class="banner__items banner__column" protect={imageProtection} />
+  <CalendarButton html={`/${directory}/story/parts/calendar-btn.html`} onlyUse="mobile" name={calendarScriptName} />
+  <BannerItems json={`/${directory}/api/bnr-vod-c.json`} class="banner__items banner__column" protect={imageProtection} />
 
-    <section class="news__container">
-      <h2 class="typ__h2" data-label="ニュース">NEWS</h2>
-      <NewsItems json={`/${directory}/news/list.json`} class="news__items__default" tId={tsukasaId} limit=4 lazyLoad={true} protect={imageProtection} />
-      <Button href="news/" class="center__pos opac">ニュース一覧へ</Button>
-    </section>
+  <section class="news__container section__container">
+    <h2 class="typ__h2" data-label="ニュース">NEWS</h2>
+    <NewsItems json={`/${directory}/news/list.json`} class="news__items__default" itemClass="textured__card" tId={tsukasaId} limit=4 lazyLoad={true} protect={imageProtection} />
+    <Button href="news/" class="center__pos opac news__button">ニュース一覧へ</Button>
+  </section>
 
-    <section class="news__container">
-      <h2 class="typ__h2" data-label="ニュース_画像左右ver.">NEWS</h2>
-      <NewsItems json={`/${directory}/news/list.json`} class="news__items__split__screen" tId={tsukasaId} limit=4 lazyLoad={true} protect={imageProtection} />
-      <Button href="news/" class="center__pos opac">ニュース一覧へ</Button>
-    </section>
 
-    <section class="news__container">
-      <h2 class="typ__h2" data-label="NEWS">ニュース_画像なしver.</h2>
-      <NewsItems json={`/${directory}/news/list.json`} class="news__items__list" itemStyle="list" tId={tsukasaId} limit=4 protect={imageProtection} />
-      <Button href="news/" class="center__pos opac">ニュース一覧へ</Button>
-    </section>
+  <section class="news__container section__container">
+    <h2 class="typ__h2" data-label="ニュース_画像左右ver.">NEWS</h2>
+    <NewsItems json={`/${directory}/news/list.json`} class="news__items__split__screen" tId={tsukasaId} limit=4 lazyLoad={true} protect={imageProtection} />
+    <Button href="news/" class="center__pos opac">ニュース一覧へ</Button>
+  </section>
 
-    <section class="youtube__container" id="YoutubePlaylist">
-      <h2 class="typ__h2" data-label="動画">YouTube</h2>
-      <YoutubePlaylist id="PLKeSkVQhqoOrrDx41RKpvSJtElZk0arIh" limit="10" />
-    </section>
+  <section class="news__container section__container">
+    <h2 class="typ__h2" data-label="NEWS">ニュース_画像なしver.</h2>
+    <NewsItems json={`/${directory}/news/list.json`} class="news__items__list" itemStyle="list" tId={tsukasaId} limit=4 protect={imageProtection} />
+    <Button href="news/" class="center__pos opac">ニュース一覧へ</Button>
+  </section>
 
-    <section id="YoutubePlaylist" class="sns__container">
-      <h2 class="typ__h2" data-label="公式SNS">OFFICIAL SNS</h2>
-      <div class="sns__items__container">
-        <div class="x__timeline">
-          <h2 class="x__timeline__title" data-label="x">番組公式X</h2>
-          <div class="x__timeline__container">
-            <XTimeline xURL="//twitter.com/tv_asahi_PR" />
-            <Button href="#" class="button__full opac" target="_blank">もっと見る</Button>
-          </div>
-        </div>
-        <BannerItems json={`/${directory}/api/bnr-sns.json`} class="banner__items banner__row" />
-      </div>
-    </section>
+  <section class="youtube__container section__container" id="YoutubePlaylist">
+    <h2 class="typ__h2" data-label="動画">YouTube</h2>
+    <YoutubePlaylist id="PLKeSkVQhqoOrrDx41RKpvSJtElZk0arIh" limit="40" class="section__items__container" />
+  </section>
+
+  <section class="sns__container section__container">
+    <h2 class="typ__h2" data-label="公式SNS">official sns</h2>
+    <div class="sns__items__container section__items__container">
+      <BannerItems json={`/${directory}/api/bnr-sns.json`} class="banner__items" />
+    </div>
+  </section>
 
 </Layout>
 

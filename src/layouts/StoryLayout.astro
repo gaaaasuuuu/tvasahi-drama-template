@@ -1,39 +1,31 @@
 ---
-import { directory, calendarScriptName } from '@settings';
+import { name, directory, calendarScriptName, imageProtection } from '@settings';
 import Layout from '@layouts/Layout.astro';
-import Guest from '@components/Guest.astro';
 import Glossary from '@components/Glossary.astro';
 import CalendarButton from '@components/CalendarButton.astro';
 import ImportHTML from '@components/ImportHTML.astro';
-import GuestHandlebars from '@templates/guest-handlebars.html?raw';
+import CastModalHandlebars from '@templates/cast-modal-handlebars.html?raw';
+const castModalHandlebars = CastModalHandlebars.replace(':::protect:::', imageProtection ? 'class="protect" ' : '');
 
-const { title } = Astro.props;
+const { episode, onairDate, calendarBtn } = Astro.props;
+const title = `第${episode}話｜ストーリー｜${name}｜テレビ朝日`;
+const pegeDescription = `テレビ朝日『${name}』番組サイト「ストーリー」ページ。${onairDate}放送【第${episode}話】あらすじ。`;
 ---
-<Layout title={title}>
-  <div class="story__container">
+<Layout title={title} pegeDescription={pegeDescription}>
+  <section class="story__container section__container">
     <h2 class="typ__h2" data-label="ストーリー">STORY</h2>
-    <div class="story__items__container">
-
+    <div class="story__items__container section__items__container">
 
       <slot />
-      <Glossary json={`/${directory}/api/cast.json`} />
 
-      <div class="guest__container">
-        <h3 class="h3-ttl">ゲスト</h3>
-        <Guest json={`/${directory}/api/cast.json`} class="guest__items">
-      </div>
-
-      <CalendarButton html={`/${directory}/story/parts/calendar-btn.html`} name={calendarScriptName} />
+      { calendarBtn && <CalendarButton html={`/${directory}/story/parts/calendar-btn.html`} name={calendarScriptName} /> }
 
       <h2 class="h2-ttl-inner" data-label="バックナンバー">BACKNUMBER</h2>
       <ImportHTML html={`/${directory}/story/parts/story-list.html`} class="backnumber__items" />
     </div>
-
-
-    <script id="cast-template" type="text/x-handlebars-template" set:html={GuestHandlebars}></script>
-
-
-  </div>
+  </section>
+  <Glossary json={`/${directory}/api/cast.json`} />
+  <script id="cast-template" type="text/x-handlebars-template" set:html={castModalHandlebars}></script>
 </Layout>
 
 <script>

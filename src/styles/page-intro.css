@@ -1,0 +1,110 @@
+.intro__items__container {
+  display: block;
+  gap: 0;
+}
+
+.device-type-mobile .intro__items__container {
+
+  .catch-copy-a {
+    font-size: calc(24vw / var(--_mbw));
+    line-height: calc(30vw / var(--_mbw));
+    font-weight: bold;
+    text-align: center;
+  }
+
+  .catch-copy-b {
+    font-size: calc(20vw / var(--_mbw));
+    line-height: calc(24vw / var(--_mbw));
+    text-align: center;
+    font-family: var(--_head-font-family);
+    font-weight: 700;
+    margin: 16px 0;
+  }
+
+  .catch-copy-c {
+    font-size: calc(20vw / var(--_mbw));
+    line-height: calc(24vw / var(--_mbw));
+    font-weight: bold;
+    text-align: center;
+  }
+
+  .img-box1 {
+    margin-top: 1.25rem;
+    margin-bottom: 1.875rem;
+
+    > img {
+      width: 100%;
+    }
+  }
+
+  .h3-ttl-a {
+    margin-top: calc(24vw / var(--_mbw));
+    padding:  calc(16vw / var(--_mbw));
+    font-size: calc(16vw / var(--_mbw));
+    line-height: calc(24vw / var(--_mbw));
+    font-family: var(--_head-font-family);
+    font-weight: 500;
+    background: #1a4ca0;
+    color: #fff;
+  }
+
+  .read-box {
+    margin-top: calc(16vw / var(--_mbw));
+    font-size: calc(14vw / var(--_mbw));
+    line-height: calc(26vw / var(--_mbw));
+  }
+}
+
+
+
+.device-type-desktop .intro__items__container {
+
+  .catch-copy-a {
+    font-size: 1.875rem;
+    font-weight: bold;
+    text-align: center;
+    line-height: 2.625rem;
+  }
+
+  .catch-copy-b {
+    font-size: 1.875rem;
+    text-align: center;
+    line-height: 2.625rem;
+    font-family: var(--_head-font-family);
+    font-weight: 700;
+    margin: 16px 0;
+  }
+
+  .catch-copy-c {
+    font-size: 1.5rem;
+    font-weight: bold;
+    text-align: center;
+    line-height: 2.625rem;
+  }
+
+  .img-box1 {
+    margin-top: 1.25rem;
+    margin-bottom: 1.875rem;
+
+    > img {
+      width: 100%;
+    }
+  }
+
+  .h3-ttl-a {
+    margin-top: 2rem;
+    font-size: 1.125rem;
+    line-height: 1.875rem;
+    font-family: var(--_head-font-family);
+    font-weight: 500;
+    background: #1a4ca0;
+    color: #fff;
+    padding: 1rem 1.5rem;
+  }
+
+  .read-box {
+    margin-top: 1rem;
+    font-size: 1rem;
+    line-height: 2rem;
+  }
+}

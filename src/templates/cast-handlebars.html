@@ -1,14 +1,9 @@
 {{#if isCast}}
   <div id="cast-{{number}}" class="cast-box">
     {{#if image}}
-      <!-- ▼通常の場合 -->
       <p class="cast-thumb">
-        <img src="{{image}}" alt="{{role}}{{#if cast}}………{{/if}}{{cast}}">
+        <img :::protect:::src="img/{{image}}" alt="{{role}}{{#if cast}}………{{/if}}{{cast}}">
       </p>
-      <!-- ▼ジャニーズ対応の場合 -->
-      <!-- <p class="cast-thumb protect">
-      <img src="{{image}}" class="protect" alt="{{role}}{{#if cast}}………{{/if}}{{cast}}">
-      </p> -->
     {{/if}}
     <div class="cast-txt">
       <p class="cast-name">{{role}}<span class="cast-name-kana">{{#if roman}}（{{/if}}{{roman}}{{#if roman}}）{{/if}}</span><span class="cast-age">{{#if age}}（{{age}}）{{/if}}</span>{{#if cast}}………{{/if}}{{cast}}</p>

@@ -1,0 +1,8 @@
+---
+export const partial = true;
+---
+<Fragment is:raw>
+{if $item_date != "" || $textarea_1 != "" }
+<h1 data-date={{$item_date|date_format:"%Y年%-m月%-d日"}}>{$textarea_1}</h1>
+{/if}
+</Fragment>

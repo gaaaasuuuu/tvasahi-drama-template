@@ -1,0 +1,17 @@
+---
+export const partial = true;
+---
+<Fragment is:raw>
+{if $text_1 != ""}
+<a href="https://form.tv-asahi.co.jp/apps/apply/jump.php?fid={$text_1}" target="_blank class="button__primary center__pos opac">
+  {$text_2}
+  <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="#5f6368"><path d="M504-480 320-664l56-56 240 240-240 240-56-56 184-184Z"></path></svg>
+</a>
+{/if}
+
+{if $textarea_1 != ""}
+<div class="attention-text">
+  {$textarea_1}
+</div>
+{/if}
+</Fragment>

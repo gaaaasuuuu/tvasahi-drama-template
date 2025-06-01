@@ -1,14 +1,17 @@
 ---
-import { name, directory } from '@settings';
+import { name, imageProtection } from '@settings';
 import StoryLayout from '@layouts/StoryLayout.astro';
-// import StoryCarousel from '@components/StoryCarousel.astro';
-import StoryCarousel from '@components/StoryCarouselThumbs.astro';
+import StoryCarousel from '@components/StoryCarousel.astro';
+// import StoryCarousel from '@components/StoryCarouselThumbs.astro';
 
 import '@styles/page-story.css';
 import '@styles/button.css';
+
+const episode = 1;
+const onairDate = '20XX年M月D日（月）よる9:00～';
 ---
 
-<StoryLayout title={`ストーリー｜${name}｜テレビ朝日`}>
+<StoryLayout episode={episode} onairDate={onairDate}>
   <h1 data-date="HHHH年m月dd日">第１話：ダミーテキスト</h1>
   <iframe data-src="https://www.youtube.com/embed/pWDgK87xAEo?rel=0&showinfo=0&wmode=transparent" frameborder="0" allowfullscreen></iframe>
 

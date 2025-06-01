@@ -1,16 +1,17 @@
 ---
-const { class: className, json, tId, limit, onlyUse, itemStyle='card', infinite, moreLabel='もっと見る', lazyLoad, protect, ...rest } = Astro.props;
+const { class: className, itemClass, json, tId, limit, onlyUse, itemStyle='card', infinite, buttonLabel='もっと見る', lazyLoad, protect, ...rest } = Astro.props;
 import '@styles/news-items.css';
 ---
 <news-items
-  class=`news__items ${[className]}`
+  class:list={['news__items', className]}
+  data-item-class={itemClass}
   data-json={json}
   data-t-id={tId}
   data-limit={limit}
   data-only-use={onlyUse}
   data-item-style={itemStyle}
   data-infinite={infinite}
-  data-more-label={moreLabel}
+  data-more-label={buttonLabel}
   data-lazy-load={lazyLoad}
   data-protect={protect}
 >
@@ -21,13 +22,14 @@ import '@styles/news-items.css';
 import deviceType from '@scripts/device-type.js';
 import { directory } from '@settings';
 const { device } = deviceType();
+let itemClassList = [];
 let jsonItems = [];
 let elItems = [];
 let tIdItems = [];
 let limitItems = [];
 let itemStyleItems = [];
 let infiniteItems = [];
-let moreLabelItems = [];
+let buttonLabelItems = [];
 let lazyLoadItems = [];
 let protectItems = [];
 let currentCountItems = [];
@@ -37,14 +39,15 @@ const specifyButton = document.querySelector('news-items[data-infinite="true"] >
 class NewsItems extends HTMLElement {
   constructor() {
     super();
-    const { onlyUse, json, tId, limit, itemStyle, infinite, moreLabel, lazyLoad, protect } = this.dataset;
+    const { onlyUse, json, tId, limit, itemStyle, itemClass, infinite, buttonLabel = 'もっと見る', lazyLoad, protect } = this.dataset;
     if (onlyUse && onlyUse !== device) return;
     jsonItems.push(json);
     tIdItems.push(tId);
     limitItems.push(parseInt(limit, 10));
     itemStyleItems.push(itemStyle);
+    itemClassList.push(itemClass ? itemClass : '');
     infiniteItems.push(infinite === 'true' ? true : false);
-    moreLabelItems.push(moreLabel);
+    buttonLabelItems.push(buttonLabel);
     lazyLoadItems.push(lazyLoad === 'true' ? true : false);
     protectItems.push(protect === 'true' ? true : false);
     currentCountItems.push(parseInt(limit, 10));
@@ -61,24 +64,35 @@ jsonItems.forEach(async(json, i) => {
   const postData = await fetchPostJson(postJson, limitItems[i]);
   const newsListData = await fetchNewsListJson(json, limitItems[i]);
   const allItems = [
-      ...postData,
-      ...newsListData,
-    ].sort((a, b) => {
-      return a.datetime < b.datetime ? 1 : -1;
-    });
+    ...postData,
+    ...newsListData,
+  ].sort((a, b) => {
+    return a.datetime < b.datetime ? 1 : -1;
+  });
 
-  allNewsItems.push(allItems || []);
+  const sortedAllItems = moveToFrontPinItem(allItems);
+  allNewsItems.push(sortedAllItems || []);
   if (!allItems.length) return;
 
-  const newsItems = allItems.slice(0, limitItems[i]);
+  const newsItems = sortedAllItems.slice(0, limitItems[i]);
   const newsHTML = itemStyleItems[i] === 'card'
     ? createCardElements(newsItems, i)
     : createListElements(newsItems);
   elItems[i].innerHTML = newsHTML.join('');
 
   lazyLoadItems[i] && setLazyLoad(elItems[i]);
-  infiniteItems[i] && setMoreButton(i);
+  infiniteItems[i] && (limitItems[i] < allItems.length) && setMoreButton(i);
 });
+
+function moveToFrontPinItem(items) {
+  const newItems = [...items];
+  const index = newItems.findIndex(item => item.attentionViewFlag === true);
+  if (index > -1) {
+    const [itemToMove] = newItems.splice(index, 1);
+    newItems.unshift(itemToMove);
+  }
+  return newItems;
+}
 
 function setLazyLoad(newsItemsElement) {
   const imgList = newsItemsElement.querySelectorAll('.news__item__image');
@@ -113,7 +127,7 @@ function setMoreButton(index) {
     }
     const newButton = document.createElement('button');
     newButton.classList.add('get__more__items');
-    newButton.innerHTML = moreLabelItems[index];
+    newButton.innerHTML = buttonLabelItems[index];
     newButton.innerHTML += `<svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="#5f6368"><path d="M480-325.91 221.91-584 296-658.09l184 184 184-184L738.09-584 480-325.91Z"/></svg>`;
     return newButton;
   })();
@@ -138,8 +152,11 @@ function getMoreItems(index, button) {
 
   newsHTML.forEach((newsString, i) => {
     const newsEl = new DOMParser().parseFromString(newsString, 'text/html').body.firstElementChild;
+    const img = newsEl.querySelector('.news__item__image');
+    lazyLoadItems[index] && lazyLoadObserver(img);
     const delay = i * 100;
     newsEl.classList.add('add__item');
+
     setTimeout(() => {
       newsEl.classList.add('fadein')
     }, delay);
@@ -180,12 +197,20 @@ function fetchNewsListJson(url, limit) {
       const response = await fetch(url);
       if (!response.ok) resolve([]);
       const json = await response.json();
-      resolve(json.filter((item) => item.attentionViewFlag));
+      const newItems = json.map((item) => {
+        if (item.id) {
+          item.url = `/${directory}/news/${item.id}/`;
+        }
+        return item;
+      });
+      resolve(newItems);
+      // resolve(json.filter((item) => item.attentionViewFlag));
     } catch (error) { }
   });
 }
 
 function createCardElements(items, index) {
+  const itemClass = itemClassList[index] && itemClassList[index];
   return items.map((item) => {
     const target = item.target ? ` target="${item.target}"` : '';
     const img = item.thumbnail ? getImg(item.thumbnail, index) : '';
@@ -193,13 +218,13 @@ function createCardElements(items, index) {
     const tag = item.category ? `<div class="news__item__tag">${getTag(item.category)}</div>` : '';
     const date = item.datetime ? `<div class="news__item__date">${getDateJP(item.datetime)}</div>` : '';
     return item.url
-      ? `<a class="news__item news__item__${item.category} opac" href="${item.url}"${target}>
+      ? `<a class="news__item news__item__${item.category} ${itemClass} opac" href="${item.url}"${target}>
         ${img}
         ${tag}
         ${title}
         ${date}
       </a>`
-      : `<div class="news__item news__item__${item.category}">
+      : `<div class="news__item news__item__${item.category} ${itemClass}">
         ${img}
         ${tag}
         ${title}

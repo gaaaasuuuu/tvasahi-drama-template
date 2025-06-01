@@ -1,4 +1,5 @@
 import fs from 'fs'
+// import { promises as fs } from 'fs'
 import path, { dirname } from 'path'
 import { fileURLToPath } from 'url'
 import { directory } from '../settings.js'
@@ -32,16 +33,38 @@ const deleteDir = (targetPath, deletePaths) => {
 deleteDir(distDir, delDir);
 
 
+
 const htmlToTpl = (targetPath) => {
-  const TPL_FILE = 'news/peco_template.tpl.html';
-  const targetDir = path.join(__dirname, '../../' + targetPath);
-  if (!fs.existsSync(targetDir)) return;
-  fs.rename(
-    `${targetDir}/${TPL_FILE}`,
-    `${distDir}/${TPL_FILE.replace('.html', '')}`,
-    (err) => {
-      if (err) throw err;
-      console.log('change file exist ".tpl.html -> .tpl"');
+  const newsTpl = fs.readdirSync(`${distDir}/peco-template/news`);
+  newsTpl.forEach((file) => {
+    fs.rename(
+      `${distDir}/peco-template/news/${file}`,
+      `${distDir}/peco-template/news/${file.replace('.html', '')}`,
+      (err) => {
+        if (err) throw err;
+      }
+    );
   });
+  const whatsNewTpl = fs.readdirSync(`${distDir}/peco-template/whats-new`);
+  whatsNewTpl.forEach((file) => {
+    fs.rename(
+      `${distDir}/peco-template/whats-new/${file}`,
+      `${distDir}/peco-template/whats-new/${file.replace('.html', '')}`,
+      (err) => {
+        if (err) throw err;
+    });
+  });
+  console.log('change all file exist ".tpl.html -> .tpl"');
 }
 htmlToTpl(distDir);
+
+
+const movePecoTemplate = async (targetPath) => {
+  const pecoPath = 'dist/__peco-template__';
+  if (fs.existsSync(pecoPath)) {
+    await fs.promises.rm(pecoPath, { recursive: true, force: true });
+  }
+  fs.renameSync(`${distDir}/peco-template`, pecoPath);
+  console.log('move "__peco-template__" to "./dist"');
+}
+movePecoTemplate(distDir);

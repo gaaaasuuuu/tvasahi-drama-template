@@ -2,12 +2,16 @@
   --_button-size: 32px;
 }
 
+.ticker__title {
+  color: var(--_accent-color);
+  background-color: var(--_accent-bg);
+}
+
 .device-type-desktop .news__ticker {
   display: flex;
   flex-wrap: nowrap;
 
   .ticker__title {
-    background: #dddddd;
     padding: 1rem 2rem;
   }
 
