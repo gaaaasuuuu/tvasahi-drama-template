@@ -28,6 +28,9 @@ export default defineConfig({
         '@settings': '/src/settings.js',
       },
     },
+    css: {
+      devSourcemap: true,
+    },
     build: {
       assetsInlineLimit: 0,
       rollupOptions: {
